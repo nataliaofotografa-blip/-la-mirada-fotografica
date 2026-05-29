@@ -14,7 +14,7 @@ body{font-family:sans-serif;background:#111;display:flex;justify-content:center;
 .screen.active{display:flex}
 .scroll{flex:1;overflow-y:auto;scrollbar-width:none}
 .scroll::-webkit-scrollbar{display:none}
-.bnav{background:#16162d;display:flex;padding:8px 0 16px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.bnav{background:#16162d;display:flex;padding:8px 0 8px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0;margin-top:auto}
 .ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:3px 0}
 .ni-icon{font-size:19px;color:rgba(255,255,255,0.28)}
 .ni-lbl{font-size:10px;color:rgba(255,255,255,0.28);font-weight:500}
@@ -27,7 +27,6 @@ body{font-family:sans-serif;background:#111;display:flex;justify-content:center;
 .sinp{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:11px 14px;color:#fff;font-size:13px;outline:none}
 .sinp::placeholder{color:rgba(255,255,255,0.3)}
 .guide-body{padding:6px 12px 20px}
-/* Section accordion */
 .sec{background:#24244a;border-radius:14px;margin-bottom:9px}
 .sec-head{display:flex;align-items:center;gap:11px;padding:13px 14px;cursor:pointer;border-radius:14px}
 .sec-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
@@ -38,9 +37,16 @@ body{font-family:sans-serif;background:#111;display:flex;justify-content:center;
 .sec.open .sec-arrow{transform:rotate(90deg)}
 .sec-topics{display:none;padding:0 10px 8px}
 .sec.open .sec-topics{display:block}
-/* Topic accordion */
-.top{background:rgba(255,255,255,0.03);border-radius:10px;margin-bottom:6px;overflow:hidden}
-.top-head{display:flex;align-items:center;gap:9px;padding:11px 12px;cursor:pointer}
+.top{background:rgba(255,255,255,0.03);border-radius:10px;margin-bottom:6px}
+.top-head{display:flex;align-items:center;gap:9px;padding:11px 12px;cursor:pointer;position:sticky;top:0;z-index:5;background:#23234a;border-radius:10px}
+.ex-btn{display:inline-flex;align-items:center;gap:6px;background:rgba(77,150,255,0.12);color:#7FB3FF;border:1px solid rgba(77,150,255,0.3);border-radius:10px;padding:9px 14px;font-size:12px;font-weight:600;cursor:pointer;margin-top:2px}
+.ex-img{margin-top:10px;position:relative}
+.ex-img img{width:100%;border-radius:10px;display:block;background:#0a0a14}
+.ex-cap{font-size:11px;color:rgba(255,255,255,0.4);margin-top:6px;display:flex;justify-content:space-between;align-items:center}
+.ex-btns{display:flex;gap:6px;margin-top:6px}
+.ex-descargar{display:inline-flex;align-items:center;gap:4px;background:rgba(107,203,119,0.12);color:#6BCB77;border:1px solid rgba(107,203,119,0.3);border-radius:8px;padding:6px 10px;font-size:10px;font-weight:600;cursor:pointer}
+.ex-again{color:#7FB3FF;cursor:pointer;font-weight:600;font-size:11px}
+.ex-load{font-size:12px;color:rgba(255,255,255,0.4);padding:14px;text-align:center}
 .top-bullet{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .top-title{flex:1;font-size:13px;font-weight:500;color:rgba(255,255,255,0.9);line-height:1.3}
 .top-arrow{font-size:13px;color:rgba(255,255,255,0.3);transition:transform 0.2s;flex-shrink:0}
@@ -59,7 +65,6 @@ ul.tl{margin:0 0 11px 0;padding-left:18px}
 ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:5px}
 .no-result{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.4);font-size:13px;line-height:1.6}
 .ask-btn{display:inline-block;margin-top:14px;background:#4D96FF;color:#fff;border:none;border-radius:11px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer}
-/* Search results */
 .sr-item{background:#24244a;border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
 .sr-sec{font-size:10px;color:#FFD93D;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
 .sr-t{font-size:14px;font-weight:600;color:#fff;margin-bottom:3px}
@@ -69,7 +74,6 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
 .ai-txt{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7;white-space:pre-wrap}
 .spinner{width:30px;height:30px;border:3px solid rgba(255,255,255,0.08);border-top-color:#4D96FF;border-radius:50%;animation:spin 0.8s linear infinite;margin:14px auto}
 @keyframes spin{to{transform:rotate(360deg)}}
-/* IA corrector */
 .step-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .step-num{width:18px;height:18px;border-radius:50%;background:#FFD93D;color:#1a1a2e;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .level-row{display:flex;gap:8px;margin-bottom:18px}
@@ -117,8 +121,18 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
 .btn-sec{display:block;width:100%;padding:12px;border-radius:13px;font-size:13px;font-weight:600;border:none;cursor:pointer;text-align:center}
 .btn-dl{background:#9D6BFF;color:#fff;font-size:14px;font-weight:700}
 .btn-reiniciar{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)}
-.gt{padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.gt{padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer;transition:background 0.15s}
+.gt:hover{background:rgba(255,255,255,0.02)}
 .gt:last-child{border-bottom:none}
+.gt-term{display:flex;align-items:center;justify-content:space-between}
+.gt-name{font-size:13px;font-weight:600;color:#fff}
+.gt-tag{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600}
+.gt-arrow{font-size:14px;color:rgba(255,255,255,0.25);transition:transform 0.18s;display:inline-block}
+.gt-def{font-size:11px;color:rgba(255,255,255,0.48);line-height:1.55;margin-top:6px;display:none;padding-top:6px;border-top:1px solid rgba(255,255,255,0.05)}
+.gt-link{color:#7FB3FF;cursor:pointer;text-decoration:underline;font-size:10px;font-weight:600;margin-top:4px;display:none}
+.gt.open .gt-arrow{transform:rotate(90deg)}
+.gt.open .gt-def{display:block}
+.gt.open .gt-link{display:block}
 </style>
 </head>
 <body>
@@ -138,7 +152,7 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
   <div class="bnav">
     <div class="ni on" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
     <div class="ni" onclick="gs('buscar')"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
-    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">IA</div></div>
     <div class="ni" onclick="gs('glosario')"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
   </div>
 </div>
@@ -160,7 +174,7 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
   <div class="bnav">
     <div class="ni" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
     <div class="ni on"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
-    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">IA</div></div>
     <div class="ni" onclick="gs('glosario')"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
   </div>
 </div>
@@ -204,7 +218,7 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
   <div class="bnav">
     <div class="ni" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
     <div class="ni" onclick="gs('buscar')"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
-    <div class="ni on"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni on"><div class="ni-icon">&#129302;</div><div class="ni-lbl">IA</div></div>
     <div class="ni" onclick="gs('glosario')"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
   </div>
 </div>
@@ -214,14 +228,14 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
   <div class="topbar">
     <button class="tbtn" onclick="gs('guia')">Guia</button>
     <div class="ttitle">Glosario</div>
-    <div style="width:50px;text-align:right;font-size:11px;color:rgba(255,255,255,0.35)">19</div>
+    <div style="width:50px;text-align:right;font-size:11px;color:rgba(255,255,255,0.35)" id="glosario-count">53</div>
   </div>
   <div class="searchbar" style="padding-top:14px"><input class="sinp" placeholder="Buscar termino..." oninput="filterG(this.value)"></div>
   <div class="scroll"><div id="glist" style="padding:4px 14px 16px"></div></div>
   <div class="bnav">
     <div class="ni" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
     <div class="ni" onclick="gs('buscar')"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
-    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">IA</div></div>
     <div class="ni on"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
   </div>
 </div>
@@ -231,8 +245,8 @@ ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-botto
 // ════════════════ CONTENIDO DEL MANUAL ════════════════
 var GUIDE = [
 {icon:'',col:'rgba(157,107,255,0.15)',name:'La mirada fotografica',desc:'Fundamentos - Los 3 pilares - La pausa',topics:[
-  {t:'Que significa mirar fotograficamente',h:'<div class="tp">Mirar fotograficamente no es un talento con el que se nace. Es una habilidad que se entrena. Significa aprender a elegir: que entra en el cuadro y que queda afuera, que luz acompana la escena, que emocion queres transmitir y desde donde te parás para decirlo.</div><div class="tp">La mayoria de las fotos que no nos gustan no fallaron por el celular. Fallaron porque no nos detuvimos a mirar. La fotografia empieza mucho antes de tocar el boton.</div><div class="box" style="border-color:#9D6BFF"><div class="box-t">Tres acciones clave</div><div class="box-d">Observar antes de disparar: luz, fondo, distancia, emocion. Elegir un punto de vista en lugar de tomar el primero. Preguntar que queres que sienta quien vea la foto.</div></div>'},
-  {t:'Los 3 pilares: Luz, Encuadre, Intencion',h:'<div class="tp">Toda foto que te guste tiene estos tres elementos. No mas, no menos.</div><div class="box" style="border-color:#FF6B6B"><div class="box-t">1. Luz</div><div class="box-d">No es sobre el celular, es sobre VER la luz. De donde viene, como golpea el sujeto, que sombras crea. La luz es el 80% de una buena foto.</div></div><div class="box" style="border-color:#4D96FF"><div class="box-t">2. Encuadre</div><div class="box-d">Que entra en el cuadro y que queda afuera. Es una decision creativa tuya, no del celular. La regla de tercios, las lineas, el fondo: todo es encuadre.</div></div><div class="box" style="border-color:#9D6BFF"><div class="box-t">3. Intencion</div><div class="box-d">Por que fotografias ESTO? Que queres contar? Una foto sin intencion es una foto olvidable. La intencion es lo que hace que alguien diga: esa foto es TUYA.</div></div><div class="tp">Un celular caro sin estos 3 pilares da fotos malas. Un celular viejo CON estos 3 pilares da fotos que enamoran.</div>'},
+  {t:'Que significa mirar fotograficamente',h:'<div class="tp">Mirar fotograficamente no es un talento con el que se nace. Es una habilidad que se entrena. Significa aprender a elegir: que entra en el cuadro y que queda afuera, que luz acompana la escena, que emocion queres transmitir y desde donde te parás para decirlo.</div><div class="tp">La mayoria de las fotos que no nos gustan no fallaron por el celular. Fallaron porque no nos detuvimos a mirar. La fotografia empieza mucho antes de tocar el boton.</div><div class="box" style="border-color:#9D6BFF"><div class="box-t">Tres acciones clave</div><div class="box-d">Observar antes de disparar: luz, fondo, distancia, emocion. Elegir un punto de vista en lugar de tomar el primero. Preguntar que queros que sienta quien vea la foto.</div></div>'},
+  {t:'Los 3 pilares: Luz, Encuadre, Intencion',h:'<div class="tp">Toda foto que te guste tiene estos tres elementos. No mas, no menos.</div><div class="box" style="border-color:#FF6B6B"><div class="box-t">1. Luz</div><div class="box-d">No es sobre el celular, es sobre VER la luz. De donde viene, como golpea el sujeto, que sombras crea. La luz es el 80% de una buena foto.</div></div><div class="box" style="border-color:#4D96FF"><div class="box-t">2. Encuadre</div><div class="box-d">Que entra en el cuadro y que queda afuera. Es una decision creativa tuya, no del celular. La regla de tercios, las lineas, el fondo: todo es encuadre.</div></div><div class="box" style="border-color:#9D6BFF"><div class="box-t">3. Intencion</div><div class="box-d">Por que fotografias ESTO? Que queros contar? Una foto sin intencion es una foto olvidable. La intencion es lo que hace que alguien diga: esa foto es TUYA.</div></div><div class="tp">Un celular caro sin estos 3 pilares da fotos malas. Un celular viejo CON estos 3 pilares da fotos que enamoran.</div>'},
   {t:'La pausa consciente',h:'<div class="tp">Uno de los habitos mas transformadores en fotografia es simple: detenerse. Antes de sacar una foto, toma 10 segundos para observar la escena.</div><div class="box" style="border-color:#FFD93D"><div class="box-t">Que observar en esos 10 segundos</div><div class="box-d">De donde viene la luz? Es suave o dura? Que hay en el fondo, distrae o acompana? Estoy en el mejor angulo posible? Que querria dejar fuera del cuadro?</div></div><div class="tp">La diferencia entre una foto comun y una foto pensada son los 5 segundos que te detenes antes de tocar el boton.</div>'},
   {t:'Las 3 preguntas antes de fotografiar',h:'<ul class="tl"><li><strong>Que?</strong> Que quiero mostrar? Cual es el sujeto principal?</li><li><strong>Como?</strong> Como lo quiero mostrar? Desde donde, con que luz, a que distancia?</li><li><strong>Para que?</strong> Que quiero que sienta quien vea la foto? Cual es la intencion?</li></ul><div class="box" style="border-color:#6BCB77"><div class="box-t">Ejercicio</div><div class="box-d">Responde estas 3 preguntas en voz alta o escritas antes de cada foto durante una semana. Vas a notar como cambia tu mirada.</div></div>'}
 ]},
@@ -312,31 +326,66 @@ var GUIDE = [
   {t:'Fotos de ninos o mascotas en movimiento',h:'<div class="tp">Activa el modo rafaga: manten apretado el boton de disparo, saca 10-15 fotos seguidas y elegi la mejor. Bajate a la altura de los ojos del nino o la mascota.</div>'}
 ]}
 ];
-// iconos
+
 var ICONS=['\uD83D\uDC41\uFE0F','\uD83D\uDCF1','\uD83D\uDCA1','\uD83D\uDDBC\uFE0F','\uD83C\uDFAD','\uD83D\uDD2C','\uD83C\uDF0D','\u2702\uFE0F','\uD83D\uDCF2','\u26A0\uFE0F','\u26A1'];
 for(var z=0;z<GUIDE.length;z++){GUIDE[z].icon=ICONS[z]||'\uD83D\uDCD6';}
 
-// ════════════════ GLOSARIO ════════════════
+// ════════════════ GLOSARIO EXPANDIDO ════════════════
 var GLOS=[
-  {n:'Exposicion',t:'Basico',c:'#FFD93D',d:'La cantidad de luz de la foto. Muy clara es sobreexpuesta. Muy oscura es subexpuesta. Se controla tocando la pantalla y deslizando el sol.'},
-  {n:'Encuadre',t:'Basico',c:'#6BCB77',d:'El recorte que eleges. Que entra y que queda afuera del cuadro. Es tu decision, no del celular.'},
-  {n:'Regla de tercios',t:'Composicion',c:'#4D96FF',d:'Dividir la pantalla en 9 partes y colocar el sujeto en una linea o cruce, no en el centro.'},
-  {n:'Luz suave',t:'Luz',c:'#FF6B6B',d:'Luz difusa sin sombras duras. Ventana sin sol directo, dia nublado, sombra abierta.'},
-  {n:'Luz dura',t:'Luz',c:'#FF6B6B',d:'Luz directa con sombras marcadas. Sol directo o flash.'},
-  {n:'Contraluz',t:'Luz',c:'#FF6B6B',d:'Luz detras del sujeto. Crea silueta o borde luminoso. Toca el sujeto en la pantalla para compensar.'},
-  {n:'Hora dorada',t:'Luz',c:'#FF6B6B',d:'30-60 min antes del atardecer. Luz calida, lateral y suave.'},
-  {n:'Zoom optico',t:'Celular',c:'#6BCB77',d:'Zoom real con lente fisica. No pierde calidad. Toca los numeros fijos (1x, 2x, 3x).'},
-  {n:'Zoom digital',t:'Celular',c:'#FF6B6B',d:'Zoom falso que recorta la imagen y pierde calidad. Ocurre al pellizcar la pantalla.'},
-  {n:'HDR',t:'Tecnico',c:'#4D96FF',d:'High Dynamic Range: combina varias fotos para balancear luces y sombras. En automatico en casi todos los celulares.'},
-  {n:'ISO',t:'Tecnico',c:'#4D96FF',d:'Sensibilidad del sensor a la luz. ISO alto capta mas luz pero genera ruido. ISO bajo: imagen limpia.'},
-  {n:'AE/AF Lock',t:'Tecnico',c:'#4D96FF',d:'Bloqueo de exposicion y enfoque. Manten presionado el dedo sobre la pantalla hasta ver el cartel.'},
-  {n:'Bokeh',t:'Composicion',c:'#4D96FF',d:'Efecto de fondo desenfocado. Se logra con el Modo Retrato o el teleobjetivo (2x o 3x).'},
-  {n:'Framing',t:'Composicion',c:'#4D96FF',d:'Usar elementos de la escena (puertas, ramas, ventanas) para rodear visualmente al sujeto.'},
-  {n:'Modo Retrato',t:'Celular',c:'#6BCB77',d:'Desenfoca el fondo y destaca al sujeto. Disponible en casi todos los celulares actuales.'},
-  {n:'RAW o ProRAW',t:'Avanzado',c:'#9D6BFF',d:'Formato sin procesar. Guarda toda la informacion del sensor para edicion avanzada.'},
-  {n:'Balance de blancos',t:'Tecnico',c:'#4D96FF',d:'Como el celular interpreta los colores de la luz. Corrige fotos muy amarillas o azuladas.'},
-  {n:'Pixel binning',t:'Avanzado',c:'#9D6BFF',d:'Combina pixeles pequenos en uno para capturar mas luz. Por eso 108 MP puede dar mejores fotos de 12 MP en poca luz.'},
-  {n:'Intencion',t:'Basico',c:'#9D6BFF',d:'Saber por que fotografias esto y que queres contar. El tercer pilar junto a Luz y Encuadre.'}
+  {n:'Exposicion',t:'Basico',c:'#FFD93D',d:'La cantidad de luz de la foto. Muy clara es sobreexpuesta. Muy oscura es subexpuesta. Se controla tocando la pantalla y deslizando el sol.',cap:1},
+  {n:'Encuadre',t:'Basico',c:'#6BCB77',d:'El recorte que eleges. Que entra y que queda afuera del cuadro. Es tu decision, no del celular.',cap:3},
+  {n:'Intencion',t:'Basico',c:'#9D6BFF',d:'Saber por que fotografias esto y que queros contar. El tercer pilar junto a Luz y Encuadre.',cap:0},
+  {n:'Regla de tercios',t:'Composicion',c:'#4D96FF',d:'Dividir la pantalla en 9 partes y colocar el sujeto en una linea o cruce, no en el centro.',cap:3},
+  {n:'Luz suave',t:'Luz',c:'#FF6B6B',d:'Luz difusa sin sombras duras. Ventana sin sol directo, dia nublado, sombra abierta.',cap:2},
+  {n:'Luz dura',t:'Luz',c:'#FF6B6B',d:'Luz directa con sombras marcadas. Sol directo o flash.',cap:2},
+  {n:'Contraluz',t:'Luz',c:'#FF6B6B',d:'Luz detras del sujeto. Crea silueta o borde luminoso. Toca el sujeto en la pantalla para compensar.',cap:2},
+  {n:'Hora dorada',t:'Luz',c:'#FF6B6B',d:'30-60 min antes del atardecer. Luz calida, lateral y suave.',cap:2},
+  {n:'Sombra abierta',t:'Luz',c:'#FF6B6B',d:'Espacio a la sombra pero con cielo visible. Luz suave y azulada, ideal para retratos en exterior.',cap:2},
+  {n:'Luz lateral',t:'Luz',c:'#FF6B6B',d:'Luz que viene del costado. Crea volumen, forma y sensacion tridimensional en el rostro.',cap:2},
+  {n:'Silueta',t:'Composicion',c:'#6BCB77',d:'Sujeto oscuro contra un fondo luminoso. Efecto dramatico en contraluz.',cap:2},
+  {n:'Rim light',t:'Luz',c:'#FF6B6B',d:'Borde luminoso alrededor del sujeto. Se logra con contraluz bien controlado.',cap:2},
+  {n:'Zoom optico',t:'Celular',c:'#6BCB77',d:'Zoom real con lente fisica. No pierde calidad. Toca los numeros fijos (1x, 2x, 3x).',cap:1},
+  {n:'Zoom digital',t:'Celular',c:'#FF6B6B',d:'Zoom falso que recorta la imagen y pierde calidad. Ocurre al pellizcar la pantalla.',cap:1},
+  {n:'Gran angular',t:'Celular',c:'#6BCB77',d:'Lente 0.5x que captura mucho campo visual. Ideal para paisajes pero deforma rostros.',cap:1},
+  {n:'Teleobjetivo',t:'Celular',c:'#6BCB77',d:'Lente 2x o 3x para acercarte sin perder calidad. Perfecto para retratos y detalles.',cap:1},
+  {n:'Cuadricula',t:'Celular',c:'#6BCB77',d:'Lineas que dividen la pantalla en 9 partes. Tu mejor aliada para componer y alinear horizontes.',cap:1},
+  {n:'HDR',t:'Tecnico',c:'#4D96FF',d:'High Dynamic Range: combina varias fotos para balancear luces y sombras.',cap:1},
+  {n:'ISO',t:'Tecnico',c:'#4D96FF',d:'Sensibilidad del sensor a la luz. ISO alto capta mas luz pero genera ruido. ISO bajo: imagen limpia.',cap:1},
+  {n:'AE/AF Lock',t:'Tecnico',c:'#4D96FF',d:'Bloqueo de exposicion y enfoque. Manten presionado el dedo sobre la pantalla.',cap:1},
+  {n:'Balance de blancos',t:'Tecnico',c:'#4D96FF',d:'Como el celular interpreta los colores de la luz. Corrige fotos muy amarillas o azuladas.',cap:1},
+  {n:'Distancia focal',t:'Tecnico',c:'#4D96FF',d:'Lo que captura cada lente. 0.5x gran angular, 1x estandar, 2-3x tele.',cap:1},
+  {n:'Bokeh',t:'Composicion',c:'#4D96FF',d:'Efecto de fondo desenfocado. Se logra con el Modo Retrato o el teleobjetivo (2x o 3x).',cap:4},
+  {n:'Framing',t:'Composicion',c:'#4D96FF',d:'Usar elementos de la escena (puertas, ramas, ventanas) para rodear visualmente al sujeto.',cap:3},
+  {n:'Lineas visuales',t:'Composicion',c:'#4D96FF',d:'Lineas dentro de la imagen que guian la mirada. Horizontales, verticales, diagonales, curvas.',cap:3},
+  {n:'Composicion',t:'Basico',c:'#4D96FF',d:'Como organizas los elementos en el cuadro. Incluye tercios, lineas, fondos limpios y aire visual.',cap:3},
+  {n:'Aire visual',t:'Composicion',c:'#4D96FF',d:'Espacio vacio alrededor del sujeto. No es desperdicio, es espacio que respira.',cap:3},
+  {n:'Profundidad',t:'Composicion',c:'#4D96FF',d:'Sensacion tridimensional. Se logra con lineas convergentes, capas o desenfoque del fondo.',cap:3},
+  {n:'Negativo',t:'Composicion',c:'#4D96FF',d:'El espacio vacio o areas simples. Tan importante como el sujeto.',cap:3},
+  {n:'Punto de fuga',t:'Composicion',c:'#4D96FF',d:'Linea o punto donde convergen lineas paralelas. Crea profundidad automatica.',cap:3},
+  {n:'Modo Retrato',t:'Celular',c:'#6BCB77',d:'Desenfoca el fondo y destaca al sujeto. Disponible en casi todos los celulares.',cap:4},
+  {n:'Modo macro',t:'Celular',c:'#6BCB77',d:'Fotografiar muy cerca para mostrar detalles. Luz lateral suave, mucha estabilidad.',cap:6},
+  {n:'Modo noche',t:'Celular',c:'#6BCB77',d:'Captura varias fotos para mejorar fotos nocturnas. Apoya el celular en algo firme.',cap:7},
+  {n:'Modo Pro',t:'Celular',c:'#6BCB77',d:'Control manual en Samsung. Ajusta ISO, velocidad, balance de blancos manualmente.',cap:11},
+  {n:'Luz rasante',t:'Luz',c:'#FF6B6B',d:'Luz lateral que ilumina desde un costado muy bajo. Aparecen texturas invisibles.',cap:6},
+  {n:'Textura',t:'Composicion',c:'#4D96FF',d:'Detalle visual de superficies. Se ve mejor con luz lateral rasante.',cap:6},
+  {n:'Fotografia documental',t:'Estilo',c:'#9D6BFF',d:'Capturar momentos reales y honestos. Enfoque en la emocion y la narrativa.',cap:4},
+  {n:'Fotografia de calle',t:'Estilo',c:'#9D6BFF',d:'Capturar momentos espontaneos en espacios publicos. Paciencia y observacion.',cap:7},
+  {n:'Fotografia macro',t:'Estilo',c:'#9D6BFF',d:'Enfoque en detalles y close-ups. Muestra lo invisible y entrena la observacion.',cap:6},
+  {n:'Paisaje',t:'Estilo',c:'#9D6BFF',d:'Fotografia de naturaleza y espacios amplios. Incluye primer plano, elemento de escala.',cap:7},
+  {n:'Retrato en contexto',t:'Estilo',c:'#9D6BFF',d:'Fotografiar personas en su ambiente natural. Cuenta quien son, no como se ven.',cap:4},
+  {n:'Serie fotografica',t:'Estilo',c:'#9D6BFF',d:'Conjunto de 5-10 imagenes que comparten tema o historia. Cada foto suma.',cap:4},
+  {n:'Interiores',t:'Tecnica',c:'#FF6B6B',d:'Fotografia en espacios cerrados. Aprovecha luz de ventanas, apaga luces amarillas.',cap:7},
+  {n:'Reflejos',t:'Tecnica',c:'#FF6B6B',d:'Mostrar dos mundos en una imagen usando espejos, vidrios o charcos.',cap:7},
+  {n:'RAW o ProRAW',t:'Avanzado',c:'#9D6BFF',d:'Formato sin procesar. Guarda toda la informacion del sensor para edicion avanzada.',cap:8},
+  {n:'DNG',t:'Avanzado',c:'#9D6BFF',d:'Digital Negative: formato RAW de Adobe. Se ve lavado sin editar, ideal para Lightroom.',cap:8},
+  {n:'Pixel binning',t:'Avanzado',c:'#9D6BFF',d:'Combina pixeles pequenos en uno para capturar mas luz con mejor resultado.',cap:11},
+  {n:'Snapseed',t:'Edicion',c:'#9D6BFF',d:'App gratis para editar. Herramientas selectivas, sutil y poderosa.',cap:8},
+  {n:'Lightroom Mobile',t:'Edicion',c:'#9D6BFF',d:'App gratis de Adobe. Edicion completa, abre RAW, color profesional.',cap:8},
+  {n:'Contraste',t:'Edicion',c:'#9D6BFF',d:'Diferencia entre luces y sombras. Ajustalo sutil, +10 a +20 maximo.',cap:8},
+  {n:'Temperatura de color',t:'Edicion',c:'#9D6BFF',d:'Calentar (amarillo) o enfriar (azul) la imagen. Comunica clima y emocion.',cap:8},
+  {n:'Nitidez',t:'Edicion',c:'#9D6BFF',d:'Definicion de detalles. Poco es mas: el exceso genera ruido.',cap:8},
+  {n:'Desenfoque de fondo',t:'Luz',c:'#FF6B6B',d:'Cuando el fondo se ve borroso. Efecto de profundidad que separa sujeto.',cap:1},
+  {n:'Oracion visual',t:'Composicion',c:'#4D96FF',d:'Estructura narrativa de la foto: presenta, desarrolla, cierra.',cap:3}
 ];
 
 // ════════════════ ENGINE ════════════════
@@ -348,7 +397,7 @@ function renderGuide(){
     var g=GUIDE[i];
     var tops='';
     for(var j=0;j<g.topics.length;j++){
-      tops+='<div class="top" id="top-'+i+'-'+j+'"><div class="top-head" onclick="toggleTop('+i+','+j+')"><div class="top-bullet" style="background:'+g.col.replace('0.15','0.8')+'"></div><div class="top-title">'+g.topics[j].t+'</div><div class="top-arrow">&#8250;</div></div><div class="top-body">'+g.topics[j].h+'</div></div>';
+      tops+='<div class="top" id="top-'+i+'-'+j+'"><div class="top-head" onclick="toggleTop('+i+','+j+')"><div class="top-bullet" style="background:'+g.col.replace('0.15','0.8')+'"></div><div class="top-title">'+g.topics[j].t+'</div><div class="top-arrow">&#8250;</div></div><div class="top-body">'+g.topics[j].h+'<button class="ex-btn" onclick="showExample('+i+','+j+')">&#128247; Ver ejemplo de foto</button><div class="ex-img" id="ex-'+i+'-'+j+'"></div></div></div>';
     }
     h+='<div class="sec" id="sec-'+i+'"><div class="sec-head" onclick="toggleSec('+i+')"><div class="sec-icon" style="background:'+g.col+'">'+g.icon+'</div><div class="sec-info"><div class="sec-name">'+g.name+'</div><div class="sec-desc">'+g.desc+'</div></div><div class="sec-arrow">&#8250;</div></div><div class="sec-topics">'+tops+'</div></div>';
   }
@@ -357,7 +406,48 @@ function renderGuide(){
 function toggleSec(i){document.getElementById('sec-'+i).classList.toggle('open');}
 function toggleTop(i,j){document.getElementById('top-'+i+'-'+j).classList.toggle('open');}
 
-// Buscar en la guia (filtra y abre)
+function exampleKeywords(title){
+  var t=title.toLowerCase();
+  if(t.indexOf('contraluz')>=0)return 'backlight portrait';
+  if(t.indexOf('ventana')>=0)return 'window light portrait';
+  if(t.indexOf('hora dorada')>=0)return 'golden hour sunset';
+  if(t.indexOf('luz suave')>=0||t.indexOf('luz dura')>=0)return 'portrait photography';
+  if(t.indexOf('tercio')>=0||t.indexOf('encuadr')>=0||t.indexOf('composic')>=0)return 'composition photography';
+  if(t.indexOf('linea')>=0)return 'lines architecture';
+  if(t.indexOf('framing')>=0)return 'doorway frame photography';
+  if(t.indexOf('fondo')>=0)return 'minimal portrait';
+  if(t.indexOf('aire')>=0)return 'portrait simple';
+  if(t.indexOf('macro')>=0||t.indexOf('detalle')>=0)return 'macro closeup detail';
+  if(t.indexOf('paisaje')>=0)return 'landscape nature';
+  if(t.indexOf('calle')>=0)return 'street photography';
+  if(t.indexOf('interior')>=0)return 'interior window light';
+  if(t.indexOf('noche')>=0)return 'night city lights';
+  if(t.indexOf('reflejo')>=0)return 'reflection water';
+  if(t.indexOf('retrato')>=0)return 'portrait people';
+  if(t.indexOf('serie')>=0||t.indexOf('historia')>=0)return 'documentary everyday';
+  return 'photography nature';
+}
+
+function showExample(i,j){
+  var box=document.getElementById('ex-'+i+'-'+j);
+  var kw=exampleKeywords(GUIDE[i].topics[j].t);
+  var n=Math.floor(Math.random()*9000)+1000;
+  box.innerHTML='<div class="ex-load">Buscando una foto...</div>';
+  
+  var url='https://picsum.photos/seed/'+kw.replace(/ /g,'')+n+'/640/440';
+  var img=new Image();
+  img.onload=function(){
+    var html='<img src="'+url+'" alt="ejemplo" style="width:100%;border-radius:10px;display:block;background:#0a0a14"><div class="ex-cap"><span style="font-size:11px;color:rgba(255,255,255,0.4)">Ejemplo: '+kw+'</span><span class="ex-again" onclick="showExample('+i+','+j+')">&#x21bb;</span></div>';
+    html+='<div class="ex-btns"><a href="'+url+'" download class="ex-descargar" onclick="event.stopPropagation()">&#x2B07; Descargar</a></div>';
+    box.innerHTML=html;
+  };
+  img.onerror=function(){
+    var alt='https://via.placeholder.com/640x440?text=Foto+de+ejemplo';
+    box.innerHTML='<div style="text-align:center;color:rgba(255,255,255,0.3);padding:40px 10px;font-size:11px">No pude cargar la imagen de ejemplo. Intenta de nuevo.</div>';
+  };
+  img.src=url;
+}
+
 function onSearch(q){
   q=q.trim().toLowerCase();
   renderGuide();
@@ -380,12 +470,10 @@ function onSearch(q){
   }
 }
 
-// Buscar + preguntar IA
 function askAI(){
   var q=document.getElementById('ask-input').value.trim();
   if(!q)return;
   var body=document.getElementById('ask-body');
-  // 1. Buscar en el manual
   var hits=[];
   for(var i=0;i<GUIDE.length;i++){
     for(var j=0;j<GUIDE[i].topics.length;j++){
@@ -404,20 +492,19 @@ function askAI(){
       h+='<div class="sr-item" onclick="goToTopic('+hits[k].si+','+hits[k].ti+')"><div class="sr-sec">'+hits[k].sec+'</div><div class="sr-t">'+hits[k].t+'</div><div class="sr-snip">'+hits[k].snip+'...</div></div>';
     }
   } else {
-    h+='<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:10px">No encontre ese tema exacto en el manual. Preguntando a la IA...</div>';
+    h+='<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:10px">No encontre ese tema exacto. Preguntando a la IA...</div>';
   }
   h+='<div id="ai-zone"><div class="spinner"></div></div>';
   body.innerHTML=h;
 
-  // 2. Preguntar a la IA
-  var prompt='Sos Natalia Olivera, fotografa documental y educadora de fotografia con celular, creadora del manual La Mirada Fotografica. Responde esta consulta de un alumno de forma clara, calida y practica, enfocada en fotografia movil. Si usas un termino tecnico, explicalo entre parentesis. Maximo 150 palabras. Consulta: '+q;
+  var prompt='Sos Natalia Olivera, fotografa documental y educadora de fotografia con celular. Responde esta consulta de forma clara, calida y practica. Si usas termino tecnico, explicalo. Maximo 120 palabras. Consulta: '+q;
   fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})})
   .then(function(r){if(!r.ok)throw new Error('e');return r.json();})
   .then(function(d){
     var txt=d.content.map(function(b){return b.text||'';}).join('');
-    document.getElementById('ai-zone').innerHTML='<div class="ai-answer"><div class="ai-lbl">Respuesta de Nat (IA)</div><div class="ai-txt">'+txt+'</div></div>';
+    document.getElementById('ai-zone').innerHTML='<div class="ai-answer"><div class="ai-lbl">Respuesta de Nat</div><div class="ai-txt">'+txt+'</div></div>';
   })
-  .catch(function(){document.getElementById('ai-zone').innerHTML='<div style="font-size:12px;color:rgba(255,150,150,0.8);padding:10px">No pude consultar la IA ahora. Proba de nuevo o busca en el manual.</div>';});
+  .catch(function(){document.getElementById('ai-zone').innerHTML='<div style="font-size:12px;color:rgba(255,150,150,0.8);padding:10px">Error. Proba de nuevo.</div>';});
 }
 function goToTopic(si,ti){
   gs('guia');
@@ -442,10 +529,9 @@ function onFile(input){
     document.getElementById('btn-s').style.display='none';
     document.getElementById('btn-c').style.display='flex';
     document.getElementById('btn-analizar').disabled=false;
-    document.getElementById('hint').textContent='Foto lista! Toca Analizar mi foto';
+    document.getElementById('hint').textContent='Foto lista! Toca Analizar';
     document.getElementById('results-wrap').classList.remove('show');
     document.getElementById('results-wrap').innerHTML='';
-    document.getElementById('error-box').classList.remove('show');
   };
   r.readAsDataURL(f);
 }
@@ -454,47 +540,39 @@ function analyze(){
   if(!iaB64)return;
   document.getElementById('loading-wrap').classList.add('show');
   document.getElementById('results-wrap').classList.remove('show');
-  document.getElementById('error-box').classList.remove('show');
   document.getElementById('btn-analizar').disabled=true;
   var i=0;var el=document.getElementById('loading-step');el.textContent=loadSteps[0];
   var iv=setInterval(function(){i=(i+1)%loadSteps.length;el.textContent=loadSteps[i];},1800);
   var lvName=['principiante','intermedio','avanzado'][iaLevel];
-  var prompt='Sos Natalia Olivera, fotografa documental y educadora, creadora de La Mirada Fotografica. Pilares: Luz, Encuadre e Intencion, con mirada documental: momentos reales y honestos. Analiza esta foto de celular. Nivel: '+lvName+'. REGLA: si usas terminos tecnicos o en ingles, explicalos entre parentesis en espanol simple. Scores enteros del 1 al 10, nunca decimales ni mayores a 10. Detecta procesamiento excesivo o filtros que tapan errores. Devuelve SOLO JSON sin markdown: {"score_total":entero1a10,"frase_general":"max 12 palabras","procesamiento":{"nivel":"normal o moderado o excesivo","detalle":"una oracion"},"luz":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"composicion":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"encuadre":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"intencion":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"documental":{"valor":"que momento unico captura","potencial":"como potenciarlo"},"desafio":"desafio practico max 25 palabras"}';
+  var prompt='Sos Natalia Olivera, fotografa. Analiza esta foto. Nivel: '+lvName+'. Explicar terminos tecnicos entre parentesis. Scores 1-10 enteros, nunca decimales. Devolver SOLO JSON: {"score_total":int1a10,"frase_general":"max 12 palabras","luz":{"score":int,"analisis":"1-2 oraciones"},"composicion":{"score":int,"analisis":"1-2 oraciones"},"encuadre":{"score":int,"analisis":"1-2 oraciones"},"intencion":{"score":int,"analisis":"1-2 oraciones"},"desafio":"max 20 palabras"}';
   fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:iaFileType,data:iaB64}},{type:'text',text:prompt}]}]})})
-  .then(function(res){clearInterval(iv);document.getElementById('loading-wrap').classList.remove('show');if(!res.ok)throw new Error('Error '+res.status);return res.json();})
+  .then(function(res){clearInterval(iv);document.getElementById('loading-wrap').classList.remove('show');if(!res.ok)throw new Error('Error');return res.json();})
   .then(function(data){
     var raw=data.content.map(function(b){return b.text||'';}).join('');
-    var s=raw.indexOf('{'),e=raw.lastIndexOf('}');if(s<0||e<0)throw new Error('Respuesta inesperada.');
-    var result;try{result=JSON.parse(raw.slice(s,e+1));}catch(ex){throw new Error('Error al procesar la respuesta.');}
-    var keys=['luz','composicion','encuadre','intencion'];
+    var s=raw.indexOf('{'),e=raw.lastIndexOf('}');
+    if(s<0||e<0)throw new Error('Respuesta inesperada.');
+    var result;try{result=JSON.parse(raw.slice(s,e+1));}catch(ex){throw new Error('Error al procesar.');}
     if(result.score_total>10)result.score_total=Math.round(result.score_total/10);
-    for(var k=0;k<keys.length;k++){if(result[keys[k]]&&result[keys[k]].score>10)result[keys[k]].score=Math.round(result[keys[k]].score/10);}
     renderResults(result);
   })
-  .catch(function(err){clearInterval(iv);document.getElementById('loading-wrap').classList.remove('show');document.getElementById('btn-analizar').disabled=false;var eb=document.getElementById('error-box');eb.textContent=err.message||'Error. Intenta de nuevo.';eb.classList.add('show');});
+  .catch(function(err){clearInterval(iv);document.getElementById('loading-wrap').classList.remove('show');document.getElementById('btn-analizar').disabled=false;});
 }
 function col(s){return s>=8?'#6BCB77':s>=5?'#FFD93D':'#FF6B6B';}
 function renderResults(r){
   iaLastResult=r;
   var secs=[{key:'luz',label:'Luz'},{key:'composicion',label:'Composicion'},{key:'encuadre',label:'Encuadre'},{key:'intencion',label:'Intencion'}];
   var cards='';
-  for(var i=0;i<secs.length;i++){var s=secs[i];var d=r[s.key]||{};var c=col(d.score||0);cards+='<div class="rcard" style="border-color:'+c+'"><div class="rctop"><div class="rclbl">'+s.label+'</div><div class="rcpill" style="background:'+c+'22;color:'+c+'">'+(d.score||0)+'/10</div></div><div class="rctxt">'+(d.analisis||'')+'</div>'+(d.tip?'<div class="rctip">Consejo: '+d.tip+'</div>':'')+'</div>';}
-  var proc=r.procesamiento||{};var pc=proc.nivel==='excesivo'?'#FF6B6B':proc.nivel==='moderado'?'#FFD93D':'#6BCB77';
-  var procCard='<div class="rcard" style="border-color:'+pc+'"><div class="rctop"><div class="rclbl">Procesamiento</div><div class="rcpill" style="background:'+pc+'22;color:'+pc+'">'+(proc.nivel||'normal')+'</div></div>'+(proc.detalle?'<div class="rctxt">'+proc.detalle+'</div>':'')+'</div>';
-  var doc=r.documental||{};
-  var docCard=(doc.valor||doc.potencial)?'<div style="background:rgba(157,107,255,0.08);border:1.5px solid rgba(157,107,255,0.25);border-radius:13px;padding:13px;margin-bottom:10px"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9D6BFF;margin-bottom:6px">Ojo documental</div>'+(doc.valor?'<div style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.55;margin-bottom:5px">'+doc.valor+'</div>':'')+(doc.potencial?'<div style="font-size:11px;color:rgba(255,255,255,0.38);font-style:italic">Potencial: '+doc.potencial+'</div>':'')+'</div>':'';
+  for(var i=0;i<secs.length;i++){var s=secs[i];var d=r[s.key]||{};var c=col(d.score||0);cards+='<div class="rcard" style="border-color:'+c+'"><div class="rctop"><div class="rclbl">'+s.label+'</div><div class="rcpill" style="background:'+c+'22;color:'+c+'">'+(d.score||0)+'/10</div></div><div class="rctxt">'+(d.analisis||'')+'</div></div>';}
   var wrap=document.getElementById('results-wrap');
-  wrap.innerHTML='<div class="score-banner"><div class="score-big">'+(r.score_total||0)+'/10</div><div class="score-info"><div class="score-title">'+(r.frase_general||'Buen trabajo')+'</div><div class="score-sub">Nivel '+['principiante','intermedio','avanzado'][iaLevel]+'</div></div></div>'+procCard+cards+docCard+(r.desafio?'<div class="desafio-box"><div class="desafio-lbl">Tu desafio</div><div class="desafio-txt">'+r.desafio+'</div></div>':'')+'<div class="result-actions"><button class="btn-sec btn-dl" onclick="descargarAnalisis()">Guardar imagen con analisis</button><button class="btn-sec btn-reiniciar" onclick="reiniciar()">Analizar otra foto</button></div>';
+  wrap.innerHTML='<div class="score-banner"><div class="score-big">'+(r.score_total||0)+'/10</div><div class="score-info"><div class="score-title">'+(r.frase_general||'Buen trabajo')+'</div></div></div>'+cards+(r.desafio?'<div class="desafio-box"><div class="desafio-lbl">Tu desafio</div><div class="desafio-txt">'+r.desafio+'</div></div>':'')+'<div class="result-actions"><button class="btn-sec btn-dl" onclick="descargarAnalisis()">Guardar analisis</button><button class="btn-sec btn-reiniciar" onclick="reiniciar()">Analizar otra</button></div>';
   wrap.classList.add('show');
-  setTimeout(function(){wrap.scrollIntoView({behavior:'smooth',block:'start'});},150);
 }
 function reiniciar(){
   iaB64=null;iaPreviewSrc=null;
   document.getElementById('fimg').style.display='none';document.getElementById('fp').style.display='block';
   document.getElementById('btn-s').style.display='flex';document.getElementById('btn-c').style.display='none';
   document.getElementById('btn-analizar').disabled=true;document.getElementById('hint').textContent='Primero subi una foto (paso 2)';
-  document.getElementById('results-wrap').classList.remove('show');document.getElementById('results-wrap').innerHTML='';
-  document.getElementById('error-box').classList.remove('show');document.getElementById('finput').value='';
+  document.getElementById('results-wrap').classList.remove('show');document.getElementById('finput').value='';
 }
 function descargarAnalisis(){
   if(!iaPreviewSrc||!iaLastResult)return;
@@ -503,28 +581,22 @@ function descargarAnalisis(){
   var g=ctx.createLinearGradient(0,0,1080,0);g.addColorStop(0,'#FF6B6B');g.addColorStop(0.33,'#FFD93D');g.addColorStop(0.66,'#6BCB77');g.addColorStop(1,'#4D96FF');ctx.fillStyle=g;ctx.fillRect(0,0,1080,14);
   var img=new Image();
   img.onload=function(){
-    var ph=440;ctx.save();ctx.beginPath();ctx.rect(30,28,1020,ph);ctx.clip();var sc=Math.max(1020/img.width,ph/img.height);ctx.drawImage(img,(1020-img.width*sc)/2+30,(ph-img.height*sc)/2+28,img.width*sc,img.height*sc);ctx.restore();
+    ctx.drawImage(img,30,28,1020,440);
     ctx.fillStyle='#FFD93D';ctx.beginPath();ctx.arc(990,78,50,0,Math.PI*2);ctx.fill();ctx.fillStyle='#1a1a2e';ctx.font='bold 26px sans-serif';ctx.textAlign='center';ctx.fillText((r.score_total||0)+'/10',990,90);
-    ctx.fillStyle='#fff';ctx.font='bold 30px sans-serif';ctx.textAlign='left';ctx.fillText((r.frase_general||'Mi analisis').slice(0,55),40,520);
-    var secs=[{key:'luz',label:'Luz'},{key:'composicion',label:'Composicion'},{key:'encuadre',label:'Encuadre'},{key:'intencion',label:'Intencion'}];var y=560;
-    for(var i=0;i<secs.length;i++){var d=r[secs[i].key]||{};var sc2=d.score||0;var c=sc2>=8?'#6BCB77':sc2>=5?'#FFD93D':'#FF6B6B';var x=i%2===0?30:550;ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fillRect(x,y,490,90);ctx.fillStyle=c;ctx.font='bold 14px sans-serif';ctx.textAlign='left';ctx.fillText(secs[i].label,x+15,y+26);ctx.font='bold 26px sans-serif';ctx.fillText(sc2+'/10',x+15,y+65);if(d.tip){ctx.fillStyle='rgba(255,255,255,0.45)';ctx.font='11px sans-serif';ctx.fillText((d.tip||'').slice(0,50),x+140,y+58);}if(i%2===1)y+=100;}
-    var doc=r.documental||{};if(doc.valor){y+=10;ctx.fillStyle='rgba(157,107,255,0.15)';ctx.fillRect(30,y,1020,70);ctx.fillStyle='#9D6BFF';ctx.font='bold 12px sans-serif';ctx.fillText('OJO DOCUMENTAL',50,y+22);ctx.fillStyle='rgba(255,255,255,0.7)';ctx.font='12px sans-serif';ctx.fillText(doc.valor.slice(0,90),50,y+48);y+=80;}
-    if(r.desafio){ctx.fillStyle='rgba(255,211,61,0.1)';ctx.fillRect(30,y+10,1020,60);ctx.fillStyle='#FFD93D';ctx.font='bold 12px sans-serif';ctx.fillText('TU DESAFIO',50,y+32);ctx.fillStyle='rgba(255,255,255,0.75)';ctx.font='12px sans-serif';ctx.fillText(r.desafio.slice(0,80),50,y+54);}
-    ctx.fillStyle='rgba(255,255,255,0.18)';ctx.font='13px sans-serif';ctx.textAlign='center';ctx.fillText('La Mirada Fotografica - Amapola Fotografia - @amapolafotografia',540,1330);
-    var a=document.createElement('a');a.download='mi-analisis.png';a.href=canvas.toDataURL('image/png');a.click();
+    ctx.fillStyle='#fff';ctx.font='bold 28px sans-serif';ctx.textAlign='left';ctx.fillText((r.frase_general||'Mi analisis').slice(0,50),40,520);
+    var a=document.createElement('a');a.download='mi-foto-analizada.png';a.href=canvas.toDataURL('image/png');a.click();
   };
   img.src=iaPreviewSrc;
 }
 
-// ════════════════ GLOSARIO ════════════════
+// ════════════════ GLOSARIO INTERACTIVO ════════════════
 function renderGlos(arr){
-  var h='';for(var i=0;i<arr.length;i++){var g=arr[i];h+='<div class="gt" onclick="toggleG(this)"><div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:13px;font-weight:600;color:#fff">'+g.n+'</div><div style="display:flex;align-items:center;gap:4px"><div style="font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600;background:'+g.c+'22;color:'+g.c+'">'+g.t+'</div><span style="font-size:14px;color:rgba(255,255,255,0.25);transition:transform 0.18s;display:inline-block" class="gar">&#8250;</span></div></div><div style="font-size:11px;color:rgba(255,255,255,0.48);line-height:1.55;margin-top:6px;display:none" class="gdef">'+g.d+'</div></div>';}
+  var h='';for(var i=0;i<arr.length;i++){var g=arr[i];h+='<div class="gt" onclick="toggleG(this)"><div class="gt-term"><div class="gt-name">'+g.n+'</div><div style="display:flex;align-items:center;gap:6px"><div class="gt-tag" style="background:'+g.c+'22;color:'+g.c+'">'+g.t+'</div><span class="gt-arrow">&#8250;</span></div></div><div class="gt-def">'+g.d+'</div>'+(g.cap!==undefined?'<div class="gt-link" onclick="event.stopPropagation();goToTopic('+GUIDE.findIndex(function(x){return GUIDE.indexOf(x)===g.cap;})+',0)">Ver en la guia &#10230;</div>':'')+'</div>';}
   document.getElementById('glist').innerHTML=h;
 }
-function toggleG(el){var d=el.querySelector('.gdef'),a=el.querySelector('.gar'),o=d.style.display==='block';d.style.display=o?'none':'block';a.style.transform=o?'':'rotate(90deg)';}
-function filterG(q){var res=[];for(var i=0;i<GLOS.length;i++){if(GLOS[i].n.toLowerCase().indexOf(q.toLowerCase())>=0||GLOS[i].d.toLowerCase().indexOf(q.toLowerCase())>=0)res.push(GLOS[i]);}renderGlos(res);}
+function toggleG(el){var d=el.querySelector('.gt-def'),l=el.querySelector('.gt-link'),a=el.querySelector('.gt-arrow'),o=d.style.display==='block';d.style.display=o?'none':'block';if(l)l.style.display=o?'none':'block';a.style.transform=o?'':'rotate(90deg)';el.classList.toggle('open');}
+function filterG(q){var res=[];for(var i=0;i<GLOS.length;i++){if(GLOS[i].n.toLowerCase().indexOf(q.toLowerCase())>=0||GLOS[i].d.toLowerCase().indexOf(q.toLowerCase())>=0)res.push(GLOS[i]);}renderGlos(res);document.getElementById('glosario-count').textContent=res.length;}
 
-// INIT
 renderGuide();
 renderGlos(GLOS);
 </script>
