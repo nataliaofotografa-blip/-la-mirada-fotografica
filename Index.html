@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:sans-serif;background:#111;display:flex;justify-content:center;padding:20px 0;min-height:100vh}
+.phone{width:375px;background:#1a1a2e;border-radius:40px;overflow:hidden;border:6px solid #2d2d4a;display:flex;flex-direction:column;height:780px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 14px 10px;background:#1a1a2e;border-bottom:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.tbtn{background:rgba(255,255,255,0.08);border:none;color:#fff;font-size:12px;padding:6px 12px;border-radius:20px;cursor:pointer;white-space:nowrap}
+.ttitle{font-size:13px;font-weight:600;color:#fff;text-align:center;flex:1;padding:0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.screen{display:none;flex-direction:column;flex:1;overflow:hidden}
+.screen.active{display:flex}
+.scroll{flex:1;overflow-y:auto;scrollbar-width:none}
+.scroll::-webkit-scrollbar{display:none}
+.bnav{background:#16162d;display:flex;padding:8px 0 16px;border-top:1px solid rgba(255,255,255,0.06);flex-shrink:0}
+.ni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:3px 0}
+.ni-icon{font-size:19px;color:rgba(255,255,255,0.28)}
+.ni-lbl{font-size:10px;color:rgba(255,255,255,0.28);font-weight:500}
+.ni.on .ni-icon,.ni.on .ni-lbl{color:#FFD93D}
+.hdr{background:linear-gradient(135deg,#FF6B6B,#FFD93D,#6BCB77,#4D96FF);padding:22px 20px 18px;flex-shrink:0}
+.brand{font-size:10px;font-weight:600;letter-spacing:2px;color:rgba(255,255,255,0.85);text-transform:uppercase;margin-bottom:3px}
+.htitle{font-size:21px;font-weight:700;color:#fff;line-height:1.2;margin-bottom:3px}
+.hsub{font-size:12px;color:rgba(255,255,255,0.85)}
+.searchbar{padding:12px 14px 6px;flex-shrink:0;background:#1a1a2e}
+.sinp{width:100%;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:12px;padding:11px 14px;color:#fff;font-size:13px;outline:none}
+.sinp::placeholder{color:rgba(255,255,255,0.3)}
+.guide-body{padding:6px 12px 20px}
+/* Section accordion */
+.sec{background:#24244a;border-radius:14px;margin-bottom:9px}
+.sec-head{display:flex;align-items:center;gap:11px;padding:13px 14px;cursor:pointer;border-radius:14px}
+.sec-icon{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sec-info{flex:1;min-width:0}
+.sec-name{font-size:14px;font-weight:600;color:#fff;margin-bottom:1px}
+.sec-desc{font-size:11px;color:rgba(255,255,255,0.4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sec-arrow{font-size:16px;color:rgba(255,255,255,0.35);transition:transform 0.2s;flex-shrink:0}
+.sec.open .sec-arrow{transform:rotate(90deg)}
+.sec-topics{display:none;padding:0 10px 8px}
+.sec.open .sec-topics{display:block}
+/* Topic accordion */
+.top{background:rgba(255,255,255,0.03);border-radius:10px;margin-bottom:6px;overflow:hidden}
+.top-head{display:flex;align-items:center;gap:9px;padding:11px 12px;cursor:pointer}
+.top-bullet{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.top-title{flex:1;font-size:13px;font-weight:500;color:rgba(255,255,255,0.9);line-height:1.3}
+.top-arrow{font-size:13px;color:rgba(255,255,255,0.3);transition:transform 0.2s;flex-shrink:0}
+.top.open .top-arrow{transform:rotate(90deg)}
+.top-body{display:none;padding:2px 14px 14px}
+.top.open .top-body{display:block}
+.tp{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.7;margin-bottom:11px}
+.tp strong{color:#fff;font-weight:600}
+.box{border-radius:10px;padding:11px 13px;margin-bottom:10px;border-left:3px solid}
+.box-t{font-size:12px;font-weight:600;color:#fff;margin-bottom:3px}
+.box-d{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6}
+.tbl{width:100%;border-collapse:collapse;margin-bottom:11px}
+.tbl th{font-size:10px;color:rgba(255,255,255,0.4);font-weight:600;padding:6px 8px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.08)}
+.tbl td{font-size:12px;color:rgba(255,255,255,0.68);padding:7px 8px;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.4;vertical-align:top}
+ul.tl{margin:0 0 11px 0;padding-left:18px}
+ul.tl li{font-size:13px;color:rgba(255,255,255,0.7);line-height:1.6;margin-bottom:5px}
+.no-result{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.4);font-size:13px;line-height:1.6}
+.ask-btn{display:inline-block;margin-top:14px;background:#4D96FF;color:#fff;border:none;border-radius:11px;padding:11px 20px;font-size:13px;font-weight:700;cursor:pointer}
+/* Search results */
+.sr-item{background:#24244a;border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.sr-sec{font-size:10px;color:#FFD93D;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.sr-t{font-size:14px;font-weight:600;color:#fff;margin-bottom:3px}
+.sr-snip{font-size:12px;color:rgba(255,255,255,0.5);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ai-answer{background:rgba(77,150,255,0.08);border:1.5px solid rgba(77,150,255,0.25);border-radius:14px;padding:14px;margin-top:12px}
+.ai-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#4D96FF;margin-bottom:8px}
+.ai-txt{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.7;white-space:pre-wrap}
+.spinner{width:30px;height:30px;border:3px solid rgba(255,255,255,0.08);border-top-color:#4D96FF;border-radius:50%;animation:spin 0.8s linear infinite;margin:14px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+/* IA corrector */
+.step-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.step-num{width:18px;height:18px;border-radius:50%;background:#FFD93D;color:#1a1a2e;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.level-row{display:flex;gap:8px;margin-bottom:18px}
+.lv{flex:1;background:rgba(255,255,255,0.05);border-radius:12px;padding:11px 6px;text-align:center;cursor:pointer;border:2px solid transparent}
+.lv.on{background:rgba(255,211,61,0.1);border-color:#FFD93D}
+.lv-e{font-size:18px;margin-bottom:3px}
+.lv-t{font-size:11px;color:rgba(255,255,255,0.4);font-weight:500}
+.lv.on .lv-t{color:#FFD93D;font-weight:700}
+.foto-wrap{border-radius:14px;overflow:hidden;margin-bottom:10px;background:rgba(255,255,255,0.03);border:1.5px solid rgba(255,255,255,0.08);min-height:140px;display:flex;align-items:center;justify-content:center}
+.fp{text-align:center;padding:22px 16px}
+.fp-icon{font-size:36px;margin-bottom:7px}
+.fp-txt{font-size:12px;color:rgba(255,255,255,0.3)}
+.foto-img{width:100%;max-height:200px;object-fit:cover;display:none}
+.foto-btns{display:flex;gap:8px;margin-bottom:16px}
+.btn-foto{flex:1;padding:12px 8px;border-radius:12px;font-size:13px;font-weight:700;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+.btn-s{background:#FFD93D;color:#1a1a2e}
+.btn-c{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);display:none}
+.btn-analizar{display:block;width:100%;padding:13px;border-radius:13px;font-size:14px;font-weight:700;border:none;cursor:pointer;background:#4D96FF;color:#fff;margin-bottom:6px}
+.btn-analizar:disabled{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.25);cursor:default}
+.hint{font-size:11px;color:rgba(255,255,255,0.22);text-align:center;margin-bottom:16px}
+.loading-wrap{text-align:center;padding:22px 0;display:none}
+.loading-wrap.show{display:block}
+.sp2{width:36px;height:36px;border:3px solid rgba(255,255,255,0.08);border-top-color:#FFD93D;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px}
+.loading-txt{font-size:13px;font-weight:600;color:#fff;margin-bottom:4px}
+.loading-step{font-size:11px;color:rgba(255,211,61,0.7);min-height:16px}
+.error-box{background:rgba(255,107,107,0.1);border:1px solid rgba(255,107,107,0.25);border-radius:12px;padding:12px;margin-bottom:12px;font-size:12px;color:rgba(255,150,150,0.9);display:none;line-height:1.5}
+.error-box.show{display:block}
+.results-wrap{display:none}
+.results-wrap.show{display:block}
+.score-banner{background:linear-gradient(135deg,rgba(255,211,61,0.12),rgba(77,150,255,0.08));border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.score-big{font-size:34px;font-weight:800;color:#FFD93D;line-height:1}
+.score-info{flex:1}
+.score-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:2px;line-height:1.4}
+.score-sub{font-size:11px;color:rgba(255,255,255,0.4)}
+.rcard{background:rgba(255,255,255,0.04);border-radius:13px;padding:13px;margin-bottom:10px;border-left:3px solid}
+.rctop{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.rclbl{font-size:12px;font-weight:700;color:#fff}
+.rcpill{font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px}
+.rctxt{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:4px}
+.rctip{font-size:11px;color:rgba(255,255,255,0.32);font-style:italic;line-height:1.5}
+.desafio-box{background:rgba(255,211,61,0.07);border:1.5px solid rgba(255,211,61,0.2);border-radius:13px;padding:13px;margin-bottom:10px}
+.desafio-lbl{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#FFD93D;margin-bottom:6px}
+.desafio-txt{font-size:12px;color:rgba(255,255,255,0.75);line-height:1.55}
+.result-actions{display:flex;flex-direction:column;gap:8px;margin-top:4px;padding-bottom:20px}
+.btn-sec{display:block;width:100%;padding:12px;border-radius:13px;font-size:13px;font-weight:600;border:none;cursor:pointer;text-align:center}
+.btn-dl{background:#9D6BFF;color:#fff;font-size:14px;font-weight:700}
+.btn-reiniciar{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6)}
+.gt{padding:11px 0;border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.gt:last-child{border-bottom:none}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- GUIA -->
+<div class="screen active" id="s-guia">
+  <div class="hdr">
+    <div class="brand">Amapola Fotografia - Nat</div>
+    <div class="htitle">La Mirada Fotografica</div>
+    <div class="hsub">Manual de fotografia con tu celular</div>
+  </div>
+  <div class="searchbar">
+    <input class="sinp" id="guide-search" placeholder="Buscar tema: luz, retrato, noche..." oninput="onSearch(this.value)">
+  </div>
+  <div class="scroll"><div class="guide-body" id="guide-body"></div></div>
+  <div class="bnav">
+    <div class="ni on" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
+    <div class="ni" onclick="gs('buscar')"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
+    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni" onclick="gs('glosario')"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
+  </div>
+</div>
+
+<!-- BUSCAR -->
+<div class="screen" id="s-buscar">
+  <div class="topbar">
+    <button class="tbtn" onclick="gs('guia')">Guia</button>
+    <div class="ttitle">Buscar</div>
+    <div style="width:50px"></div>
+  </div>
+  <div class="searchbar" style="padding-top:14px">
+    <input class="sinp" id="ask-input" placeholder="Que queres aprender o resolver?">
+    <button class="ask-btn" style="width:100%;margin-top:10px" onclick="askAI()">Buscar y preguntar a la IA</button>
+  </div>
+  <div class="scroll"><div style="padding:10px 14px 24px" id="ask-body">
+    <div class="no-result">Escribi cualquier duda de fotografia.<br>Busca primero en el manual y, si no esta, te responde la IA sin salir de la app.</div>
+  </div></div>
+  <div class="bnav">
+    <div class="ni" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
+    <div class="ni on"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
+    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni" onclick="gs('glosario')"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
+  </div>
+</div>
+
+<!-- CORRECTOR IA -->
+<div class="screen" id="s-ia">
+  <div class="topbar">
+    <button class="tbtn" onclick="gs('guia')">Guia</button>
+    <div class="ttitle">Corrector IA</div>
+    <div style="width:50px"></div>
+  </div>
+  <div class="scroll">
+    <div style="padding:16px 16px 24px">
+      <div style="margin-bottom:18px">
+        <div class="step-lbl"><div class="step-num">1</div>Elegi tu nivel</div>
+        <div class="level-row">
+          <div class="lv" onclick="setLv(this,0)"><div class="lv-e">&#128994;</div><div class="lv-t">Principiante</div></div>
+          <div class="lv on" onclick="setLv(this,1)"><div class="lv-e">&#128993;</div><div class="lv-t">Intermedio</div></div>
+          <div class="lv" onclick="setLv(this,2)"><div class="lv-e">&#128308;</div><div class="lv-t">Avanzado</div></div>
+        </div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div class="step-lbl"><div class="step-num">2</div>Subi tu foto</div>
+        <div class="foto-wrap"><div class="fp" id="fp"><div class="fp-icon">&#128444;</div><div class="fp-txt">Tu foto aparece aca</div></div><img class="foto-img" id="fimg" alt="preview"></div>
+        <div class="foto-btns">
+          <button class="btn-foto btn-s" id="btn-s" onclick="triggerUp()">Subir foto</button>
+          <button class="btn-foto btn-c" id="btn-c" onclick="triggerUp()">Cambiar foto</button>
+        </div>
+        <input type="file" id="finput" accept="image/*" onchange="onFile(this)" style="display:none">
+      </div>
+      <div style="margin-bottom:6px">
+        <div class="step-lbl"><div class="step-num">3</div>Analiza tu foto</div>
+        <button class="btn-analizar" id="btn-analizar" onclick="analyze()" disabled>Analizar mi foto</button>
+        <div class="hint" id="hint">Primero subi una foto (paso 2)</div>
+      </div>
+      <div class="error-box" id="error-box"></div>
+      <div class="loading-wrap" id="loading-wrap"><div class="sp2"></div><div class="loading-txt">Analizando tu foto...</div><div class="loading-step" id="loading-step">Leyendo la luz...</div></div>
+      <div class="results-wrap" id="results-wrap"></div>
+    </div>
+  </div>
+  <div class="bnav">
+    <div class="ni" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
+    <div class="ni" onclick="gs('buscar')"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
+    <div class="ni on"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni" onclick="gs('glosario')"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
+  </div>
+</div>
+
+<!-- GLOSARIO -->
+<div class="screen" id="s-glosario">
+  <div class="topbar">
+    <button class="tbtn" onclick="gs('guia')">Guia</button>
+    <div class="ttitle">Glosario</div>
+    <div style="width:50px;text-align:right;font-size:11px;color:rgba(255,255,255,0.35)">19</div>
+  </div>
+  <div class="searchbar" style="padding-top:14px"><input class="sinp" placeholder="Buscar termino..." oninput="filterG(this.value)"></div>
+  <div class="scroll"><div id="glist" style="padding:4px 14px 16px"></div></div>
+  <div class="bnav">
+    <div class="ni" onclick="gs('guia')"><div class="ni-icon">&#128214;</div><div class="ni-lbl">Guia</div></div>
+    <div class="ni" onclick="gs('buscar')"><div class="ni-icon">&#128269;</div><div class="ni-lbl">Buscar</div></div>
+    <div class="ni" onclick="gs('ia')"><div class="ni-icon">&#129302;</div><div class="ni-lbl">Corrector IA</div></div>
+    <div class="ni on"><div class="ni-icon">&#128221;</div><div class="ni-lbl">Glosario</div></div>
+  </div>
+</div>
+
+</div>
+<script>
+// ════════════════ CONTENIDO DEL MANUAL ════════════════
+var GUIDE = [
+{icon:'',col:'rgba(157,107,255,0.15)',name:'La mirada fotografica',desc:'Fundamentos - Los 3 pilares - La pausa',topics:[
+  {t:'Que significa mirar fotograficamente',h:'<div class="tp">Mirar fotograficamente no es un talento con el que se nace. Es una habilidad que se entrena. Significa aprender a elegir: que entra en el cuadro y que queda afuera, que luz acompana la escena, que emocion queres transmitir y desde donde te parás para decirlo.</div><div class="tp">La mayoria de las fotos que no nos gustan no fallaron por el celular. Fallaron porque no nos detuvimos a mirar. La fotografia empieza mucho antes de tocar el boton.</div><div class="box" style="border-color:#9D6BFF"><div class="box-t">Tres acciones clave</div><div class="box-d">Observar antes de disparar: luz, fondo, distancia, emocion. Elegir un punto de vista en lugar de tomar el primero. Preguntar que queres que sienta quien vea la foto.</div></div>'},
+  {t:'Los 3 pilares: Luz, Encuadre, Intencion',h:'<div class="tp">Toda foto que te guste tiene estos tres elementos. No mas, no menos.</div><div class="box" style="border-color:#FF6B6B"><div class="box-t">1. Luz</div><div class="box-d">No es sobre el celular, es sobre VER la luz. De donde viene, como golpea el sujeto, que sombras crea. La luz es el 80% de una buena foto.</div></div><div class="box" style="border-color:#4D96FF"><div class="box-t">2. Encuadre</div><div class="box-d">Que entra en el cuadro y que queda afuera. Es una decision creativa tuya, no del celular. La regla de tercios, las lineas, el fondo: todo es encuadre.</div></div><div class="box" style="border-color:#9D6BFF"><div class="box-t">3. Intencion</div><div class="box-d">Por que fotografias ESTO? Que queres contar? Una foto sin intencion es una foto olvidable. La intencion es lo que hace que alguien diga: esa foto es TUYA.</div></div><div class="tp">Un celular caro sin estos 3 pilares da fotos malas. Un celular viejo CON estos 3 pilares da fotos que enamoran.</div>'},
+  {t:'La pausa consciente',h:'<div class="tp">Uno de los habitos mas transformadores en fotografia es simple: detenerse. Antes de sacar una foto, toma 10 segundos para observar la escena.</div><div class="box" style="border-color:#FFD93D"><div class="box-t">Que observar en esos 10 segundos</div><div class="box-d">De donde viene la luz? Es suave o dura? Que hay en el fondo, distrae o acompana? Estoy en el mejor angulo posible? Que querria dejar fuera del cuadro?</div></div><div class="tp">La diferencia entre una foto comun y una foto pensada son los 5 segundos que te detenes antes de tocar el boton.</div>'},
+  {t:'Las 3 preguntas antes de fotografiar',h:'<ul class="tl"><li><strong>Que?</strong> Que quiero mostrar? Cual es el sujeto principal?</li><li><strong>Como?</strong> Como lo quiero mostrar? Desde donde, con que luz, a que distancia?</li><li><strong>Para que?</strong> Que quiero que sienta quien vea la foto? Cual es la intencion?</li></ul><div class="box" style="border-color:#6BCB77"><div class="box-t">Ejercicio</div><div class="box-d">Responde estas 3 preguntas en voz alta o escritas antes de cada foto durante una semana. Vas a notar como cambia tu mirada.</div></div>'}
+]},
+{icon:'',col:'rgba(255,211,61,0.15)',name:'Tu celular',desc:'Lentes - Zoom - Cuadricula - Exposicion',topics:[
+  {t:'Los lentes de tu celular',h:'<div class="tp">Los celulares actuales traen entre 2 y 3 lentes fisicos. Cada numero que ves en la camara es un lente diferente, no es zoom.</div><table class="tbl"><tr><th>Boton</th><th>Lente</th><th>Ideal para</th></tr><tr><td>0.5x</td><td>Gran angular</td><td>Paisajes, interiores, grupos. Deforma bordes y rostros.</td></tr><tr><td>1x</td><td>Principal (la mejor)</td><td>Todo. Maxima calidad. Punto de partida.</td></tr><tr><td>2x / 3x</td><td>Teleobjetivo</td><td>Retratos y detalles sin perder calidad.</td></tr></table><div class="box" style="border-color:#FFD93D"><div class="box-t">Regla de oro</div><div class="box-d">Toca directamente el numero (0.5, 1x, 2, 3). Nunca pellizques la pantalla: eso activa el zoom digital y baja la calidad.</div></div>'},
+  {t:'Zoom optico vs zoom digital',h:'<table class="tbl"><tr><th></th><th>Optico</th><th>Digital</th></tr><tr><td>Que es</td><td>Zoom real, lente fisica</td><td>Recorta y agranda</td></tr><tr><td>Calidad</td><td>Se mantiene</td><td>Se pierde, aparece ruido</td></tr><tr><td>Como</td><td>Toca el numero</td><td>Pellizcar pantalla</td></tr><tr><td>Cuando</td><td>Siempre</td><td>Ultimo recurso</td></tr></table><div class="tp">Evita el zoom digital especialmente en: retratos, fotos nocturnas, eventos, ninos e imagenes para imprimir. La solucion siempre es acercarte fisicamente caminando.</div>'},
+  {t:'La cuadricula y como activarla',h:'<div class="tp">La cuadricula divide la pantalla en 9 partes iguales. Es tu mejor aliada para componer mejor antes de disparar y para alinear el horizonte.</div><div class="box" style="border-color:#FFD93D"><div class="box-t">iPhone</div><div class="box-d">Ajustes del celular, luego Camara, luego activar Cuadricula.</div></div><div class="box" style="border-color:#4D96FF"><div class="box-t">Samsung</div><div class="box-d">App Camara, icono de engranaje (Configuracion), luego Lineas guia.</div></div><div class="box" style="border-color:#6BCB77"><div class="box-t">Motorola y Xiaomi</div><div class="box-d">Camara, Configuracion, busca Cuadricula o Grilla de encuadre.</div></div>'},
+  {t:'Exposicion y enfoque (tocar la pantalla)',h:'<div class="tp">La <strong>exposicion</strong> es la cantidad de luz que captura el sensor. Si entra demasiada, la foto se quema (sobreexposicion). Si entra muy poca, queda oscura (subexposicion).</div><ul class="tl"><li><strong>Tocar la pantalla:</strong> el celular enfoca y mide la luz para ese punto. Es el gesto mas importante.</li><li><strong>Deslizar el sol:</strong> despues de tocar, aparece un icono de sol. Subilo o bajalo para aclarar u oscurecer.</li><li><strong>AE/AF Lock:</strong> manten presionado el dedo sobre el sujeto. Bloquea luz y foco en ese punto aunque muevas el celular.</li></ul><div class="box" style="border-color:#FFD93D"><div class="box-t">Tip cinematografico</div><div class="box-d">Las fotos levemente oscuras son mas recuperables que las quemadas. En contraluces y atardeceres, baja un poco la exposicion.</div></div>'},
+  {t:'Configuracion ideal antes de empezar',h:'<ul class="tl"><li><strong>Cuadricula:</strong> siempre activada.</li><li><strong>HDR en automatico:</strong> combina varias fotos para que el cielo no salga quemado ni las sombras oscuras.</li><li><strong>Resolucion:</strong> no al maximo. Para redes y uso diario, resolucion estandar. El maximo (50/108/200 MP) solo para imprimir grande.</li><li><strong>Limpiar la lente:</strong> con microfibra o remera de algodon antes de cada sesion. Una lente sucia arruina cualquier foto.</li></ul>'}
+]},
+{icon:'',col:'rgba(255,107,107,0.15)',name:'Luz natural',desc:'Suave - Dura - Ventana - Hora dorada',topics:[
+  {t:'Como ve la luz tu celular',h:'<div class="tp">El sensor del celular lee la luz de forma diferente al ojo humano. El ojo se adapta a los cambios en milisegundos. El sensor no. Por eso muchas fotos salen oscuras, quemadas o con colores raros.</div><div class="tp">Entender esto cambia todo: en vez de culpar al celular, aprendes a guiarlo tocando la pantalla y ajustando la exposicion.</div>'},
+  {t:'Luz suave vs luz dura',h:'<table class="tbl"><tr><th></th><th>Suave</th><th>Dura</th></tr><tr><td>Que es</td><td>Difusa, sin direccion clara</td><td>Directa, con direccion clara</td></tr><tr><td>Cuando</td><td>Dia nublado, sombra, ventana sin sol</td><td>Sol directo, flash, mediodia</td></tr><tr><td>Produce</td><td>Sombras suaves, piel agradable</td><td>Sombras duras, contraste fuerte</td></tr><tr><td>Para</td><td>Retratos, flores, comida</td><td>Texturas, arquitectura, drama</td></tr></table><div class="tp">La luz que entra por una ventana sin sol directo es, casi siempre, la mejor luz que vas a tener gratis.</div>'},
+  {t:'Luz de ventana: tu estudio gratis',h:'<div class="tp">La luz de ventana es la mejor fuente de luz para fotografia cotidiana. Es gratis, esta en todos lados y produce resultados preciosos.</div><ul class="tl"><li><strong>Sujeto de frente a la ventana:</strong> luz suave y pareja en la cara. Ideal para retratos.</li><li><strong>Sujeto de costado:</strong> luz lateral que crea volumen y sombras suaves. Dramatismo controlado.</li><li><strong>Sujeto entre vos y la ventana:</strong> contraluz. Crea silueta o borde luminoso.</li></ul><div class="box" style="border-color:#FFD93D"><div class="box-t">El truco</div><div class="box-d">El momento ideal es cuando el sol NO da directo. La luz es difusa y envolvente. Si da directo, corre la cortina o usa una sabana blanca como difusor.</div></div>'},
+  {t:'Contraluz',h:'<div class="tp">El contraluz es cuando la fuente de luz esta detras del sujeto. Es uno de los recursos mas poderosos y el que mas confunde a los celulares: el celular ve mucha luz detras y oscurece al sujeto.</div><div class="box" style="border-color:#6BCB77"><div class="box-t">Como resolverlo</div><div class="box-d">Toca el sujeto en la pantalla para que el celular exponga para ese punto. Luego desliza el sol hacia arriba si quedo oscuro. O usa el HDR automatico.</div></div><div class="tp">Usos creativos: dejar el sujeto en <strong>silueta</strong> contra un fondo limpio, o crear un <strong>rim light</strong> (borde luminoso, halo de luz en el contorno del sujeto).</div>'},
+  {t:'Hora dorada y sombra abierta',h:'<div class="tp">La <strong>hora dorada</strong> son los 30-60 minutos despues del amanecer y antes del atardecer. La luz es calida, lateral y suave. Hace que todo parezca mas lindo.</div><div class="tp">La <strong>sombra abierta</strong> es el espacio a la sombra pero con cielo visible (el borde de un edificio o arbol). La luz es suave y azulada, ideal para retratos en exterior.</div><div class="box" style="border-color:#FF6B6B"><div class="box-t">Error comun</div><div class="box-d">Fotografiar al mediodia con sol directo: sombras duras bajo ojos y nariz. La cara parece cansada. Evitalo para retratos.</div></div><div class="tp">El dia nublado no es un dia malo: la nube actua como difusor gigante y da luz perfectamente suave.</div>'},
+  {t:'Direccion de la luz',h:'<ul class="tl"><li><strong>Frontal:</strong> luz de frente. Cara pareja, sin volumen. Menos favorecedor.</li><li><strong>Lateral 45 grados:</strong> la mas usada en retratos. Da volumen, forma y sensacion tridimensional.</li><li><strong>Lateral 90 grados:</strong> mitad de cara iluminada, mitad en sombra. Dramatismo fuerte.</li><li><strong>Desde arriba:</strong> evitarla para retratos. Crea sombras feas bajo ojos y nariz.</li></ul><div class="box" style="border-color:#FF6B6B"><div class="box-t">El error mas comun en exteriores</div><div class="box-d">Fotografiar con el sol de frente a la fotografa (detras del sujeto): la cara queda oscura. Solucion: gira y pone el sol detras tuyo.</div></div>'}
+]},
+{icon:'',col:'rgba(77,150,255,0.15)',name:'Encuadre y composicion',desc:'Tercios - Lineas - Framing - Fondos',topics:[
+  {t:'Que es encuadrar',h:'<div class="tp">Encuadrar es decidir los limites de tu imagen: que entra y que queda afuera. El marco del celular no capta todo lo que ves, elige un recorte de la realidad. Ese recorte es una decision tuya.</div><div class="tp">Una misma escena puede dar diez fotos distintas segun como la encuadres. Acercarte, alejarte, girarte, agacharte: cada movimiento cambia la foto. Antes de disparar, movete fisicamente y proba tres posiciones.</div>'},
+  {t:'Regla de tercios',h:'<div class="tp">La herramienta de composicion mas usada. Divide el cuadro en 9 partes iguales con 2 lineas horizontales y 2 verticales. El ojo humano no va al centro de una imagen: va a los 4 puntos de cruce.</div><ul class="tl"><li><strong>Retrato:</strong> los ojos sobre la linea superior de tercios.</li><li><strong>Paisaje:</strong> el horizonte en el tercio superior (mas cielo) o inferior (mas tierra). Nunca en el medio exacto.</li><li><strong>Objeto:</strong> colocalo en uno de los 4 puntos de cruce.</li></ul><div class="box" style="border-color:#4D96FF"><div class="box-t">En una frase</div><div class="box-d">Tu sujeto rara vez va en el centro. Va en una linea o cruce de la cuadricula, ahi naturalmente miran los ojos.</div></div>'},
+  {t:'Lineas visuales',h:'<div class="tp">Las lineas dentro de una imagen guian la mirada del espectador. Aprender a verlas transforma una foto comun en una imagen con fuerza.</div><ul class="tl"><li><strong>Horizontales:</strong> tranquilidad, estabilidad (horizonte, mesas).</li><li><strong>Verticales:</strong> fuerza, altura (edificios, arboles).</li><li><strong>Diagonales:</strong> movimiento, dinamismo (escaleras, caminos, sombras).</li><li><strong>Curvas:</strong> suavidad, elegancia (rios, caminos).</li><li><strong>Convergentes:</strong> profundidad y perspectiva (una calle que se pierde en el horizonte).</li></ul>'},
+  {t:'Fondos limpios',h:'<div class="tp">El fondo es tan importante como el sujeto. Un fondo desordenado compite por la atencion. Un fondo limpio hace que el sujeto brille.</div><ul class="tl"><li>Busca paredes lisas, cielo abierto, vegetacion uniforme.</li><li>Alejate del fondo o acerca la camara al sujeto.</li><li>Usa el Modo Retrato para desenfocar el fondo.</li></ul><div class="box" style="border-color:#FFD93D"><div class="box-t">Fondo primero</div><div class="box-d">Antes de disparar, mira especificamente el fondo. Si hay algo que distrae, cambia el angulo. Un paso a la izquierda puede eliminarlo todo.</div></div>'},
+  {t:'Aire visual y distancia',h:'<div class="tp">El <strong>aire visual</strong> es el espacio vacio alrededor del sujeto. No es espacio perdido: es espacio que respira y hace que la foto no se sienta aplastada.</div><ul class="tl"><li>En un retrato: deja espacio en la direccion hacia donde mira la persona.</li><li>En un objeto: deja margen en los bordes, no lo recortes justo.</li><li>En movimiento (un pajaro, un auto): deja mas espacio adelante que atras.</li></ul><div class="tp">Sobre la distancia: uno de los errores mas comunes es fotografiar desde demasiado lejos. Acercarte hace que el sujeto gane presencia, el fondo pierda protagonismo y los detalles se vuelvan visibles.</div>'},
+  {t:'Vertical, horizontal y cuadrado',h:'<table class="tbl"><tr><th>Orientacion</th><th>Cuando usarla</th></tr><tr><td>Vertical</td><td>Retratos, sujetos altos, historias de redes, puertas, edificios.</td></tr><tr><td>Horizontal</td><td>Paisajes, grupos, interiores, escenas amplias.</td></tr><tr><td>Cuadrado</td><td>Redes, composiciones centradas, productos, objetos simetricos.</td></tr></table>'},
+  {t:'Framing: el entorno como marco',h:'<div class="tp">El framing (enmarcado) es usar algo de la escena para rodear visualmente al sujeto: le dice al ojo adonde mirar. No depende del celular, depende de como miras la escena.</div><ul class="tl"><li><strong>Naturales:</strong> ramas, hojas, flores, sombras.</li><li><strong>Artificiales:</strong> puertas, ventanas, marcos, rejas, pasillos.</li><li><strong>Cercanos:</strong> brazos, telas, objetos desenfocados en primer plano.</li></ul><div class="tp">Una foto con framing se siente mas pensada, mas cinematografica e inmersiva, aunque la hayas sacado con el celular mas basico.</div>'},
+  {t:'Menos es mas',h:'<div class="tp">Una foto con demasiados elementos compite consigo misma. La simplificacion es uno de los recursos mas poderosos. Cada elemento que aparece deberia estar ahi por una razon.</div><div class="box" style="border-color:#6BCB77"><div class="box-t">Ejercicio de los 5 encuadres</div><div class="box-d">De una misma escena: encuadre general, encuadre medio, primer plano, detalle y angulo inusual (desde arriba, desde abajo). Compara y elegi el mejor.</div></div>'}
+]},
+{icon:'',col:'rgba(157,107,255,0.15)',name:'Retratos e intencion',desc:'Tipos - Comodidad - Cotidiano - Serie',topics:[
+  {t:'El retrato con celular',h:'<div class="tp">Fotografiar personas es un acto de confianza. Antes de pensar en tecnica, pensa en la relacion que tenes con quien vas a fotografiar y en como hacer que se sienta comoda.</div><div class="tp">El retrato mas honesto es el que la persona no sabia que le estaban sacando. El mejor retrato no es el mas posado: es el del momento exacto donde la persona se olvido del celular.</div>'},
+  {t:'Tipos de retrato',h:'<ul class="tl"><li><strong>En contexto:</strong> la persona en su ambiente natural. Cuenta quien es mas que como se ve.</li><li><strong>En accion:</strong> haciendo algo. Natural, sin posado.</li><li><strong>Sin mirar a camara:</strong> mirada perdida o fuera de cuadro. Genera intimidad.</li><li><strong>Sin rostro:</strong> manos, espalda, silueta. Puede ser muy expresivo.</li><li><strong>Detalle:</strong> un gesto, una mano, un objeto que identifica a la persona.</li></ul>'},
+  {t:'Modo retrato',h:'<div class="tp">El modo retrato desenfoca el fondo y destaca al sujeto. Esta en casi todos los celulares (Modo Retrato en iPhone, Live Focus en Samsung, Retrato en Motorola/Xiaomi).</div><div class="box" style="border-color:#FFD93D"><div class="box-t">Para que funcione bien</div><div class="box-d">Necesita buena luz y al menos 1 metro entre el sujeto y el fondo. Si el sujeto esta pegado al fondo, el desenfoque queda forzado y artificial.</div></div>'},
+  {t:'Como generar comodidad',h:'<ul class="tl"><li>Mostrales las fotos a medida que sacas. Genera confianza.</li><li>Habla mientras fotografias. El silencio pone nerviosa a la gente.</li><li>Saca muchas fotos: el mejor gesto suele estar entre dos poses.</li><li>Pediles que hagan algo (tomar cafe, mirar por la ventana) en lugar de que posen.</li><li>Evita la frase sonrei: pediles que piensen en algo que les de risa.</li></ul>'},
+  {t:'Fotos cotidianas con intencion',h:'<div class="tp">La belleza esta en lo ordinario. Las fotos mas emotivas suelen ser las mas simples: una mesa con luz de manana, unas manos, un detalle de la cocina.</div><ul class="tl"><li><strong>Tu casa:</strong> busca la luz de manana sobre una superficie.</li><li><strong>Comida:</strong> foto cenital (desde arriba) o lateral, con luz natural. Sin flash, fondo simple.</li><li><strong>Momentos familiares:</strong> documenta sin interrumpir. El mejor momento esta antes y despues del pose.</li></ul>'},
+  {t:'Mini historia en 6 fotos',h:'<div class="tp">Una forma poderosa de fotografiar lo cotidiano es pensar en una serie: seis imagenes que cuenten algo juntas.</div><ul class="tl"><li>Foto 1: el contexto (escena amplia).</li><li>Foto 2: el sujeto en su ambiente.</li><li>Foto 3: una accion.</li><li>Foto 4: un detalle.</li><li>Foto 5: un momento espontaneo.</li><li>Foto 6: un cierre (una mirada, un detalle final).</li></ul>'},
+  {t:'Proyecto: serie fotografica',h:'<div class="tp">Una serie es un conjunto de 5 a 10 imagenes que comparten un tema, una estetica o una historia. Juntas dicen algo que cada foto sola no puede decir.</div><div class="box" style="border-color:#9D6BFF"><div class="box-t">Criterios de una buena serie</div><div class="box-d">Coherencia visual (mismo mundo), intencion (cada foto por una razon), variedad (planos generales, medios y detalles), luz consistente y edicion uniforme.</div></div><div class="tp">Una serie no necesita ser epica. Necesita ser coherente. La coherencia visual convierte fotos sueltas en una historia.</div>'}
+]},
+{icon:'',col:'rgba(107,203,119,0.15)',name:'Fotografia macro',desc:'Detalles - Luz lateral - Narrativa',topics:[
+  {t:'Que es macro y para que sirve',h:'<div class="tp">Macro significa fotografiar muy cerca para mostrar detalles que normalmente no vemos: las gotas de una hoja, la textura de una tela, el vapor de una taza, unas manos, una flor.</div><div class="tp">No es hacer zoom. La idea es acercarse fisicamente al objeto hasta el limite donde el celular todavia puede enfocar. Sirve para mostrar detalles invisibles, entrenar la observacion y dar identidad visual a tus fotos.</div>'},
+  {t:'Los 3 pilares del macro',h:'<table class="tbl"><tr><th>Pilar</th><th>Como lograrlo</th></tr><tr><td>Luz</td><td>Luz lateral suave (ventana, lampara de costado). Al acercarte tapas la luz con el celular. Evita el flash directo.</td></tr><tr><td>Estabilidad</td><td>Cualquier movimiento se amplifica. Usa ambas manos, apoyate, activa el temporizador de 2-3 seg.</td></tr><tr><td>Enfoque</td><td>Toca exactamente el detalle que queres destacar. Si no enfoca, alejate un poco.</td></tr></table><div class="box" style="border-color:#FFD93D"><div class="box-t">La luz rasante</div><div class="box-d">La luz lateral rasante es tu mejor aliada en macro. Ilumina desde un costado y veras aparecer texturas que antes no notabas.</div></div>'},
+  {t:'Macro por marca de celular',h:'<ul class="tl"><li><strong>iPhone Pro:</strong> el macro se activa solo al acercarte. Controlalo en Ajustes, Camara, Control macro.</li><li><strong>Samsung:</strong> Camara, Mas, Macro. Proba tambien la camara principal, a veces da mejor resultado.</li><li><strong>Motorola y Xiaomi:</strong> Camara, Modos, Macro. En Xiaomi la camara principal suele dar mejor textura que el lente macro dedicado.</li></ul>'},
+  {t:'Narrativa con detalles',h:'<div class="tp">La macro no sirve solo para mostrar detalles lindos. Puede aportar emocion, clima y simbolismo. Dentro de una serie, una macro funciona como pausa visual o elemento narrativo.</div><ul class="tl"><li>Unas manos arrugadas hablan del paso del tiempo.</li><li>Una taza transmite rutina o ausencia.</li><li>Una textura transmite sensacion tactil.</li><li>Una gota refuerza una emocion o un clima.</li></ul>'}
+]},
+{icon:'',col:'rgba(255,150,50,0.15)',name:'Fotografia posible',desc:'Paisaje - Calle - Noche - Reflejos - Clima',topics:[
+  {t:'Paisajes',h:'<ul class="tl"><li>Inclui una persona pequena para dar escala.</li><li>Aprovecha lineas (camino, rio, borde) que guien la mirada.</li><li>Suma un primer plano: una rama, una piedra.</li><li>Usa el 0.5x con intencion para mostrar amplitud.</li><li>Baja la camara cerca del suelo para cambiar la perspectiva.</li></ul><div class="box" style="border-color:#FF6B6B"><div class="box-t">Error comun</div><div class="box-d">Hacer la foto desde donde estas parada sin explorar otros angulos primero. Agachate, subite a algo, acostate en el piso.</div></div>'},
+  {t:'Fotografia de calle',h:'<ul class="tl"><li>Observa la escena antes de sacar el celular.</li><li>Espera que algo ocurra en lugar de disparar rapido.</li><li>Usa reflejos en vidrieras, charcos y ventanas.</li><li>Busca capas: primer plano + fondo con vida.</li><li>Las sombras largas son tus aliadas.</li></ul><div class="tp">En la calle la paciencia vale mas que disparar rapido. Muchas veces la foto aparece sola si te quedas quieta y esperas el momento justo.</div>'},
+  {t:'Interiores',h:'<ul class="tl"><li>Apaga las luces artificiales amarillas si compiten con la luz natural.</li><li>Trabaja con luz natural entrando por ventanas.</li><li>Acercate fisicamente a la ventana con el sujeto.</li><li>Usa puertas y marcos como elementos compositivos.</li></ul><div class="box" style="border-color:#FFD93D"><div class="box-t">Truco</div><div class="box-d">Antes de sacar la foto, reorganiza lo que tenes en el cuadro. Un vaso, una manta o una planta en otro lugar puede transformar la imagen.</div></div>'},
+  {t:'Fotos de noche',h:'<ul class="tl"><li>Apoya el celular en una superficie para evitar movimiento.</li><li>Usa las luces urbanas como fuente: faroles, carteles, autos.</li><li>Fotografia reflejos de luz en el piso mojado.</li><li>No abuses del zoom: a mayor zoom, mas movimiento y ruido.</li><li>Usa el lente principal (1x), nunca el 0.5x de noche.</li></ul><div class="tp">El error mas comun es querer que la foto nocturna parezca de dia. A veces el encanto esta exactamente en la oscuridad y el contraste.</div>'},
+  {t:'Clima y atmosfera',h:'<div class="tp">El clima no arruina fotos, muchas veces las vuelve mas interesantes.</div><ul class="tl"><li>Lluvia en ventanas: gotas que crean texturas y reflejos.</li><li>Vapor en tazas o en la calle fria.</li><li>Viento moviendo hojas, ropa o cabello.</li><li>Niebla que difumina el fondo y crea profundidad.</li><li>Charcos despues de la lluvia como espejos naturales.</li></ul>'},
+  {t:'Reflejos y espejos',h:'<div class="tp">Los reflejos permiten mostrar dos mundos en una sola imagen. Crean profundidad, misterio y capas que una foto directa no tiene.</div><ul class="tl"><li>Espejos en locales o en el bano.</li><li>Vidrios de escaparates con reflejo del exterior.</li><li>Charcos en la vereda despues de la lluvia.</li><li>Pantallas apagadas o superficies brillantes.</li></ul><div class="tp">A veces insinuar funciona mas que mostrar. Un reflejo parcial, una silueta en un vidrio: generan mas intriga.</div>'}
+]},
+{icon:'',col:'rgba(255,107,107,0.15)',name:'Edicion',desc:'5 ajustes - Snapseed - Lightroom - RAW',topics:[
+  {t:'Para que sirve editar',h:'<div class="tp">Editar no es disfrazar una foto. Es completar lo que la camara no pudo capturar exactamente como lo viste vos. La edicion honesta busca que la foto se parezca mas a como era la escena, no que parezca otra cosa.</div><div class="tp">Los filtros excesivos esconden una mala foto pero no la arreglan. Primero aprende a fotografiar bien. Los filtros son el final, no la solucion.</div>'},
+  {t:'Los 5 ajustes basicos',h:'<table class="tbl"><tr><th>Ajuste</th><th>Para que</th></tr><tr><td>Exposicion</td><td>Aclarar u oscurecer. Solo lo necesario.</td></tr><tr><td>Contraste</td><td>Separar luces y sombras. Sutil, +10 a +20 max.</td></tr><tr><td>Temperatura</td><td>Calentar (amarillo) o enfriar (azul) segun la intencion.</td></tr><tr><td>Nitidez</td><td>Definir detalles. Poco, el exceso genera ruido.</td></tr><tr><td>Recorte</td><td>Corregir horizonte y composicion.</td></tr></table>'},
+  {t:'Apps recomendadas',h:'<ul class="tl"><li><strong>Snapseed:</strong> gratis, intuitiva, herramientas selectivas. Ideal para empezar.</li><li><strong>Lightroom Mobile:</strong> gratis, edicion completa, abre RAW, color profesional.</li><li><strong>VSCO:</strong> presets y edicion manual, estetica cuidada.</li></ul><div class="tp">Con Snapseed o Lightroom haces el 90% de lo que necesitas. Empeza por ahi, no por filtros.</div>'},
+  {t:'RAW y DNG explicado simple',h:'<div class="tp">El <strong>RAW</strong> (o ProRAW en iPhone) es un formato de foto sin procesar: guarda toda la informacion que capturo el sensor. Ocupa mucho espacio pero permite una edicion mucho mas profunda.</div><div class="tp">El archivo se llama <strong>DNG</strong> (Digital Negative, formato RAW de Adobe). Se ve lavado o apagado al abrirlo sin editar, eso es normal. Esta pensado para editar en Lightroom Mobile o Snapseed, donde recuperas cielos quemados, aclaras sombras y cambias colores con total libertad.</div>'}
+]},
+{icon:'',col:'rgba(77,150,255,0.15)',name:'Guia por marca',desc:'iPhone - Samsung - Motorola - Xiaomi',topics:[
+  {t:'iPhone',h:'<ul class="tl"><li><strong>Lentes:</strong> toca el numero (0.5, 1x, 2, 3, 5). Para retratos usa 1x o 2x, nunca 0.5x.</li><li><strong>AE/AF Lock:</strong> manten presionado el sujeto hasta ver el cartel. Bloquea foco y luz.</li><li><strong>ProRAW:</strong> Ajustes, Camara, Formatos, Apple ProRAW. Solo iPhone Pro.</li><li><strong>Live Photo:</strong> graba segundos antes y despues. Permite elegir el mejor momento y hacer larga exposicion.</li><li><strong>Balance de blancos:</strong> la camara nativa no lo deja ajustar manual. Solucion: cambiar la luz o tocar otro punto.</li></ul>'},
+  {t:'Samsung',h:'<ul class="tl"><li><strong>Modo Pro:</strong> control total de ISO (sensibilidad a la luz) y velocidad. El mas completo de Android.</li><li><strong>Nightography:</strong> sistema nocturno que combina varias fotos con IA. Activalo y apoya el celular.</li><li><strong>Expert RAW (S25 Ultra):</strong> guarda en DNG para editar en Lightroom igual que iPhone.</li><li><strong>Desactiva la marca de agua:</strong> Camara, Config, Marca de agua.</li><li><strong>Gama media (A15/A52):</strong> el sensor importa menos de lo que crees. Luz, encuadre e intencion mandan.</li></ul>'},
+  {t:'Motorola',h:'<ul class="tl"><li><strong>IA aclara de mas:</strong> toca el sujeto y baja la exposicion entre -0.3 y -0.7.</li><li><strong>Modo noche:</strong> no siempre se activa solo. Activalo manual desde el selector de modos.</li><li><strong>Modo retrato:</strong> necesita mas distancia que el iPhone. Aleja a la persona del fondo al menos 1.5 metros.</li><li><strong>Linea G vs Edge:</strong> en la linea G evita el gran angular en interiores oscuros. Los Edge tienen mejor sensor y HDR.</li></ul>'},
+  {t:'Xiaomi / Redmi / Poco',h:'<ul class="tl"><li><strong>Procesamiento agresivo:</strong> satura y agudiza de mas. Ve a Config, IA de camara, y reduce o desactiva la mejora de color.</li><li><strong>200 MP:</strong> dejalo en automatico el 95% del tiempo. Solo activalo para imprimir grande. En poca luz, nunca uses 200 MP.</li><li><strong>Modo Pro:</strong> uno de los mas completos. Para retratos en interior: ISO 200, velocidad 1/100, balance de blancos Nublado.</li><li><strong>Google Photos:</strong> muestra la foto real, sin el procesamiento extra de la galeria Xiaomi.</li></ul>'}
+]},
+{icon:'',col:'rgba(255,70,70,0.15)',name:'Que NO hacer',desc:'Errores comunes - El error cero',topics:[
+  {t:'El error cero: no detenerse a mirar',h:'<div class="tp">Antes de todos los errores tecnicos esta este: disparar por impulso sin observar la luz, el fondo, el encuadre y la intencion. Diez segundos de observacion evitan el 80% de los errores.</div>'},
+  {t:'Zoom digital y lente sucia',h:'<div class="tp"><strong>Zoom digital extremo:</strong> recorta y agranda, aparece ruido y el celular inventa detalles. Usa los botones de lente o acercate caminando.</div><div class="tp"><strong>Lente sucia:</strong> el problema MAS comun. Acumula grasa y polvo. Produce fotos con halos y sin contraste. Limpiala con microfibra antes de cada sesion.</div>'},
+  {t:'Flash, filtros y fondo',h:'<ul class="tl"><li><strong>Flash del celular:</strong> apagalo. Aplana la cara y crea reflejos. La luz natural es mejor en el 95% de los casos.</li><li><strong>Abusar de filtros:</strong> destruyen informacion y hacen que todas las fotos se vean iguales. Exposicion, contraste y temperatura alcanzan.</li><li><strong>No mirar el fondo:</strong> arruina fotos perfectas. Mira el fondo antes de disparar.</li></ul>'},
+  {t:'Errores nocturnos y de retrato',h:'<ul class="tl"><li><strong>Gran angular de noche:</strong> su sensor es chico, da ruido. De noche usa siempre el 1x.</li><li><strong>Retratos con 0.5x:</strong> deforma los bordes y estira las caras. Usa 1x o 2x.</li><li><strong>No tocar para enfocar:</strong> el celular enfoca solo y muchas veces el fondo. Siempre toca el sujeto antes de disparar.</li></ul>'}
+]},
+{icon:'',col:'rgba(107,203,119,0.15)',name:'Soluciones rapidas',desc:'Problemas frecuentes resueltos',topics:[
+  {t:'Fotos movidas o borrosas',h:'<div class="tp">Apoya el celular en algo firme. Toca exactamente el sujeto para enfocar. Con poca luz, acercate a una ventana. El movimiento de tus manos es el culpable mas comun: apoya los codos, sostene con dos manos, respira.</div>'},
+  {t:'Fotos oscuras o quemadas',h:'<div class="tp"><strong>Oscuras:</strong> toca el sujeto en la pantalla y desliza el sol hacia arriba. Acercate a una ventana.</div><div class="tp"><strong>Quemadas:</strong> toca el sujeto, desliza el sol hacia abajo. Activa el HDR. Si es paisaje, toca el cielo para exponer para el.</div>'},
+  {t:'Colores raros o amarillos',h:'<div class="tp">Es un problema de balance de blancos (como el celular interpreta los colores de la luz). Toca un punto blanco o neutro de la escena para que el celular recalibre. En interiores de noche, la luz calida de las lamparas pone todo amarillo: toca un punto blanco o ajusta la temperatura en edicion.</div>'},
+  {t:'Fondo desordenado',h:'<div class="tp">Cambia el angulo: un paso a la izquierda o derecha puede eliminar lo que distrae. Usa el Modo Retrato para desenfocar. En Snapseed: herramienta selectiva, desenfoque.</div>'},
+  {t:'Retratos distorsionados',h:'<div class="tp">No uses el 0.5x para retratos: deforma. Usa 1x o 2x. Toca directamente el numero, no pellizques la pantalla con los dedos.</div>'},
+  {t:'Fotos de comida que no dan hambre',h:'<div class="tp">Saca la foto desde arriba (cenital) o desde el lado a la altura del plato, nunca de frente sentada. Busca luz natural lateral, la luz cenital aplana todo. Fondo simple: mantel liso o mesa de madera.</div>'},
+  {t:'Fotos de ninos o mascotas en movimiento',h:'<div class="tp">Activa el modo rafaga: manten apretado el boton de disparo, saca 10-15 fotos seguidas y elegi la mejor. Bajate a la altura de los ojos del nino o la mascota.</div>'}
+]}
+];
+// iconos
+var ICONS=['\uD83D\uDC41\uFE0F','\uD83D\uDCF1','\uD83D\uDCA1','\uD83D\uDDBC\uFE0F','\uD83C\uDFAD','\uD83D\uDD2C','\uD83C\uDF0D','\u2702\uFE0F','\uD83D\uDCF2','\u26A0\uFE0F','\u26A1'];
+for(var z=0;z<GUIDE.length;z++){GUIDE[z].icon=ICONS[z]||'\uD83D\uDCD6';}
+
+// ════════════════ GLOSARIO ════════════════
+var GLOS=[
+  {n:'Exposicion',t:'Basico',c:'#FFD93D',d:'La cantidad de luz de la foto. Muy clara es sobreexpuesta. Muy oscura es subexpuesta. Se controla tocando la pantalla y deslizando el sol.'},
+  {n:'Encuadre',t:'Basico',c:'#6BCB77',d:'El recorte que eleges. Que entra y que queda afuera del cuadro. Es tu decision, no del celular.'},
+  {n:'Regla de tercios',t:'Composicion',c:'#4D96FF',d:'Dividir la pantalla en 9 partes y colocar el sujeto en una linea o cruce, no en el centro.'},
+  {n:'Luz suave',t:'Luz',c:'#FF6B6B',d:'Luz difusa sin sombras duras. Ventana sin sol directo, dia nublado, sombra abierta.'},
+  {n:'Luz dura',t:'Luz',c:'#FF6B6B',d:'Luz directa con sombras marcadas. Sol directo o flash.'},
+  {n:'Contraluz',t:'Luz',c:'#FF6B6B',d:'Luz detras del sujeto. Crea silueta o borde luminoso. Toca el sujeto en la pantalla para compensar.'},
+  {n:'Hora dorada',t:'Luz',c:'#FF6B6B',d:'30-60 min antes del atardecer. Luz calida, lateral y suave.'},
+  {n:'Zoom optico',t:'Celular',c:'#6BCB77',d:'Zoom real con lente fisica. No pierde calidad. Toca los numeros fijos (1x, 2x, 3x).'},
+  {n:'Zoom digital',t:'Celular',c:'#FF6B6B',d:'Zoom falso que recorta la imagen y pierde calidad. Ocurre al pellizcar la pantalla.'},
+  {n:'HDR',t:'Tecnico',c:'#4D96FF',d:'High Dynamic Range: combina varias fotos para balancear luces y sombras. En automatico en casi todos los celulares.'},
+  {n:'ISO',t:'Tecnico',c:'#4D96FF',d:'Sensibilidad del sensor a la luz. ISO alto capta mas luz pero genera ruido. ISO bajo: imagen limpia.'},
+  {n:'AE/AF Lock',t:'Tecnico',c:'#4D96FF',d:'Bloqueo de exposicion y enfoque. Manten presionado el dedo sobre la pantalla hasta ver el cartel.'},
+  {n:'Bokeh',t:'Composicion',c:'#4D96FF',d:'Efecto de fondo desenfocado. Se logra con el Modo Retrato o el teleobjetivo (2x o 3x).'},
+  {n:'Framing',t:'Composicion',c:'#4D96FF',d:'Usar elementos de la escena (puertas, ramas, ventanas) para rodear visualmente al sujeto.'},
+  {n:'Modo Retrato',t:'Celular',c:'#6BCB77',d:'Desenfoca el fondo y destaca al sujeto. Disponible en casi todos los celulares actuales.'},
+  {n:'RAW o ProRAW',t:'Avanzado',c:'#9D6BFF',d:'Formato sin procesar. Guarda toda la informacion del sensor para edicion avanzada.'},
+  {n:'Balance de blancos',t:'Tecnico',c:'#4D96FF',d:'Como el celular interpreta los colores de la luz. Corrige fotos muy amarillas o azuladas.'},
+  {n:'Pixel binning',t:'Avanzado',c:'#9D6BFF',d:'Combina pixeles pequenos en uno para capturar mas luz. Por eso 108 MP puede dar mejores fotos de 12 MP en poca luz.'},
+  {n:'Intencion',t:'Basico',c:'#9D6BFF',d:'Saber por que fotografias esto y que queres contar. El tercer pilar junto a Luz y Encuadre.'}
+];
+
+// ════════════════ ENGINE ════════════════
+function gs(n){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});document.getElementById('s-'+n).classList.add('active');}
+
+function renderGuide(){
+  var h='';
+  for(var i=0;i<GUIDE.length;i++){
+    var g=GUIDE[i];
+    var tops='';
+    for(var j=0;j<g.topics.length;j++){
+      tops+='<div class="top" id="top-'+i+'-'+j+'"><div class="top-head" onclick="toggleTop('+i+','+j+')"><div class="top-bullet" style="background:'+g.col.replace('0.15','0.8')+'"></div><div class="top-title">'+g.topics[j].t+'</div><div class="top-arrow">&#8250;</div></div><div class="top-body">'+g.topics[j].h+'</div></div>';
+    }
+    h+='<div class="sec" id="sec-'+i+'"><div class="sec-head" onclick="toggleSec('+i+')"><div class="sec-icon" style="background:'+g.col+'">'+g.icon+'</div><div class="sec-info"><div class="sec-name">'+g.name+'</div><div class="sec-desc">'+g.desc+'</div></div><div class="sec-arrow">&#8250;</div></div><div class="sec-topics">'+tops+'</div></div>';
+  }
+  document.getElementById('guide-body').innerHTML=h;
+}
+function toggleSec(i){document.getElementById('sec-'+i).classList.toggle('open');}
+function toggleTop(i,j){document.getElementById('top-'+i+'-'+j).classList.toggle('open');}
+
+// Buscar en la guia (filtra y abre)
+function onSearch(q){
+  q=q.trim().toLowerCase();
+  renderGuide();
+  if(!q)return;
+  var body=document.getElementById('guide-body');
+  var any=false;
+  for(var i=0;i<GUIDE.length;i++){
+    var g=GUIDE[i];var secMatch=false;
+    for(var j=0;j<g.topics.length;j++){
+      var txt=(g.topics[j].t+' '+g.topics[j].h).toLowerCase();
+      if(txt.indexOf(q)>=0){
+        document.getElementById('top-'+i+'-'+j).classList.add('open');
+        secMatch=true;any=true;
+      } else {
+        document.getElementById('top-'+i+'-'+j).style.display='none';
+      }
+    }
+    if(secMatch){document.getElementById('sec-'+i).classList.add('open');}
+    else{document.getElementById('sec-'+i).style.display='none';}
+  }
+}
+
+// Buscar + preguntar IA
+function askAI(){
+  var q=document.getElementById('ask-input').value.trim();
+  if(!q)return;
+  var body=document.getElementById('ask-body');
+  // 1. Buscar en el manual
+  var hits=[];
+  for(var i=0;i<GUIDE.length;i++){
+    for(var j=0;j<GUIDE[i].topics.length;j++){
+      var t=GUIDE[i].topics[j];
+      var txt=(t.t+' '+t.h).toLowerCase();
+      if(txt.indexOf(q.toLowerCase())>=0){
+        var snip=t.h.replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim().slice(0,120);
+        hits.push({sec:GUIDE[i].name,t:t.t,snip:snip,si:i,ti:j});
+      }
+    }
+  }
+  var h='';
+  if(hits.length>0){
+    h+='<div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:10px;text-transform:uppercase;letter-spacing:1px">En el manual ('+hits.length+')</div>';
+    for(var k=0;k<hits.length&&k<6;k++){
+      h+='<div class="sr-item" onclick="goToTopic('+hits[k].si+','+hits[k].ti+')"><div class="sr-sec">'+hits[k].sec+'</div><div class="sr-t">'+hits[k].t+'</div><div class="sr-snip">'+hits[k].snip+'...</div></div>';
+    }
+  } else {
+    h+='<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:10px">No encontre ese tema exacto en el manual. Preguntando a la IA...</div>';
+  }
+  h+='<div id="ai-zone"><div class="spinner"></div></div>';
+  body.innerHTML=h;
+
+  // 2. Preguntar a la IA
+  var prompt='Sos Natalia Olivera, fotografa documental y educadora de fotografia con celular, creadora del manual La Mirada Fotografica. Responde esta consulta de un alumno de forma clara, calida y practica, enfocada en fotografia movil. Si usas un termino tecnico, explicalo entre parentesis. Maximo 150 palabras. Consulta: '+q;
+  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:600,messages:[{role:'user',content:prompt}]})})
+  .then(function(r){if(!r.ok)throw new Error('e');return r.json();})
+  .then(function(d){
+    var txt=d.content.map(function(b){return b.text||'';}).join('');
+    document.getElementById('ai-zone').innerHTML='<div class="ai-answer"><div class="ai-lbl">Respuesta de Nat (IA)</div><div class="ai-txt">'+txt+'</div></div>';
+  })
+  .catch(function(){document.getElementById('ai-zone').innerHTML='<div style="font-size:12px;color:rgba(255,150,150,0.8);padding:10px">No pude consultar la IA ahora. Proba de nuevo o busca en el manual.</div>';});
+}
+function goToTopic(si,ti){
+  gs('guia');
+  renderGuide();
+  document.getElementById('sec-'+si).classList.add('open');
+  document.getElementById('top-'+si+'-'+ti).classList.add('open');
+  setTimeout(function(){document.getElementById('top-'+si+'-'+ti).scrollIntoView({behavior:'smooth',block:'center'});},100);
+}
+
+// ════════════════ CORRECTOR IA ════════════════
+var iaLevel=1,iaB64=null,iaFileType='image/jpeg',iaPreviewSrc=null,iaLastResult=null;
+function setLv(el,idx){document.querySelectorAll('.lv').forEach(function(b){b.classList.remove('on');});el.classList.add('on');iaLevel=idx;}
+function triggerUp(){document.getElementById('finput').click();}
+function onFile(input){
+  var f=input.files[0];if(!f)return;
+  iaFileType=f.type||'image/jpeg';
+  var r=new FileReader();
+  r.onload=function(e){
+    iaB64=e.target.result.split(',')[1];iaPreviewSrc=e.target.result;
+    var img=document.getElementById('fimg');img.src=e.target.result;img.style.display='block';
+    document.getElementById('fp').style.display='none';
+    document.getElementById('btn-s').style.display='none';
+    document.getElementById('btn-c').style.display='flex';
+    document.getElementById('btn-analizar').disabled=false;
+    document.getElementById('hint').textContent='Foto lista! Toca Analizar mi foto';
+    document.getElementById('results-wrap').classList.remove('show');
+    document.getElementById('results-wrap').innerHTML='';
+    document.getElementById('error-box').classList.remove('show');
+  };
+  r.readAsDataURL(f);
+}
+var loadSteps=['Leyendo la luz...','Analizando composicion...','Revisando encuadre...','Preparando feedback...'];
+function analyze(){
+  if(!iaB64)return;
+  document.getElementById('loading-wrap').classList.add('show');
+  document.getElementById('results-wrap').classList.remove('show');
+  document.getElementById('error-box').classList.remove('show');
+  document.getElementById('btn-analizar').disabled=true;
+  var i=0;var el=document.getElementById('loading-step');el.textContent=loadSteps[0];
+  var iv=setInterval(function(){i=(i+1)%loadSteps.length;el.textContent=loadSteps[i];},1800);
+  var lvName=['principiante','intermedio','avanzado'][iaLevel];
+  var prompt='Sos Natalia Olivera, fotografa documental y educadora, creadora de La Mirada Fotografica. Pilares: Luz, Encuadre e Intencion, con mirada documental: momentos reales y honestos. Analiza esta foto de celular. Nivel: '+lvName+'. REGLA: si usas terminos tecnicos o en ingles, explicalos entre parentesis en espanol simple. Scores enteros del 1 al 10, nunca decimales ni mayores a 10. Detecta procesamiento excesivo o filtros que tapan errores. Devuelve SOLO JSON sin markdown: {"score_total":entero1a10,"frase_general":"max 12 palabras","procesamiento":{"nivel":"normal o moderado o excesivo","detalle":"una oracion"},"luz":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"composicion":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"encuadre":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"intencion":{"score":entero,"analisis":"2-3 oraciones","tip":"consejo"},"documental":{"valor":"que momento unico captura","potencial":"como potenciarlo"},"desafio":"desafio practico max 25 palabras"}';
+  fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:[{type:'image',source:{type:'base64',media_type:iaFileType,data:iaB64}},{type:'text',text:prompt}]}]})})
+  .then(function(res){clearInterval(iv);document.getElementById('loading-wrap').classList.remove('show');if(!res.ok)throw new Error('Error '+res.status);return res.json();})
+  .then(function(data){
+    var raw=data.content.map(function(b){return b.text||'';}).join('');
+    var s=raw.indexOf('{'),e=raw.lastIndexOf('}');if(s<0||e<0)throw new Error('Respuesta inesperada.');
+    var result;try{result=JSON.parse(raw.slice(s,e+1));}catch(ex){throw new Error('Error al procesar la respuesta.');}
+    var keys=['luz','composicion','encuadre','intencion'];
+    if(result.score_total>10)result.score_total=Math.round(result.score_total/10);
+    for(var k=0;k<keys.length;k++){if(result[keys[k]]&&result[keys[k]].score>10)result[keys[k]].score=Math.round(result[keys[k]].score/10);}
+    renderResults(result);
+  })
+  .catch(function(err){clearInterval(iv);document.getElementById('loading-wrap').classList.remove('show');document.getElementById('btn-analizar').disabled=false;var eb=document.getElementById('error-box');eb.textContent=err.message||'Error. Intenta de nuevo.';eb.classList.add('show');});
+}
+function col(s){return s>=8?'#6BCB77':s>=5?'#FFD93D':'#FF6B6B';}
+function renderResults(r){
+  iaLastResult=r;
+  var secs=[{key:'luz',label:'Luz'},{key:'composicion',label:'Composicion'},{key:'encuadre',label:'Encuadre'},{key:'intencion',label:'Intencion'}];
+  var cards='';
+  for(var i=0;i<secs.length;i++){var s=secs[i];var d=r[s.key]||{};var c=col(d.score||0);cards+='<div class="rcard" style="border-color:'+c+'"><div class="rctop"><div class="rclbl">'+s.label+'</div><div class="rcpill" style="background:'+c+'22;color:'+c+'">'+(d.score||0)+'/10</div></div><div class="rctxt">'+(d.analisis||'')+'</div>'+(d.tip?'<div class="rctip">Consejo: '+d.tip+'</div>':'')+'</div>';}
+  var proc=r.procesamiento||{};var pc=proc.nivel==='excesivo'?'#FF6B6B':proc.nivel==='moderado'?'#FFD93D':'#6BCB77';
+  var procCard='<div class="rcard" style="border-color:'+pc+'"><div class="rctop"><div class="rclbl">Procesamiento</div><div class="rcpill" style="background:'+pc+'22;color:'+pc+'">'+(proc.nivel||'normal')+'</div></div>'+(proc.detalle?'<div class="rctxt">'+proc.detalle+'</div>':'')+'</div>';
+  var doc=r.documental||{};
+  var docCard=(doc.valor||doc.potencial)?'<div style="background:rgba(157,107,255,0.08);border:1.5px solid rgba(157,107,255,0.25);border-radius:13px;padding:13px;margin-bottom:10px"><div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#9D6BFF;margin-bottom:6px">Ojo documental</div>'+(doc.valor?'<div style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.55;margin-bottom:5px">'+doc.valor+'</div>':'')+(doc.potencial?'<div style="font-size:11px;color:rgba(255,255,255,0.38);font-style:italic">Potencial: '+doc.potencial+'</div>':'')+'</div>':'';
+  var wrap=document.getElementById('results-wrap');
+  wrap.innerHTML='<div class="score-banner"><div class="score-big">'+(r.score_total||0)+'/10</div><div class="score-info"><div class="score-title">'+(r.frase_general||'Buen trabajo')+'</div><div class="score-sub">Nivel '+['principiante','intermedio','avanzado'][iaLevel]+'</div></div></div>'+procCard+cards+docCard+(r.desafio?'<div class="desafio-box"><div class="desafio-lbl">Tu desafio</div><div class="desafio-txt">'+r.desafio+'</div></div>':'')+'<div class="result-actions"><button class="btn-sec btn-dl" onclick="descargarAnalisis()">Guardar imagen con analisis</button><button class="btn-sec btn-reiniciar" onclick="reiniciar()">Analizar otra foto</button></div>';
+  wrap.classList.add('show');
+  setTimeout(function(){wrap.scrollIntoView({behavior:'smooth',block:'start'});},150);
+}
+function reiniciar(){
+  iaB64=null;iaPreviewSrc=null;
+  document.getElementById('fimg').style.display='none';document.getElementById('fp').style.display='block';
+  document.getElementById('btn-s').style.display='flex';document.getElementById('btn-c').style.display='none';
+  document.getElementById('btn-analizar').disabled=true;document.getElementById('hint').textContent='Primero subi una foto (paso 2)';
+  document.getElementById('results-wrap').classList.remove('show');document.getElementById('results-wrap').innerHTML='';
+  document.getElementById('error-box').classList.remove('show');document.getElementById('finput').value='';
+}
+function descargarAnalisis(){
+  if(!iaPreviewSrc||!iaLastResult)return;
+  var r=iaLastResult;var canvas=document.createElement('canvas');canvas.width=1080;canvas.height=1350;var ctx=canvas.getContext('2d');
+  ctx.fillStyle='#1a1a2e';ctx.fillRect(0,0,1080,1350);
+  var g=ctx.createLinearGradient(0,0,1080,0);g.addColorStop(0,'#FF6B6B');g.addColorStop(0.33,'#FFD93D');g.addColorStop(0.66,'#6BCB77');g.addColorStop(1,'#4D96FF');ctx.fillStyle=g;ctx.fillRect(0,0,1080,14);
+  var img=new Image();
+  img.onload=function(){
+    var ph=440;ctx.save();ctx.beginPath();ctx.rect(30,28,1020,ph);ctx.clip();var sc=Math.max(1020/img.width,ph/img.height);ctx.drawImage(img,(1020-img.width*sc)/2+30,(ph-img.height*sc)/2+28,img.width*sc,img.height*sc);ctx.restore();
+    ctx.fillStyle='#FFD93D';ctx.beginPath();ctx.arc(990,78,50,0,Math.PI*2);ctx.fill();ctx.fillStyle='#1a1a2e';ctx.font='bold 26px sans-serif';ctx.textAlign='center';ctx.fillText((r.score_total||0)+'/10',990,90);
+    ctx.fillStyle='#fff';ctx.font='bold 30px sans-serif';ctx.textAlign='left';ctx.fillText((r.frase_general||'Mi analisis').slice(0,55),40,520);
+    var secs=[{key:'luz',label:'Luz'},{key:'composicion',label:'Composicion'},{key:'encuadre',label:'Encuadre'},{key:'intencion',label:'Intencion'}];var y=560;
+    for(var i=0;i<secs.length;i++){var d=r[secs[i].key]||{};var sc2=d.score||0;var c=sc2>=8?'#6BCB77':sc2>=5?'#FFD93D':'#FF6B6B';var x=i%2===0?30:550;ctx.fillStyle='rgba(255,255,255,0.06)';ctx.fillRect(x,y,490,90);ctx.fillStyle=c;ctx.font='bold 14px sans-serif';ctx.textAlign='left';ctx.fillText(secs[i].label,x+15,y+26);ctx.font='bold 26px sans-serif';ctx.fillText(sc2+'/10',x+15,y+65);if(d.tip){ctx.fillStyle='rgba(255,255,255,0.45)';ctx.font='11px sans-serif';ctx.fillText((d.tip||'').slice(0,50),x+140,y+58);}if(i%2===1)y+=100;}
+    var doc=r.documental||{};if(doc.valor){y+=10;ctx.fillStyle='rgba(157,107,255,0.15)';ctx.fillRect(30,y,1020,70);ctx.fillStyle='#9D6BFF';ctx.font='bold 12px sans-serif';ctx.fillText('OJO DOCUMENTAL',50,y+22);ctx.fillStyle='rgba(255,255,255,0.7)';ctx.font='12px sans-serif';ctx.fillText(doc.valor.slice(0,90),50,y+48);y+=80;}
+    if(r.desafio){ctx.fillStyle='rgba(255,211,61,0.1)';ctx.fillRect(30,y+10,1020,60);ctx.fillStyle='#FFD93D';ctx.font='bold 12px sans-serif';ctx.fillText('TU DESAFIO',50,y+32);ctx.fillStyle='rgba(255,255,255,0.75)';ctx.font='12px sans-serif';ctx.fillText(r.desafio.slice(0,80),50,y+54);}
+    ctx.fillStyle='rgba(255,255,255,0.18)';ctx.font='13px sans-serif';ctx.textAlign='center';ctx.fillText('La Mirada Fotografica - Amapola Fotografia - @amapolafotografia',540,1330);
+    var a=document.createElement('a');a.download='mi-analisis.png';a.href=canvas.toDataURL('image/png');a.click();
+  };
+  img.src=iaPreviewSrc;
+}
+
+// ════════════════ GLOSARIO ════════════════
+function renderGlos(arr){
+  var h='';for(var i=0;i<arr.length;i++){var g=arr[i];h+='<div class="gt" onclick="toggleG(this)"><div style="display:flex;align-items:center;justify-content:space-between"><div style="font-size:13px;font-weight:600;color:#fff">'+g.n+'</div><div style="display:flex;align-items:center;gap:4px"><div style="font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600;background:'+g.c+'22;color:'+g.c+'">'+g.t+'</div><span style="font-size:14px;color:rgba(255,255,255,0.25);transition:transform 0.18s;display:inline-block" class="gar">&#8250;</span></div></div><div style="font-size:11px;color:rgba(255,255,255,0.48);line-height:1.55;margin-top:6px;display:none" class="gdef">'+g.d+'</div></div>';}
+  document.getElementById('glist').innerHTML=h;
+}
+function toggleG(el){var d=el.querySelector('.gdef'),a=el.querySelector('.gar'),o=d.style.display==='block';d.style.display=o?'none':'block';a.style.transform=o?'':'rotate(90deg)';}
+function filterG(q){var res=[];for(var i=0;i<GLOS.length;i++){if(GLOS[i].n.toLowerCase().indexOf(q.toLowerCase())>=0||GLOS[i].d.toLowerCase().indexOf(q.toLowerCase())>=0)res.push(GLOS[i]);}renderGlos(res);}
+
+// INIT
+renderGuide();
+renderGlos(GLOS);
+</script>
+</body>
+</html>
