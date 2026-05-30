@@ -594,7 +594,7 @@ function renderGuide(){
       var bulletColor=g.col.replace('0.15','0.8').replace('0.18','0.8').replace('0.25','0.8');
       tops+='<div class="top" id="top-'+i+'-'+j+'"><div class="top-head" onclick="toggleTop('+i+','+j+')"><div class="top-bullet" style="background:'+bulletColor+'"></div><div class="top-title">'+g.topics[j].t+'</div><div class="top-arrow">&#8250;</div></div><div class="top-body">'+g.topics[j].h+'</div></div>';
     }
-    h+='<div class="sec" id="sec-'+i+'"><div class="sec-head" onclick="toggleSec('+i+')"><div class="sec-icon" style="background:'+g.col+'">'+g.icon+'</div><div class="sec-info"><div class="sec-name">'+g.name+'</div><div class="sec-desc">'+g.desc+'</div></div><div class="sec-arrow">&#8250;</div></div><div class="sec-topics">'+tops+'</div></div>';
+    h+='<div class="sec" id="sec-'+i+'"><div class="sec-head" onclick="toggleSec('+i+')"><div class="sec-icon" style="background:'+g.col+'">📚</div><div class="sec-info"><div class="sec-name">'+g.name+'</div><div class="sec-desc">'+g.desc+'</div></div><div class="sec-arrow">&#8250;</div></div><div class="sec-topics">'+tops+'</div></div>';
   }
   document.getElementById('guide-body').innerHTML=h;
 }
