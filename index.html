@@ -8,206 +8,85 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-:root{
-  --bg:#ffffff;
-  --bg-card:#ffffff;
-  --ink:#111111;
-  --ink-soft:#333333;
-  --ink-mute:#999999;
-  --line:#e0e0e0;
-  --line-soft:#f5f5f5;
-  --dark:#111111;
-  --on-dark:#ffffff;
-  --on-dark-mute:#888888;
-  --nav-h:60px;
-  --maxw:680px;
-}
-html{font-size:16px;-webkit-text-size-adjust:100%;}
-body{
-  font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
-  background:var(--bg);
-  color:var(--ink);
-  line-height:1.6;
-  letter-spacing:-0.01em;
-  -webkit-font-smoothing:antialiased;
-  padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 16px);
-  min-height:100vh;
-}
-a{color:inherit;text-decoration:none;}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px;}
-
-/* HEADER */
-.hdr{
-  position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,0.95);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--line);
-}
-.hdr-inner{max-width:var(--maxw);margin:0 auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;}
-.brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
-.brand-dot{width:28px;height:28px;background:var(--dark);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.brand-dot span{color:#fff;font-weight:800;font-size:14px;}
-.brand-tx{line-height:1.25;}
-.brand-name{font-size:14px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);}
-.brand-sub{font-size:10px;color:var(--ink-mute);font-weight:400;letter-spacing:0.01em;}
-.hdr-contact{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--bg);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
-.hdr-contact svg{width:16px;height:16px;stroke:var(--ink);fill:none;stroke-width:1.8;}
-
-/* SCREENS */
-.screen{display:none;}
-.screen.active{display:block;animation:fadeup .22s ease;}
-@keyframes fadeup{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
-
-/* HERO */
-.hero{padding:40px 0 28px;}
-.hero h1{font-size:clamp(38px,9vw,58px);font-weight:300;line-height:1;letter-spacing:-0.03em;color:var(--ink);}
-.hero p{margin-top:14px;font-size:16px;color:var(--ink-mute);line-height:1.6;font-weight:400;}
-.hero-stats{display:flex;gap:28px;margin-top:24px;padding-top:24px;border-top:1px solid var(--line);}
-.hstat b{display:block;font-size:24px;font-weight:700;letter-spacing:-0.03em;color:var(--ink);}
-.hstat span{font-size:10px;color:var(--ink-mute);text-transform:uppercase;letter-spacing:0.1em;font-weight:500;}
-
-/* SEARCH */
-.sfield{position:relative;margin:0 0 22px;}
-.sfield input{
-  width:100%;background:var(--line-soft);border:1px solid var(--line);
-  border-radius:14px;padding:14px 14px 14px 44px;
-  font:inherit;font-size:15px;color:var(--ink);outline:none;transition:.15s;
-}
-.sfield input::placeholder{color:var(--ink-mute);}
-.sfield input:focus{border-color:var(--ink);background:var(--bg);box-shadow:0 0 0 3px rgba(17,17,17,0.06);}
-.sfield svg{position:absolute;left:15px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--ink-mute);fill:none;pointer-events:none;}
-
-/* MÓDULOS ACORDEÓN */
-.mod-list{}
-.mod{border-top:1px solid var(--line);}
-.mod:last-child{border-bottom:1px solid var(--line);}
-.mod-head{display:flex;align-items:center;gap:14px;padding:22px 0;cursor:pointer;user-select:none;}
-.mod-num{font-size:11px;font-weight:400;color:var(--ink-mute);width:26px;flex-shrink:0;letter-spacing:0.02em;}
-.mod-info{flex:1;min-width:0;}
-.mod-name{font-size:20px;font-weight:400;letter-spacing:-0.02em;line-height:1.2;color:var(--ink);}
-.mod-desc{font-size:13px;color:var(--ink-mute);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400;}
-.mod-toggle{width:20px;height:20px;position:relative;flex-shrink:0;}
-.mod-toggle::before,.mod-toggle::after{content:'';position:absolute;background:var(--ink-mute);transition:transform .25s ease,opacity .25s;}
-.mod-toggle::before{top:50%;left:0;right:0;height:1.5px;transform:translateY(-50%);}
-.mod-toggle::after{left:50%;top:0;bottom:0;width:1.5px;transform:translateX(-50%);}
-.mod.open .mod-toggle::after{opacity:0;}
-.mod-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.4,0,.2,1);}
-.mod.open .mod-body{max-height:30000px;}
-.mod-inner{padding:0 0 8px;}
-
-/* TOPICS */
-.topic{border-top:1px solid var(--line-soft);}
-.topic-head{display:flex;align-items:center;gap:10px;padding:14px 0;cursor:pointer;user-select:none;}
-.topic-dot{width:4px;height:4px;border-radius:50%;background:var(--ink-mute);flex-shrink:0;}
-.topic-title{flex:1;font-size:15px;font-weight:500;color:var(--ink-soft);letter-spacing:-0.01em;transition:.15s;}
-.topic.open .topic-title{color:var(--ink);}
-.topic-chev{width:14px;height:14px;stroke:var(--ink-mute);fill:none;flex-shrink:0;transition:transform .25s;}
-.topic.open .topic-chev{transform:rotate(180deg);}
-.topic-body{max-height:0;overflow:hidden;transition:max-height .35s cubic-bezier(.4,0,.2,1);}
-.topic.open .topic-body{max-height:10000px;}
-.topic-content{padding:8px 0 24px;font-size:15px;color:var(--ink-soft);line-height:1.72;}
-
-/* RICH CONTENT */
-.tp{margin:10px 0;}
-.topic-content strong{color:var(--ink);font-weight:600;}
-.topic-content em{font-style:italic;color:var(--ink-soft);}
-.box{background:var(--line-soft);border:1px solid var(--line);border-left:2px solid var(--ink);border-radius:12px;padding:14px 16px;margin:14px 0;font-size:14px;}
-.box-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--ink);margin-bottom:6px;}
-.box-d{color:var(--ink-soft);line-height:1.65;}
-.tl{margin:10px 0;padding-left:20px;}
-.tl li{margin:6px 0;color:var(--ink-soft);}
-.tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;}
-.tbl th{background:var(--dark);color:#fff;padding:9px 11px;text-align:left;font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.05em;}
-.tbl th:first-child{border-radius:8px 0 0 0;}
-.tbl th:last-child{border-radius:0 8px 0 0;}
-.tbl td{padding:9px 11px;border-bottom:1px solid var(--line);color:var(--ink-soft);vertical-align:top;}
-.fotog{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:16px;margin:14px 0;}
-.fotog-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:5px;}
-.fotog-n{font-size:16px;font-weight:600;letter-spacing:-0.02em;color:var(--ink);}
-.fotog-y{font-size:11px;color:var(--ink-mute);}
-.fotog-tag{font-size:11px;font-weight:500;color:var(--ink-mute);margin-bottom:8px;}
-.fotog-d{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:8px;}
-.fotog-obra{font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:10px;}
-.fotog-link{font-size:13px;font-weight:600;color:var(--ink);border-bottom:1.5px solid var(--ink);padding-bottom:1px;}
-.diag-btn{display:inline-flex;align-items:center;gap:6px;background:var(--dark);color:#fff;border:none;padding:10px 16px;border-radius:10px;font:inherit;font-size:13px;font-weight:500;margin:12px 0;cursor:pointer;transition:.15s;}
-.diag-btn:active{opacity:.8;}
-
-/* FOOTER */
-.foot{background:var(--dark);margin-top:40px;}
-.foot-inner{max-width:var(--maxw);margin:0 auto;padding:32px 22px calc(32px + env(safe-area-inset-bottom));}
-.foot-brand{font-size:28px;font-weight:700;color:#fff;letter-spacing:-0.03em;}
-.foot-sub{font-size:13px;color:var(--on-dark-mute);margin-top:8px;}
-.foot-copy{font-size:11px;color:#555;margin-top:22px;}
-
-/* NAV */
-.nav{
-  position:fixed;bottom:0;left:0;right:0;z-index:60;
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
-  border-top:1px solid var(--line);
-  padding-bottom:env(safe-area-inset-bottom);
-}
-.nav-inner{max-width:var(--maxw);margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(5,1fr);}
-.ni{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--ink-mute);font:inherit;transition:.15s;padding:0;}
-.ni svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7;}
-.ni span{font-size:10px;font-weight:400;letter-spacing:0.03em;}
-.ni.on{color:var(--ink);}
-.ni.on svg{stroke-width:2.2;}
-
-/* MODAL */
-.modal{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);display:none;align-items:flex-end;justify-content:center;}
-.modal.show{display:flex;animation:fadeup .2s ease;}
-.modal-sheet{background:var(--bg);width:100%;max-width:var(--maxw);border-radius:20px 20px 0 0;max-height:88vh;overflow-y:auto;animation:slideup .3s cubic-bezier(.4,0,.2,1);}
-@keyframes slideup{from{transform:translateY(100%);}to{transform:none;}}
-.modal-hdr{position:sticky;top:0;background:var(--bg);display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--line);}
-.modal-title{font-size:15px;font-weight:600;letter-spacing:-0.015em;color:var(--ink);}
-.modal-x{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:none;cursor:pointer;font-size:18px;color:var(--ink);display:flex;align-items:center;justify-content:center;}
-.modal-body{padding:20px;}
-.modal-body svg{max-width:100%;height:auto;display:block;margin:0 auto;}
-.modal-note{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--ink-soft);line-height:1.65;}
-
-@media(min-width:700px){
-  .modal{align-items:center;}
-  .modal-sheet{border-radius:20px;max-height:84vh;animation:fadeup .22s ease;}
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#fff;--ink:#111;--ink-soft:#333;--ink-mute:#999;--line:#e0e0e0;--line-soft:#f5f5f5;--dark:#111;--nav-h:60px;--maxw:680px}
+html{font-size:16px}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;padding-bottom:calc(var(--nav-h)+30px);min-height:100vh}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+.hdr{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.95);border-bottom:1px solid var(--line)}
+.hdr-inner{max-width:var(--maxw);margin:0 auto;padding:14px 22px;display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer}
+.brand-dot{width:28px;height:28px;background:var(--dark);border-radius:7px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px}
+.brand-name{font-size:14px;font-weight:600;color:var(--ink)}
+.brand-sub{font-size:10px;color:var(--ink-mute)}
+.hero{padding:40px 0 28px}
+.hero h1{font-size:clamp(32px,8vw,52px);font-weight:300;line-height:1;color:var(--ink)}
+.hero p{margin-top:14px;font-size:15px;color:var(--ink-mute);line-height:1.6}
+.mod{border-top:1px solid var(--line)}
+.mod:last-child{border-bottom:1px solid var(--line)}
+.mod-head{display:flex;gap:14px;padding:22px 0;cursor:pointer;user-select:none}
+.mod-num{font-size:11px;color:var(--ink-mute);width:26px;flex-shrink:0;font-weight:500}
+.mod-info{flex:1}
+.mod-name{font-size:18px;font-weight:400;color:var(--ink)}
+.mod-desc{font-size:12px;color:var(--ink-mute);margin-top:4px}
+.mod-toggle{width:20px;height:20px;position:relative;flex-shrink:0}
+.mod-toggle::before{content:'';position:absolute;top:50%;left:0;right:0;height:1.5px;background:var(--ink-mute);transform:translateY(-50%);transition:.25s}
+.mod-toggle::after{content:'';position:absolute;left:50%;top:0;bottom:0;width:1.5px;background:var(--ink-mute);transform:translateX(-50%);transition:.25s}
+.mod.open .mod-toggle::after{opacity:0}
+.mod-body{max-height:0;overflow:hidden;transition:max-height .35s}
+.mod.open .mod-body{max-height:50000px}
+.topic{border-top:1px solid var(--line-soft)}
+.topic-head{display:flex;gap:10px;padding:14px 0;cursor:pointer;user-select:none;align-items:center}
+.topic-dot{width:4px;height:4px;border-radius:50%;background:var(--ink-mute);flex-shrink:0}
+.topic-title{flex:1;font-size:14px;font-weight:500;color:var(--ink-soft)}
+.topic.open .topic-title{color:var(--ink);font-weight:600}
+.topic-chev{width:14px;height:14px;stroke:var(--ink-mute);fill:none;flex-shrink:0;transition:.25s}
+.topic.open .topic-chev{transform:rotate(180deg)}
+.topic-body{max-height:0;overflow:hidden;transition:max-height .3s}
+.topic.open .topic-body{max-height:10000px}
+.topic-content{padding:8px 0 24px;font-size:14px;color:var(--ink-soft);line-height:1.7}
+.topic-content strong{color:var(--ink);font-weight:600}
+.topic-content em{font-style:italic}
+.box{background:var(--line-soft);border:1px solid var(--line);border-left:3px solid var(--dark);border-radius:8px;padding:12px 14px;margin:12px 0;font-size:13px}
+.box-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--ink);margin-bottom:6px}
+.box-d{color:var(--ink-soft);line-height:1.6}
+.tl{margin:10px 0;padding-left:20px}
+.tl li{margin:6px 0;color:var(--ink-soft);font-size:13px}
+.foot{background:var(--dark);color:#fff;margin-top:40px}
+.foot-inner{max-width:var(--maxw);margin:0 auto;padding:32px 22px}
+.foot-brand{font-size:24px;font-weight:700}
+.foot-sub{font-size:12px;color:#888;margin-top:8px}
+.foot-copy{font-size:10px;color:#555;margin-top:16px}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:rgba(255,255,255,.96);border-top:1px solid var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(5,1fr)}
+.ni{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;border:none;background:none;cursor:pointer;color:var(--ink-mute);font:inherit;font-size:10px}
+.ni svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.7}
+.ni.on{color:var(--ink);font-weight:500}
+.ni.on svg{stroke-width:2.2}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="hdr">
   <div class="hdr-inner">
-    <div class="brand" onclick="go('guia')">
-      <div class="brand-dot"><span>A</span></div>
-      <div class="brand-tx">
+    <div class="brand">
+      <div class="brand-dot">A</div>
+      <div>
         <div class="brand-name">La Mirada Fotográfica</div>
         <div class="brand-sub">Amapola Fotografía</div>
       </div>
     </div>
-    <button class="hdr-contact" onclick="go('contacto')" title="Contacto">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><line x1="12" y1="11" x2="12" y2="16"/><circle cx="12" cy="7.5" r=".6" fill="currentColor" stroke="none"/></svg>
-    </button>
   </div>
 </header>
 
 <main class="wrap">
-
-  <!-- ════ GUÍA ════ -->
-  <section class="screen active" id="s-guia">
-    <div class="hero">
-      <h1>La Mirada<br>Fotográfica</h1>
-      <p>Academia de fotografía online (con opción a presenciales). Herramientas, conceptos y técnica para celular y cámara.</p>
-    </div>
-    <div class="mod-list" id="guide-body"></div>
-  </section>
-
+  <div class="hero">
+    <h1>La Mirada<br>Fotográfica</h1>
+    <p>Academia de fotografía online (con opción a presenciales). Herramientas, conceptos y técnica para celular y cámara.</p>
+  </div>
+  <div id="guide-body"></div>
 </main>
 
-<!-- FOOTER -->
 <footer class="foot">
   <div class="foot-inner">
     <div class="foot-brand">Amapola</div>
@@ -216,7 +95,6 @@ a{color:inherit;text-decoration:none;}
   </div>
 </footer>
 
-<!-- NAV -->
 <nav class="nav">
   <div class="nav-inner">
     <button class="ni on" data-s="guia" onclick="go('guia')">
@@ -228,7 +106,7 @@ a{color:inherit;text-decoration:none;}
       <span>Buscar</span>
     </button>
     <button class="ni" data-s="analizar" onclick="go('analizar')">
-      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13" r="3.5"/><path d="M8 6l1.5-2h5L16 6"/></svg>
+      <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="14" rx="2.5"/><circle cx="12" cy="13" r="3.5"/></svg>
       <span>Analizar</span>
     </button>
     <button class="ni" data-s="glosario" onclick="go('glosario')">
@@ -242,131 +120,74 @@ a{color:inherit;text-decoration:none;}
   </div>
 </nav>
 
-<!-- MODAL diagramas -->
-<div class="modal" id="modal" onclick="if(event.target===this)closeModal()">
-  <div class="modal-sheet">
-    <div class="modal-hdr">
-      <div class="modal-title" id="modal-title">Diagrama</div>
-      <button class="modal-x" onclick="closeModal()">&times;</button>
-    </div>
-    <div class="modal-body" id="modal-body"></div>
-  </div>
-</div>
-
 <script>
-// ════════ NAVEGACIÓN ════════
 function go(name){
-  document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
-  var t=document.getElementById('s-'+name);if(t)t.classList.add('active');
-  document.querySelectorAll('.ni').forEach(function(n){n.classList.toggle('on',n.getAttribute('data-s')===name);});
-  window.scrollTo({top:0,behavior:'instant'});
+  document.querySelectorAll('.ni').forEach(n => n.classList.toggle('on', n.dataset.s === name));
 }
 
-// ════════ RENDER GUÍA ════════
-function renderGuide(){
-  var h='';
-  for(var i=0;i<GUIDE.length;i++){
-    var g=GUIDE[i];var tops='';
-    for(var j=0;j<g.topics.length;j++){
-      tops+='<div class="topic" id="t-'+i+'-'+j+'"><div class="topic-head" onclick="toggleTopic('+i+','+j+')"><div class="topic-dot"></div><div class="topic-title">'+g.topics[j].t+'</div><svg class="topic-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div><div class="topic-body"><div class="topic-content">'+g.topics[j].h+'</div></div></div>';
-    }
-    var num=(i+1)<10?'0'+(i+1):''+(i+1);
-    h+='<div class="mod" id="m-'+i+'"><div class="mod-head" onclick="toggleMod('+i+')"><div class="mod-num">'+num+'</div><div class="mod-info"><div class="mod-name">'+g.name+'</div><div class="mod-desc">'+g.desc+'</div></div><div class="mod-toggle"></div></div><div class="mod-body"><div class="mod-inner">'+tops+'</div></div></div>';
-  }
-  document.getElementById('guide-body').innerHTML=h;
+function toggleMod(i){
+  document.getElementById('m-'+i).classList.toggle('open');
 }
-function toggleMod(i){document.getElementById('m-'+i).classList.toggle('open');}
-function toggleTopic(i,j){document.getElementById('t-'+i+'-'+j).classList.toggle('open');}
 
-// ════════ DIAGRAMAS ════════
-function openDiag(key){
-  var d=DIAGRAMS[key];if(!d)return;
-  document.getElementById('modal-title').textContent=d.title;
-  document.getElementById('modal-body').innerHTML=d.svg+'<div class="modal-note">'+d.note+'</div>';
-  document.getElementById('modal').classList.add('show');
-  document.body.style.overflow='hidden';
+function toggleTopic(i,j){
+  document.getElementById('t-'+i+'-'+j).classList.toggle('open');
 }
-function closeModal(){document.getElementById('modal').classList.remove('show');document.body.style.overflow='';}
 
-// ════════ DATA: MÓDULOS Y TEMAS ════════
-
-var CURSO_TOPICS = [
-
-{t:'Bienvenida al taller: para qué sirve esto',h:'<div class="tp">Este taller es para aprender a ver antes que para aprender a disparar. Antes de hablar de celulares, de cámaras o de aplicaciones, vamos a hablar de <strong>mirada</strong>.</div><div class="tp">No importa si llegaste con un iPhone de última generación o con un Android de tres años. Lo que vas a llevarte de acá no está en el equipo: está en cómo mirás antes de tocar el botón.</div><div class="box"><div class="box-t">¿Para quién es este taller?</div><div class="box-d">Para quien quiera fotografiar con celular y obtener resultados que a ellos mismos les gusten. Para quien sienta que sus fotos \"no salen bien\" sin entender por qué. Para quien quiera pasar de sacar fotos a pensar fotografías.</div></div><div class="box"><div class="box-t">Qué vas a llevarte</div><div class="box-d">Los principios que hacen que una foto funcione — independientemente del equipo. Cuando entiendas luz, encuadre e intención, cualquier cámara va a darte mejores resultados.</div></div>'},
-
-{t:'Fotografía móvil vs cámara: mismos principios, distintas herramientas',h:'<div class="tp">La gran pregunta que aparece siempre: <em>\"¿Con celular se pueden sacar buenas fotos?\"</em> La respuesta es sí, con una condición: que sepas ver.</div><div class="tp">Los principios de la fotografía son los mismos desde 1839. Luz, composición, momento, intención. Eso no cambia. Lo que cambia es la herramienta. Y la herramienta más avanzada en manos de alguien que no observa da peores resultados que un celular básico en manos de alguien que aprendió a mirar.</div><table class="tbl"><tr><th></th><th>Cámara</th><th>Celular</th></tr><tr><td>Principios</td><td>Iguales</td><td>Iguales</td></tr><tr><td>Luz</td><td>Igual</td><td>Igual</td></tr><tr><td>Composición</td><td>Igual</td><td>Igual</td></tr><tr><td>Intención</td><td>Igual</td><td>Igual</td></tr><tr><td>Control manual</td><td>Total</td><td>Parcial (con apps Pro)</td></tr><tr><td>Disponibilidad</td><td>Limitada</td><td>Siempre en el bolsillo</td></tr><tr><td>Discreción</td><td>Menor</td><td>Alta</td></tr></table><div class="box"><div class="box-t">Lo que más importa en este taller</div><div class="box-d">Aprender a ver. El celular es la herramienta. La mirada es tuya.</div></div>'},
-
-{t:'Los 3 pilares: por qué una foto funciona',h:'<div class="tp">Antes de hablar de técnica, hagamos este ejercicio: mirá una foto que te guste — cualquiera. No hace falta que sepas por qué te gusta. Vas a notar que siempre tiene estas tres cosas:</div><div class="box" style="border-color:#FF6B6B"><div class="box-t">1. Luz</div><div class="box-d">La foto tiene una luz que funciona. Puede ser suave, dramática, lateral, cálida. Pero hay una decisión de luz. No es la luz que había: es la luz que se eligió.</div></div><div class="box" style="border-color:#4D96FF"><div class="box-t">2. Encuadre</div><div class="box-d">Algo quedó dentro del cuadro y algo quedó afuera. Esa decisión es el encuadre. El celular no decide eso: lo decidís vos.</div></div><div class="box" style="border-color:#9D6BFF"><div class="box-t">3. Intención</div><div class="box-d">La foto dice algo. Transmite algo. Hay un \"para qué\" detrás. Una foto sin intención es una foto que nadie recuerda.</div></div><div class="tp" style="margin-top:14px">Estos tres pilares son el trasfondo de todo lo que vamos a ver en el taller. Técnica, composición, edición: todo está al servicio de estos tres.</div>'},
-
-{t:'Por qué esa foto te gusta (sin saber por qué)',h:'<div class="tp">Antes de cualquier teoría, te propongo este experimento: mirá tres fotos que te gusten mucho — de Instagram, de una revista, de donde sea. Sin pensarlo demasiado, preguntate: <strong>¿de dónde viene la luz en esa foto?</strong></div><div class="tp">Casi siempre vas a encontrar que la luz viene de un costado, o desde atrás, o desde una ventana. Casi nunca de frente. Esa es la primera razón por la que una foto gusta: la luz tiene dirección, y esa dirección crea volumen, sombra y profundidad.</div><div class="box"><div class="box-t">El experimento de la primera clase</div><div class="box-d">Mostramos fotos sin contexto técnico. El grupo dice qué le gusta y qué no, sin saber por qué. Después analizamos: casi siempre las que gustan tienen los tres pilares. Las que no gustan, les falta al menos uno. Esa es la primera lección.</div></div><div class="box"><div class="box-t">Lo científico detrás de lo emocional</div><div class="box-d">El cerebro humano está entrenado evolutivamente para leer la luz: sabe cuándo hay profundidad, cuándo hay peligro, cuándo algo es verdadero. Una foto bien iluminada activa los mismos mecanismos. Por eso nos gusta antes de entender por qué.</div></div>'},
-
-{t:'La pausa antes de fotografiar',h:'<div class="tp">El hábito más transformador que podés desarrollar en fotografía es simple y gratis: <strong>detenerte 10 segundos antes de sacar la foto</strong>.</div><div class="tp">En esos 10 segundos, recorrés mentalmente tres preguntas:</div><ul class="tl"><li><strong>¿Qué?</strong> ¿Cuál es el sujeto principal? ¿Qué quiero mostrar?</li><li><strong>¿Cómo?</strong> ¿Desde dónde, con qué luz, a qué distancia?</li><li><strong>¿Para qué?</strong> ¿Qué quiero que sienta quien vea esta foto?</li></ul><div class="tp">La diferencia entre una foto impulsiva y una foto pensada son exactamente esos 10 segundos.</div><div class="box"><div class="box-t">Ejercicio de la semana</div><div class="box-d">Respondé estas tres preguntas en voz alta antes de cada foto durante una semana. No importa si se sienten raras. Al final de la semana, comparás las fotos con las de la semana anterior. La diferencia suele ser notable.</div></div>'},
-
-{t:'La luz: el elemento fundamental',h:'<div class="tp">La palabra fotografía viene del griego: <em>photos</em> (luz) y <em>graphos</em> (escritura). Literalmente: <strong>escribir con luz</strong>. No fotografiamos objetos: fotografiamos la luz que rebota en ellos.</div><div class="tp">Cuando hablamos de aprender fotografía, el 80% del aprendizaje es aprender a ver la luz: de dónde viene, qué tipo es, qué genera, cómo modificarla o elegirla.</div><div class="box"><div class="box-t">La primera pregunta que hacerse siempre</div><div class="box-d">Antes de mirar al sujeto, mirá la luz. ¿De dónde viene? ¿Es suave o dura? ¿Ilumina lo que quiero mostrar o lo esconde? Esa pregunta, hecha sistemáticamente, cambia todo.</div></div>'},
-
-{t:'Luz suave vs luz dura: qué transmite cada una',h:'<div class="tp">No toda la luz es igual. Antes de hablar de tipos de luz, hay que entender esta diferencia fundamental:</div><table class="tbl"><tr><th></th><th>Luz suave</th><th>Luz dura</th></tr><tr><td>Qué es</td><td>Difusa, sin dirección clara</td><td>Directa, con dirección precisa</td></tr><tr><td>Cuándo aparece</td><td>Día nublado, sombra abierta, ventana sin sol directo</td><td>Sol directo, flash sin difusor, mediodía</td></tr><tr><td>Qué produce</td><td>Sombras suaves, piel favorable, calidez</td><td>Sombras marcadas, contraste alto, dramatismo</td></tr><tr><td>Para qué</td><td>Retratos, flores, comida, niños</td><td>Texturas, arquitectura, drama emocional</td></tr><tr><td>Transmite</td><td>Calma, ternura, naturalidad</td><td>Tensión, fuerza, carácter</td></tr></table><div class="box"><div class="box-t">Error clásico</div><div class="box-d">Fotografiar personas al mediodía con sol directo. Las sombras caen debajo de los ojos y la nariz. La cara parece cansada, dura. La solución no es el celular: es cambiar la hora o buscar sombra.</div></div>'},
-
-{t:'Dirección de la luz: cada ángulo cuenta una historia distinta',h:'<div class="tp">La misma persona, el mismo lugar, la misma cámara: cambiá solo la dirección de la luz y tenés fotos completamente distintas.</div><ul class="tl"><li><strong>Luz frontal (de frente):</strong> cara pareja, sin sombras, sin volumen. Segura pero plana. No favorece.</li><li><strong>Luz lateral a 45°:</strong> la más usada en retrato. Crea volumen, da forma al rostro, sombra suave en la mitad. La más favorecedora.</li><li><strong>Luz lateral a 90°:</strong> mitad cara en luz, mitad en sombra. Drama fuerte. Para retratos de carácter.</li><li><strong>Contraluz (desde atrás):</strong> la luz viene detrás del sujeto. Crea silueta o borde luminoso (rim light). Muy expresivo y desafiante para el celular.</li><li><strong>Luz desde arriba:</strong> evitar en retratos. Sombras duras bajo ojos y nariz. Solo funciona con luz suave o cenital artístico.</li></ul><div class="diag-btn" onclick="openDiag(\'luz-direccion\')">💡 Ver diagrama: dirección de la luz</div><div class="box"><div class="box-t">En la práctica</div><div class="box-d">Tomá a alguien y pedile que gire lentamente mientras la fuente de luz queda fija. Fotografiá en cada posición. Las fotos van a ser completamente distintas aunque el sujeto sea el mismo. Ese ejercicio enseña más que cualquier explicación.</div></div>'},
-
-{t:'La ventana: tu estudio fotográfico gratuito',h:'<div class="tp">La mejor fuente de luz que tenés disponible siempre, en cualquier lugar, es gratis y produce resultados profesionales: <strong>la luz que entra por una ventana</strong>.</div><ul class="tl"><li><strong>Sujeto de frente a la ventana:</strong> luz suave y pareja. Ideal para retratos. Los ojos brillan.</li><li><strong>Sujeto de costado a la ventana:</strong> luz lateral, da volumen y sombras suaves. La opción más fotogénica.</li><li><strong>Sujeto entre vos y la ventana:</strong> contraluz, silueta o borde luminoso. Muy atmosférico.</li></ul><div class="box"><div class="box-t">El momento ideal</div><div class="box-d">La ventana funciona mejor cuando el sol no da directamente. Si da directo, corrés la cortina o colocás una sábana blanca como difusor. Luz filtrada = luz de estudio.</div></div><div class="box"><div class="box-t">Truco práctico</div><div class="box-d">Antes de fotografiar a alguien en interior, identificá la ventana más grande. Colocá al sujeto a 1–2 metros, de costado o de frente. Apagá las luces artificiales que compiten (lámparas amarillas arruinan el color). Tocá el sujeto en la pantalla para exponer correctamente.</div></div>'},
-
-{t:'Cómo leer una fotografía: el recorrido visual',h:'<div class="tp">Leer una foto no es solo mirarla. Es entender cómo funciona: dónde va la mirada primero, por qué, qué la retiene, qué la expulsa.</div><div class="tp">El ojo humano no recorre la imagen aleatoriamente. Va a ciertos lugares primero, obedeciendo reglas visuales que están por debajo de la consciencia.</div><ul class="tl"><li><strong>Va primero a:</strong> el área más brillante, el mayor contraste, el único rostro, el elemento más saturado.</li><li><strong>Va después a:</strong> los bordes del sujeto principal, los elementos secundarios, el fondo.</li><li><strong>Se detiene en:</strong> lo que tiene textura, lo que tiene detalle, lo que genera pregunta.</li><li><strong>Se va si:</strong> encuentra demasiados elementos de igual peso compitiendo al mismo tiempo.</li></ul><div class="box"><div class="box-t">Ejercicio en clase</div><div class="box-d">Mostramos una foto durante 3 segundos y la tapamos. Preguntamos: ¿qué viste primero? ¿Qué recordás? Las respuestas del grupo revelan el recorrido visual real de esa imagen.</div></div>'},
-
-{t:'Qué hace que una foto funcione (y qué no)',h:'<div class="tp">Una foto funciona cuando quien la ve entiende qué es lo importante, sin que nadie se lo explique. La jerarquía visual es clara: hay un sujeto principal y todo lo demás lo acompaña.</div><div class="tp">Una foto no funciona cuando:</div><ul class="tl"><li>Hay demasiados elementos de igual peso visual compitiendo.</li><li>El fondo distrae más que el sujeto.</li><li>No hay un punto de entrada claro para la mirada.</li><li>La luz no diferencia el sujeto del entorno.</li><li>Hay elementos técnicos que llaman la atención (foto movida, horizonte torcido, sobreexposición).</li></ul><div class="box"><div class="box-t">La pregunta clave</div><div class="box-d">Si alguien ve tu foto por primera vez y no sabe el contexto, ¿entiende qué es lo más importante? Si la respuesta es no, la jerarquía visual no está clara.</div></div>'},
-
-{t:'Errores que arruinan una foto',h:'<div class="tp">Antes de hablar de composición avanzada, hay errores básicos que, una vez que los ves, no podés dejar de verlos:</div><table class="tbl"><tr><th>Error</th><th>Por qué pasa</th></tr><tr><td>Horizonte torcido</td><td>No miramos el fondo al disparar</td></tr><tr><td>Foto movida</td><td>Poca luz + movimiento de mano</td></tr><tr><td>Sujeto desenfocado</td><td>El celular enfocó en otro punto</td></tr><tr><td>Fondo distractor</td><td>No miramos el fondo antes de disparar</td></tr><tr><td>Cielo quemado</td><td>El celular expuso por el suelo</td></tr><tr><td>Sombras empastadas</td><td>Subexposición o contraluz no resuelto</td></tr><tr><td>Cabezas cortadas</td><td>Encuadre apresurado</td></tr><tr><td>Flash encendido</td><td>Automático del celular</td></tr><tr><td>Zoom digital</td><td>Pellizcar la pantalla</td></tr><tr><td>Lente sucia</td><td>El celular vive en el bolsillo</td></tr></table>'},
-
-{t:'Exposición: qué es y por qué importa',h:'<div class="tp">La exposición es la cantidad de luz que registra el sensor en una foto. Una foto bien expuesta tiene detalle tanto en las zonas claras como en las oscuras.</div><div class="tp">El celular intenta ajustar la exposición automáticamente — y a veces se equivoca. Las situaciones que más lo confunden:</div><ul class="tl"><li>Contraluz: ve mucha luz detrás y oscurece al sujeto.</li><li>Escenas muy brillantes (playa, nieve): sobreexpone.</li><li>Persona frente a ventana: la ventana quemada o la persona oscura.</li></ul><div class="box"><div class="box-t">El gesto más importante</div><div class="box-d">Tocá la pantalla sobre el sujeto. Aparece el cuadro de enfoque y el ícono del sol al costado. Deslizá el sol hacia arriba para aclarar, hacia abajo para oscurecer. Mantené presionado para bloquear (AE/AF Lock). Eso resuelve el 90% de los problemas de exposición.</div></div>'},
-
-{t:'El triángulo de exposición: ISO, velocidad y diafragma',h:'<div class="tp">La exposición depende de tres variables que trabajan juntas. Si entendés esto, entendés el lenguaje universal de la fotografía.</div><div class="diag-btn" onclick="openDiag('triangulo-exposicion')\">△ Ver diagrama: triángulo de exposición</div><div class="box" style="border-color:#FFD93D"><div class="box-t">ISO — sensibilidad a la luz</div><div class="box-d">Cuánto amplifica el sensor la luz disponible. <strong>ISO bajo (100–200):</strong> imagen limpia, necesitás buena luz. <strong>ISO alto (1600+):</strong> captura oscuridad, aparece ruido (grano). Regla: usá el ISO más bajo posible para la luz que tenés.</div></div><div class="box" style="border-color:#4D96FF"><div class="box-t">Velocidad de obturador — tiempo de exposición</div><div class="box-d"><strong>Rápida (1/1000s):</strong> congela movimiento. Deportes, niños corriendo. <strong>Lenta (1s+):</strong> captura luz en la oscuridad pero requiere trípode. Sin apoyo = foto movida.</div></div><div class="box" style="border-color:#FF6B6B"><div class="box-t">Diafragma — en el celular, es diferente</div><div class="box-d">En cámaras reales, el diafragma es una apertura física que controla luz y profundidad. <strong>En el celular no existe:</strong> el \"bokeh\" del Modo Retrato es simulado por IA. No es apertura real.</div></div>'},
-
-{t:'Apps nativas vs apps externas',h:'<div class="tp">La cámara nativa de tu celular (la app que viene por defecto) es cómoda y rápida — pero a veces sus limitaciones te juegan en contra. Saber cuándo cambiar de app es parte de fotografiar bien.</div><div class="box"><div class="box-t">Cuándo quedarte con la nativa</div><div class="box-d">El 80% del tiempo. Momentos espontáneos, velocidad de reacción, fotos del día a día. La nativa procesa bien en automático.</div></div><div class="box"><div class="box-t">Cuándo cambiar a una app externa</div><div class="box-d">Cuando necesitás controlar exposición manualmente (noche, contraluz extremo, interior oscuro). Cuando querés guardar en RAW para editar después. Cuando el automático de la nativa falla repetidamente.</div></div>'},
-
-{t:'Snapseed: la app que más vale la pena aprender',h:'<div class="tp">Snapseed (Google, gratis, iOS y Android) es la app de edición más completa para celular. No hace falta saber todo — con tres herramientas ya mejorás cualquier foto.</div><ul class="tl"><li><strong>Ajustes básicos:</strong> exposición, contraste, altas luces, sombras, saturación, temperatura.</li><li><strong>Herramienta selectiva:</strong> tocás una zona específica y ajustás solo esa área.</li><li><strong>Pincel selectivo:</strong> pintás con el dedo para aclarar, oscurecer, saturar o desenfocar.</li><li><strong>Grano de película:</strong> añade textura analógica. Da carácter a fotos de blanco y negro.</li></ul>'},
-
-{t:'Encuadre: la decisión más creativa',h:'<div class="tp">Encuadrar es decidir los límites de la imagen: qué entra y qué queda afuera. Esa decisión es enteramente tuya — no del celular, no de la app.</div><div class="tp">Una misma escena, en manos de diez personas, produce diez fotos completamente distintas según cómo cada una la encuadra. La cámara registra. Vos encuadrás.</div><div class="box"><div class="box-t">El error más frecuente</div><div class="box-d">Fotografiar de muy lejos. El sujeto queda pequeño, perdido, sin presencia. Acercarte es casi siempre la solución. Robert Capa lo decía: \"Si tus fotos no son lo suficientemente buenas, no estabas lo suficientemente cerca.\"</div></div>'},
-
-{t:'Regla de tercios: dónde poner el sujeto',h:'<div class="tp">Dividí el cuadro en 9 partes iguales con dos líneas horizontales y dos verticales. Los cuatro puntos donde se cruzan son los puntos más fuertes visualmente. El centro es el más débil.</div><div class="diag-btn" onclick="openDiag('composicion-tercios')\">📐 Ver diagrama: regla de tercios</div><ul class="tl"><li><strong>Retrato:</strong> los ojos sobre la línea horizontal superior, no en el centro.</li><li><strong>Paisaje:</strong> el horizonte en el tercio superior (más cielo) o inferior (más tierra), nunca al medio.</li><li><strong>Objeto:</strong> en uno de los cuatro cruces, no centrado.</li></ul>'},
-
-{t:'Tipos de planos: la distancia como decisión narrativa',h:'<div class="tp">El plano define desde qué distancia contás la historia. No es solo una cuestión de zoom: es una decisión sobre qué querés mostrar.</div><table class="tbl"><tr><th>Plano</th><th>Para qué sirve</th></tr><tr><td>General</td><td>Contexto, lugar, ambiente</td></tr><tr><td>Medio</td><td>Conversación, acción, trabajo</td></tr><tr><td>Primer plano</td><td>Emociones, expresiones</td></tr><tr><td>Detalle</td><td>Textura, objeto, símbolo</td></tr></table>'},
-
-{t:'Ángulos: picado, contrapicado y punto de vista',h:'<div class="tp">El ángulo desde el que fotografiás cambia completamente el mensaje de la imagen — aunque el sujeto sea exactamente el mismo.</div><ul class="tl"><li><strong>Picado:</strong> el sujeto se ve pequeño, vulnerable, contenido.</li><li><strong>Neutro:</strong> el ángulo más natural. Igualdad, honestidad.</li><li><strong>Contrapicado:</strong> el sujeto se ve poderoso, grande, imponente.</li><li><strong>Cenital:</strong> vista de pájaro. Mapas, comida, objetos.</li></ul>'},
-
-{t:'El fondo: tan importante como el sujeto',h:'<div class="tp">El fondo no es lo que queda detrás del sujeto. Es parte activa de la imagen. Un fondo mal elegido puede destruir una buena foto. Un fondo bien elegido puede elevar una foto simple a algo memorable.</div><div class="box"><div class="box-t">El chequeo del fondo</div><div class="box-d">Antes de disparar, mirá el fondo. ¿Hay algo que distrae? ¿Un árbol que sale de la cabeza del sujeto? ¿Un cartel que compite? Un paso al costado, agacharse o cambiar el ángulo puede resolverlo en segundos.</div></div>'},
-
-{t:'Intención: el tercer pilar',h:'<div class="tp">La intención es la respuesta a \"¿para qué tomé esta foto?\". Es lo que diferencia una imagen de una fotografía. Una imagen registra. Una fotografía comunica.</div><div class="box"><div class="box-t">El test de la intención</div><div class="box-d">Mostrále tu foto a alguien que no sabe el contexto. Sin explicarle nada. ¿Entiende qué es lo importante? ¿Siente algo? Si necesitás explicarla, la intención no llegó a la imagen.</div></div>'},
-
-{t:'Por qué una fotografía emociona',h:'<div class="tp">Las fotos que recordamos no son siempre las técnicamente perfectas. Son las que nos hicieron sentir algo.</div><ul class="tl"><li><strong>Momento:</strong> captaron algo irrepetible. Un gesto, una mirada, una fracción de segundo.</li><li><strong>Luz que refuerza la emoción:</strong> la luz no es neutra. Una luz cálida y lateral en un retrato de familia transmite algo completamente distinto a la misma familia con flash frontal.</li><li><strong>Composición que guía:</strong> la mirada llega al lugar correcto en el momento correcto.</li><li><strong>Verdad:</strong> la foto no está posada. Es real. El sujeto no sabe que lo están fotografiando, o lo olvidó.</li></ul>'},
-
-{t:'Edición: no es trampa',h:'<div class="tp">Editar una foto no es falsificarla. Desde el primer cuarto oscuro, los fotógrafos ajustaban exposición, contraste y tonos manualmente. Hoy lo hacemos en el celular. La diferencia es la velocidad, no la práctica.</div><div class="box"><div class="box-t">Regla de oro</div><div class="box-d">La edición debe ser invisible. Si alguien mira tu foto y lo primero que nota es el filtro o la edición, editaste de más. El objetivo es que la foto parezca real — solo que mejor que como salió.</div></div>'},
-
-{t:'Los 5 ajustes esenciales en orden',h:'<div class="tp">Este es el orden correcto para editar:</div><ol class="tl"><li><strong>Exposición:</strong> ¿está oscura o clara? Corregí primero.</li><li><strong>Contraste:</strong> la diferencia entre luces y sombras.</li><li><strong>Altas luces y sombras:</strong> recuperar cielo quemado o aclarar zonas oscuras.</li><li><strong>Color:</strong> ¿la foto es muy amarilla o azulada?</li><li><strong>Recorte:</strong> corregir horizonte torcido, mejorar la composición.</li></ol>'},
-
-{t:'Ejercicio en clase: las tres posiciones de luz',h:'<div class="tp">Este es el ejercicio central de la primera clase. Sin teoría adicional: directamente a practicar.</div><ol class="tl"><li>Un integrante del grupo se sienta cerca de la ventana más grande del salón.</li><li>Tres posiciones: de frente a la ventana, de costado, de espaldas.</li><li>El resto fotografía las tres posiciones desde el mismo lugar.</li><li>Comparamos en pantalla: ¿en qué posición la cara tiene más volumen? ¿cuándo aparece el borde luminoso?</li></ol>'},
-
-{t:'Ejercicio: los 5 encuadres',h:'<div class="tp">Elegís un objeto cualquiera. Le sacás exactamente 5 fotos desde 5 posiciones:</div><ol class="tl"><li><strong>Plano general:</strong> el objeto en su contexto completo.</li><li><strong>Plano medio:</strong> más cerca, eliminando contexto.</li><li><strong>Primer plano:</strong> solo el objeto, llenando el cuadro.</li><li><strong>Detalle:</strong> una sola parte del objeto, muy cerca.</li><li><strong>Ángulo inusual:</strong> desde abajo, desde arriba, desde atrás.</li></ol>'},
-
-{t:'Tarea para la semana: las 3 preguntas',h:'<div class="tp">Durante la semana, antes de cada foto que saques, respondé en voz alta estas tres preguntas:</div><ul class="tl"><li><strong>¿Qué?</strong> ¿Cuál es el sujeto principal?</li><li><strong>¿Cómo?</strong> ¿Qué luz, qué encuadre, qué distancia?</li><li><strong>¿Para qué?</strong> ¿Qué quiero que sienta quien la vea?</li></ul><div class="tp">Al final de la semana, elegís las 3 mejores fotos que sacaste. Condición única: tienen que tener intención clara y entenderse sin explicación.</div>'}
-
+const CURSO_TOPICS = [
+{t:'Bienvenida al taller: para qué sirve esto',h:'<div class="tp">Este taller es para aprender a ver antes que para aprender a disparar. Antes de hablar de celulares, de cámaras o de aplicaciones, vamos a hablar de mirada.</div><div class="tp">No importa si llegaste con un iPhone de última generación o con un Android de tres años. Lo que vas a llevarte de acá no está en el equipo: está en cómo mirás antes de tocar el botón.</div><div class="box"><div class="box-t">¿Para quién es este taller?</div><div class="box-d">Para quien quiera fotografiar con celular y obtener resultados que a ellos mismos les gusten. Para quien sienta que sus fotos no salen bien sin entender por qué.</div></div>'},
+{t:'Fotografía móvil vs cámara: mismos principios',h:'<div class="tp">La gran pregunta que aparece siempre: ¿Con celular se pueden sacar buenas fotos? La respuesta es sí, con una condición: que sepas ver.</div><div class="tp">Los principios de la fotografía son los mismos desde 1839. Luz, composición, momento, intención. Eso no cambia. Lo que cambia es la herramienta.</div><div class="box"><div class="box-t">Lo que más importa</div><div class="box-d">Aprender a ver. El celular es la herramienta. La mirada es tuya.</div></div>'},
+{t:'Los 3 pilares: por qué una foto funciona',h:'<div class="tp">Antes de hablar de técnica, mirá una foto que te guste. Vas a notar que siempre tiene estas tres cosas:</div><div class="box"><div class="box-t">1. Luz</div><div class="box-d">La foto tiene una luz que funciona. Puede ser suave, dramática, lateral, cálida. Pero hay una decisión de luz.</div></div><div class="box"><div class="box-t">2. Encuadre</div><div class="box-d">Algo quedó dentro del cuadro y algo quedó afuera. Esa decisión es el encuadre.</div></div><div class="box"><div class="box-t">3. Intención</div><div class="box-d">La foto dice algo. Transmite algo. Hay un para qué detrás.</div></div>'},
+{t:'La luz: el elemento fundamental',h:'<div class="tp">La palabra fotografía viene del griego: photos (luz) y graphos (escritura). Literalmente: escribir con luz. No fotografiamos objetos: fotografiamos la luz que rebota en ellos.</div><div class="tp">Cuando aprendemos fotografía, el 80% del aprendizaje es aprender a ver la luz: de dónde viene, qué tipo es, qué genera, cómo modificarla o elegirla.</div><div class="box"><div class="box-t">La primera pregunta</div><div class="box-d">Antes de mirar al sujeto, mirá la luz. ¿De dónde viene? ¿Es suave o dura? Esa pregunta, hecha sistemáticamente, cambia todo.</div></div>'},
+{t:'Luz suave vs luz dura',h:'<div class="tp">No toda la luz es igual. Hay una diferencia fundamental:</div><div class="box"><div class="box-t">Luz suave</div><div class="box-d">Difusa, sin dirección clara. Día nublado, sombra abierta. Produce sombras suaves. Favorece retratos.</div></div><div class="box"><div class="box-t">Luz dura</div><div class="box-d">Directa, con dirección precisa. Sol directo, mediodía. Produce sombras marcadas. Crea dramatismo.</div></div>'},
+{t:'Dirección de la luz',h:'<div class="tp">La misma persona, la misma cámara: cambiá solo la dirección de la luz y tenés fotos completamente distintas.</div><ul class="tl"><li><strong>Luz frontal:</strong> cara pareja, sin sombras, sin volumen. Segura pero plana.</li><li><strong>Luz lateral 45°:</strong> la más usada en retrato. Crea volumen. La más favorecedora.</li><li><strong>Luz lateral 90°:</strong> mitad cara en luz, mitad en sombra. Drama fuerte.</li><li><strong>Contraluz:</strong> la luz viene detrás. Crea silueta o borde luminoso.</li></ul>'},
+{t:'La ventana: tu estudio fotográfico',h:'<div class="tp">La mejor fuente de luz disponible siempre es gratis: la luz que entra por una ventana.</div><ul class="tl"><li><strong>Frente a ventana:</strong> luz suave y pareja. Ideal para retratos.</li><li><strong>Costado a ventana:</strong> luz lateral. La opción más fotogénica.</li><li><strong>Contraluz:</strong> muy atmosférico.</li></ul><div class="box"><div class="box-t">Truco</div><div class="box-d">Si el sol da directo, corre la cortina o coloca una sábana blanca como difusor. Luz filtrada = luz de estudio.</div></div>'},
+{t:'Encuadre: la decisión más creativa',h:'<div class="tp">Encuadrar es decidir los límites de la imagen: qué entra y qué queda afuera. Esa decisión es enteramente tuya.</div><div class="box"><div class="box-t">El error más frecuente</div><div class="box-d">Fotografiar de muy lejos. El sujeto queda pequeño, perdido. Acercarte es casi siempre la solución.</div></div>'},
+{t:'Regla de tercios',h:'<div class="tp">Dividí el cuadro en 9 partes iguales. Los cuatro puntos donde se cruzan las líneas son los más fuertes visualmente. El centro es el más débil.</div><ul class="tl"><li><strong>Retrato:</strong> los ojos sobre la línea horizontal superior.</li><li><strong>Paisaje:</strong> el horizonte en el tercio superior o inferior, nunca al medio.</li><li><strong>Objeto:</strong> en uno de los cuatro cruces, no centrado.</li></ul>'},
+{t:'Intención: el tercer pilar',h:'<div class="tp">La intención es la respuesta a ¿para qué tomé esta foto? Es lo que diferencia una imagen de una fotografía. Una imagen registra. Una fotografía comunica.</div><div class="box"><div class="box-t">El test</div><div class="box-d">Muéstrale tu foto a alguien que no sabe el contexto. ¿Entiende qué es lo importante? ¿Siente algo? Si necesitas explicarla, la intención no llegó.</div></div>'}
 ];
 
-var cursoModule = {
+const GUIDE = [{
   name: 'El Curso (Presencial)',
-  desc: 'Luz · Lectura de imagen · Exposición · Encuadre · Intención · Edición · Ejercicios prácticos',
-  col: 'rgba(157,107,255,0.15)',
+  desc: 'Luz · Encuadre · Intención · Composición · Edición',
   topics: CURSO_TOPICS
-};
+}];
 
-var GUIDE = [cursoModule];
-
-var DIAGRAMS={
-'luz-direccion':{title:'Dirección de la luz',svg:'<svg viewBox="0 0 340 220" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="20" width="100" height="180" rx="6" fill="rgba(255,150,50,0.08)" stroke="#FF6B6B" stroke-width="1.5"/><text x="70" y="40" style="font-size:10px;font-weight:700;text-anchor:middle;fill:#FF6B6B">LUZ LATERAL</text><circle cx="40" cy="80" r="18" fill="#FFD93D"/><line x1="40" y1="98" x2="40" y2="150" stroke="#333" stroke-width="2"/><path d="M 40 150 L 30 160 L 50 160 Z" fill="#333"/><text x="70" y="110" style="font-size:9px;fill:#FF6B6B">Volumen</text><text x="70" y="125" style="font-size:9px;fill:#FF6B6B">Textura</text></svg>',note:'Luz lateral crea volumen, profundidad y textura. Es la más usada en retrato.'},
-'composicion-tercios':{title:'Regla de tercios',svg:'<svg viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="20" width="240" height="240" fill="#1a1a2e" stroke="#444" stroke-width="2"/><line x1="100" y1="20" x2="100" y2="260" stroke="#FFD93D" stroke-width="1.5" opacity="0.6"/><line x1="180" y1="20" x2="180" y2="260" stroke="#FFD93D" stroke-width="1.5" opacity="0.6"/><line x1="20" y1="100" x2="260" y2="100" stroke="#FFD93D" stroke-width="1.5" opacity="0.6"/><line x1="20" y1="180" x2="260" y2="180" stroke="#FFD93D" stroke-width="1.5" opacity="0.6"/><circle cx="100" cy="100" r="6" fill="#FFD93D"/><circle cx="180" cy="100" r="6" fill="#FFD93D"/><circle cx="100" cy="180" r="6" fill="#FFD93D"/><circle cx="180" cy="180" r="6" fill="#FFD93D"/><circle cx="140" cy="140" r="8" fill="none" stroke="#FF6B6B" stroke-width="2"/><text x="140" y="160" style="font-size:9px;text-anchor:middle;fill:#FF6B6B">Centro = débil</text></svg>',note:'Los 4 puntos de cruce son los más fuertes. Pon el sujeto ahí, no en el centro.'},
-'triangulo-exposicion':{title:'Triángulo de Exposición',svg:'<svg viewBox="0 0 300 280" xmlns="http://www.w3.org/2000/svg"><text x="150" y="25" style="font-size:13px;font-weight:700;text-anchor:middle;fill:#FFD93D">TRIÁNGULO DE EXPOSICIÓN</text><polygon points="150,50 60,210 240,210" fill="none" stroke="#888" stroke-width="2"/><circle cx="150" cy="50" r="32" fill="rgba(255,211,61,0.2)" stroke="#FFD93D" stroke-width="2"/><text x="150" y="48" style="font-size:11px;font-weight:700;text-anchor:middle;fill:#FFD93D">ISO</text><text x="150" y="62" style="font-size:8px;text-anchor:middle;fill:#FFD93D">sensibilidad</text><circle cx="60" cy="210" r="32" fill="rgba(77,150,255,0.2)" stroke="#4D96FF" stroke-width="2"/><text x="60" y="206" style="font-size:9px;font-weight:700;text-anchor:middle;fill:#4D96FF">VELOCIDAD</text><text x="60" y="219" style="font-size:8px;text-anchor:middle;fill:#4D96FF">tiempo</text><circle cx="240" cy="210" r="32" fill="rgba(255,107,107,0.2)" stroke="#FF6B6B" stroke-width="2"/><text x="240" y="206" style="font-size:9px;font-weight:700;text-anchor:middle;fill:#FF6B6B">DIAFRAGMA</text><text x="240" y="219" style="font-size:7px;text-anchor:middle;fill:#FF6B6B">(simulado)</text></svg>',note:'Los tres controlan la luz. Cambiar uno obliga a cambiar los otros dos.'}
-};
+function renderGuide(){
+  let html = '';
+  for(let i=0; i<GUIDE.length; i++){
+    const g = GUIDE[i];
+    let topics = '';
+    for(let j=0; j<g.topics.length; j++){
+      topics += `<div class="topic" id="t-${i}-${j}">
+        <div class="topic-head" onclick="toggleTopic(${i},${j})">
+          <div class="topic-dot"></div>
+          <div class="topic-title">${g.topics[j].t}</div>
+          <svg class="topic-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="topic-body">
+          <div class="topic-content">${g.topics[j].h}</div>
+        </div>
+      </div>`;
+    }
+    const num = (i+1).toString().padStart(2, '0');
+    html += `<div class="mod" id="m-${i}">
+      <div class="mod-head" onclick="toggleMod(${i})">
+        <div class="mod-num">${num}</div>
+        <div class="mod-info">
+          <div class="mod-name">${g.name}</div>
+          <div class="mod-desc">${g.desc}</div>
+        </div>
+        <div class="mod-toggle"></div>
+      </div>
+      <div class="mod-body">
+        <div class="topic">${topics}</div>
+      </div>
+    </div>`;
+  }
+  document.getElementById('guide-body').innerHTML = html;
+}
 
 renderGuide();
-
 </script>
 </body>
 </html>
