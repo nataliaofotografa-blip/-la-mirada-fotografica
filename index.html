@@ -20,16 +20,16 @@
   --bg:#0a0a0a;
   --bg-raise:#131313;
   --paper:#1a1a1a;
-  --ink:#f5f5f5;
-  --ink-soft:#e0e0e0;
-  --ink-mute:#a0a0a0;
+  --ink:#ffffff;           /* BLANCO PURO para máxima legibilidad */
+  --ink-soft:#e8e8e8;      /* gris claro para textos secundarios */
+  --ink-mute:#b0b0b0;      /* gris medio para textos terciarios */
   --line:#2a2a2a;
   --line-soft:#1f1f1f;
-  --accent:#d4af37;          /* oro suave para detalles premium */
+  --accent:#d4af37;        /* oro suave para detalles premium */
   --accent-ink:#e8c547;
-  --dark:#000000;            /* negro puro para máximo contraste */
-  --on-dark:#f5f5f5;
-  --on-dark-mute:#a0a0a0;
+  --dark:#000000;
+  --on-dark:#ffffff;
+  --on-dark-mute:#b0b0b0;
   --nav-h:74px;
   --maxw:720px;
   --r:18px;
@@ -68,7 +68,7 @@ a{color:inherit;text-decoration:none;}
 .brand-dot{width:32px;height:32px;background:var(--dark);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .brand-dot span{color:var(--on-dark);font-weight:600;font-size:15px;font-family:'Fraunces',serif;}
 .brand-tx{line-height:1.3;}
-.brand-name{font-size:15px;font-weight:500;letter-spacing:-0.02em;color:var(--ink);font-family:'Fraunces',serif;}
+.brand-name{font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#000000;font-family:'Fraunces',serif;}
 .brand-sub{font-size:10.5px;color:var(--ink-mute);font-weight:400;letter-spacing:0.04em;text-transform:uppercase;}
 .hdr-contact{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:.18s;}
 .hdr-contact:active{transform:scale(.94);}
@@ -81,7 +81,7 @@ a{color:inherit;text-decoration:none;}
 
 /* HERO */
 .hero{padding:56px 0 36px;}
-.hero h1{font-size:clamp(42px,11vw,68px);font-weight:340;line-height:1.02;letter-spacing:-0.025em;color:var(--ink);}
+.hero h1{font-size:clamp(42px,11vw,68px);font-weight:340;line-height:1.02;letter-spacing:-0.025em;color:#2a2a2a;}
 .hero p{margin-top:18px;font-size:16.5px;color:var(--ink-mute);line-height:1.65;font-weight:400;max-width:46ch;}
 .eje-line{display:inline-flex;gap:10px;margin-top:28px;padding:11px 18px;border:1px solid var(--line);border-radius:100px;background:var(--paper);font-size:11.5px;text-transform:uppercase;letter-spacing:0.16em;color:var(--ink-mute);font-weight:500;flex-wrap:wrap;align-items:center;}
 .eje-line b{color:var(--accent-ink);font-weight:600;}
@@ -100,9 +100,10 @@ a{color:inherit;text-decoration:none;}
 
 /* MÓDULOS ACORDEÓN — tarjetas con aire */
 .mod-list{display:flex;flex-direction:column;gap:14px;}
-.mod{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;transition:border-color .2s,box-shadow .2s;}
+.mod{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:clip;transition:border-color .2s,box-shadow .2s;}
 .mod.open{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 6px 28px -16px rgba(60,45,30,0.28);}
 .mod-head{display:flex;align-items:center;gap:16px;padding:24px 22px;cursor:pointer;user-select:none;}
+.mod.open .mod-head{position:sticky;top:66px;z-index:20;background:color-mix(in srgb,var(--paper) 96%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;}
 .mod-num{font-family:'Fraunces',serif;font-size:14px;font-weight:400;color:var(--accent);width:28px;flex-shrink:0;letter-spacing:0.02em;}
 .mod-info{flex:1;min-width:0;}
 .mod-name{font-family:'Fraunces',serif;font-size:21px;font-weight:420;letter-spacing:-0.015em;line-height:1.25;color:var(--ink);}
@@ -272,10 +273,6 @@ a{color:inherit;text-decoration:none;}
       <h1>La Mirada<br>Fotográfica</h1>
       <p>Academia de fotografía. Aprendé a ver con lo que ya tenés en el bolsillo.</p>
       <div class="eje-line"><b>Luz</b> · <b>Encuadre</b> · <b>Intención</b></div>
-    </div>
-    <div class="sfield">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input id="guide-search" placeholder="Buscar en la guía…" oninput="onGuideSearch(this.value)">
     </div>
     <div class="mod-list" id="guide-body"></div>
   </section>
