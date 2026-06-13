@@ -196,7 +196,7 @@ var IPHONE_DATA=[
     {t:'Estos NO están (o están limitados)',h:'<div class="tp"><strong>ISO manual:</strong> La app decide automáticamente según la luz.</div><div class="tp"><strong>Velocidad de obturación:</strong> No ves el número ni lo controlás.</div><div class="tp"><strong>RAW/DNG:</strong> Solo disponible con apps externas.</div><div class="tp"><strong>Histograma:</strong> No hay en tiempo real.</div>'}
    ]
   },
-  {name:'Apps manuales recomendadas',desc:'Lightroom, Halide, ProCamera...',
+  {id:'apps-manuales',name:'Apps manuales recomendadas',desc:'Lightroom, Halide, ProCamera...',
    topics:[
     {t:'Lightroom Mobile ⭐',h:'<div class="rec-box"><div class="rec-tag">Recomendada para el taller</div><div class="rec-t">Control completo: ISO, velocidad, balance de blancos, RAW/DNG.</div><p style="font-size:14px; color:var(--ink-soft); line-height:1.65; margin:0;">Permite capturar y editar en la misma app. Es la más práctica si querés aprender viendo los números y después retocar. Versión básica gratuita.</p></div>'},
     {t:'Halide',h:'<div class="tp">Muy buena para fotografía móvil. Controles manuales claros, histograma en tiempo real, RAW, y enfoque manual con focus peaking (ver puntos enfocados). Perfecta si querés sentir que controlás como en una réflex.</div>'},
@@ -281,6 +281,7 @@ function renderContent(){
     data.forEach(function(mod,mi){
       var modEl=document.createElement('div');
       modEl.className='mod';
+      if(mod.id) modEl.id=mod.id;
       var num=String(mi+1).padStart(2,'0');
       var head=document.createElement('div');
       head.className='mod-head';
