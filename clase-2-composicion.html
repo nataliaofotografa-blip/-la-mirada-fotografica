@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Clase 2: Composición y Encuadre · La Mirada Fotográfica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#ffffff;
+  --bg-raise:#fafafa;
+  --paper:#ffffff;
+  --ink:#1a1a1a;
+  --ink-soft:#3a3a3a;
+  --ink-mute:#8a8a8a;
+  --line:#e8e8e8;
+  --line-soft:#f2f2f2;
+  --accent:#7a6b5f;
+  --accent-ink:#6b5f54;
+  --dark:#1a1a1a;
+  --on-dark:#ffffff;
+  --on-dark-mute:#c0c0c0;
+  --nav-h:74px;
+  --maxw:720px;
+  --r:18px;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 20px);min-height:100vh;}
+h1,h2,h3,.serif{font-family:'Fraunces','Georgia',serif;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;}
+.hdr{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);border-bottom:1px solid var(--line);}
+.hdr-inner{max-width:var(--maxw);margin:0 auto;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand-dot{width:32px;height:32px;background:var(--dark);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand-dot span{color:var(--on-dark);font-weight:600;font-size:15px;font-family:'Fraunces',serif;}
+.brand-tx{line-height:1.3;}
+.brand-name{font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#000000;font-family:'Fraunces',serif;}
+.brand-sub{font-size:10.5px;color:var(--ink-mute);font-weight:400;letter-spacing:0.04em;text-transform:uppercase;}
+.hero{padding:48px 0 24px;}
+.hero h1{font-size:clamp(42px,11vw,68px);font-weight:340;line-height:1.05;letter-spacing:-0.025em;color:#2a2a2a;margin-bottom:16px;}
+.hero-tag{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent-ink);font-weight:600;margin-bottom:14px;}
+.hero p{margin-top:12px;font-size:16px;color:var(--ink-soft);line-height:1.65;font-weight:400;max-width:46ch;}
+.mod-list{display:flex;flex-direction:column;gap:16px;margin:32px 0;}
+.mod{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);overflow:clip;transition:border-color .2s,box-shadow .2s;}
+.mod.open{border-color:color-mix(in srgb,var(--accent) 35%,var(--line));box-shadow:0 6px 28px -16px rgba(60,45,30,0.28);}
+.mod-head{display:flex;align-items:center;gap:16px;padding:20px 22px;cursor:pointer;user-select:none;}
+.mod.open .mod-head{position:sticky;top:66px;z-index:20;background:color-mix(in srgb,var(--paper) 96%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);border-radius:var(--r) var(--r) 0 0;}
+.mod-num{font-family:'Fraunces',serif;font-size:14px;font-weight:400;color:var(--accent);width:28px;flex-shrink:0;letter-spacing:0.02em;}
+.mod-info{flex:1;min-width:0;}
+.mod-name{font-family:'Fraunces',serif;font-size:19px;font-weight:420;letter-spacing:-0.015em;line-height:1.25;color:var(--ink);}
+.mod-desc{font-size:13px;color:var(--ink-mute);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:400;}
+.mod-toggle{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);position:relative;flex-shrink:0;transition:.25s;}
+.mod.open .mod-toggle{background:var(--dark);border-color:var(--dark);transform:rotate(180deg);}
+.mod-toggle::before,.mod-toggle::after{content:'';position:absolute;background:var(--ink-mute);transition:transform .25s ease,opacity .25s,background .25s;}
+.mod-toggle::before{top:50%;left:8px;right:8px;height:1.5px;transform:translateY(-50%);}
+.mod-toggle::after{left:50%;top:8px;bottom:8px;width:1.5px;transform:translateX(-50%);}
+.mod.open .mod-toggle::before,.mod.open .mod-toggle::after{background:var(--on-dark);}
+.mod.open .mod-toggle::after{opacity:0;}
+.mod-body{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+.mod.open .mod-body{max-height:90000px;}
+.mod-inner{padding:0 22px 16px;}
+.topic{border-top:1px solid var(--line-soft);padding-top:16px;padding-bottom:2px;}
+.topic-head{display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer;user-select:none;}
+.topic-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;opacity:.55;}
+.topic-title{flex:1;font-size:14.5px;font-weight:500;color:var(--ink-soft);letter-spacing:-0.01em;transition:.15s;}
+.topic.open .topic-title{color:var(--ink);}
+.topic-chev{width:15px;height:15px;stroke:var(--ink-mute);fill:none;flex-shrink:0;transition:transform .25s;}
+.topic.open .topic-chev{transform:rotate(180deg);stroke:var(--accent);}
+.topic-body{max-height:0;overflow:hidden;transition:max-height .38s cubic-bezier(.4,0,.2,1);}
+.topic.open .topic-body{max-height:30000px;}
+.topic-content{padding:10px 0 16px;font-size:14px;color:var(--ink-soft);line-height:1.75;}
+.tp{margin:10px 0;}
+.topic-content strong{color:var(--ink);font-weight:600;}
+.topic-content em{font-style:italic;color:var(--ink-soft);}
+.box{background:var(--bg-raise);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:12px;padding:14px 16px;margin:12px 0;font-size:13.5px;}
+.box-t{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent-ink);margin-bottom:6px;}
+.box-d{color:var(--ink-soft);line-height:1.65;}
+.intro-box{background:var(--dark);color:var(--on-dark);border-radius:14px;padding:22px;margin:24px 0;position:relative;overflow:hidden;}
+.intro-t{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin-bottom:8px;}
+.intro-d{font-size:14px;color:var(--on-dark-mute);line-height:1.7;}
+.foot{background:var(--dark);margin-top:48px;}
+.foot-inner{max-width:var(--maxw);margin:0 auto;padding:40px 26px calc(40px + env(safe-area-inset-bottom));}
+.foot-brand{font-family:'Fraunces',serif;font-size:32px;font-weight:500;color:var(--on-dark);letter-spacing:-0.02em;}
+.foot-sub{font-size:13.5px;color:var(--on-dark-mute);margin-top:10px;}
+.foot-copy{font-size:11.5px;color:#6b6155;margin-top:26px;}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(2,1fr);}
+.ni{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:none;background:none;cursor:pointer;color:var(--ink-mute);font:inherit;transition:.16s;padding:0;}
+.ni svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;transition:.16s;}
+.ni span{font-size:10px;font-weight:500;letter-spacing:0.02em;}
+.ni.on{color:var(--accent-ink);}
+.ni.on svg{stroke-width:2.1;}
+.ni:active{transform:scale(.92);}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-inner">
+    <div class="brand" onclick="history.back()">
+      <div class="brand-dot"><span>A</span></div>
+      <div class="brand-tx">
+        <div class="brand-name">La Mirada Fotográfica</div>
+        <div class="brand-sub">Amapola Fotografía</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <span class="hero-tag">Clase 2</span>
+    <h1>Composición y Encuadre</h1>
+    <p>Aprende a dirigir la mirada del espectador. La composición transforma una foto ordinaria en una que comunica.</p>
+  </div>
+
+  <div class="intro-box">
+    <div class="intro-t">¿Qué es composición?</div>
+    <div class="intro-d">Es la decisión consciente de <strong>cómo distribuir los elementos dentro del cuadro.</strong> No es sobre reglas rígidas, sino sobre herramientas que otros fotógrafos han descubierto: patrones visuales que hacen que el ojo del espectador se pase por la foto de forma interesante.</div>
+  </div>
+
+  <div class="mod-list" id="mod-container"></div>
+
+  <div style="padding:32px 0 0;text-align:center;color:var(--ink-mute);font-size:14px;border-top:1px solid var(--line);margin-top:36px;">
+    <p>Fuente: Artículos educativos de dZoom.org.es</p>
+  </div>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">Amapola</div>
+    <div class="foot-sub">Academia de fotografía con celular.</div>
+    <div class="foot-copy">© Amapola Fotografía 2026 · Natalia Olivera</div>
+  </div>
+</footer>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="ni on" onclick="history.back()">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span>Atrás</span>
+    </button>
+    <button class="ni" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <svg viewBox="0 0 24 24"><path d="M12 2v20M5 9l7-7 7 7"/></svg>
+      <span>Arriba</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+var CLASES_DATA=[
+  {name:'Centro de Interés',desc:'Cada foto necesita un protagonista claro',
+   topics:[
+    {t:'Define tu sujeto principal',h:'<div class="tp"><strong>Todo lo que fotografías necesita responder: ¿de qué trata esta foto?</strong></div><div class="tp">Sin un centro claro, "la vista del espectador se perderá por la foto sin prestar atención a nada". Como dijo dZoom: <em>"Debería ser obvio para cualquiera que mire una fotografía entender lo que queremos enseñar."</em></div><div class="tp"><strong>Ejemplo:</strong> Tu novia, la pirámide de Egipto, una flor mojada. Algo obvio a primera vista.</div><div class="box"><div class="box-t">Pregúntate</div><div class="box-d">¿Si alguien mira mi foto 2 segundos, ¿qué ve primero? Si la respuesta no está clara, tu composición necesita ajustes.</div></div>'},
+    {t:'Técnicas para destacarlo',h:'<div class="tp"><strong>Contraste:</strong> Diferencia el sujeto por color, textura o iluminación. Algo oscuro en fondo claro salta a la vista.</div><div class="tp"><strong>Espacio negativo:</strong> Rodea el elemento con áreas vacías. La soledad destaca al sujeto.</div><div class="tp"><strong>Enfoque selectivo:</strong> Enfoca el protagonista, deja el fondo desenfocado.</div><div class="tp"><strong>Regla de tercios:</strong> Coloca el sujeto fuera del centro matemático (más adelante en esta clase).</div>'}
+   ]
+  },
+  {name:'Rellena el Encuadre (Fill the Frame)',desc:'Elimina lo innecesario, acércate al sujeto',
+   topics:[
+    {t:'La idea central',h:'<div class="tp">No fotografíes un animal pequeño rodeado de mucho espacio vacío innecesario. <strong>Acércate.</strong> Que predomine en la imagen.</div><div class="tp">Esto es especialmente útil en retrato: <strong>acercarse más = mayor impacto emocional.</strong></div>'},
+    {t:'Cuándo usarlo',h:'<div class="tp"><strong>Retratos:</strong> Llena el cuadro con la cara o el torso. Intimidad máxima.</div><div class="tp"><strong>Detalles:</strong> Una mano, un objeto, texturas. Acercarte revela cosas que el ojo no ve a distancia.</div><div class="tp"><strong>Cuando hay distracciones:</strong> Si el contexto no suma, acercate y elimina el ruido visual.</div><div class="box"><div class="box-t">Advertencia</div><div class="box-d">No confundas "fill the frame" con "llenar todo el espacio". Sigue siendo composición: puede haber aire, pero tiene propósito.</div></div>'}
+   ]
+  },
+  {name:'Regla de Tercios',desc:'Divide mentalmente la imagen en 3×3',
+   topics:[
+    {t:'Cómo funciona',h:'<div class="tp">Imagina dos líneas horizontales y dos verticales que dividen tu pantalla en <strong>9 cuadrículas iguales.</strong></div><div class="tp">Los puntos más fuertes visuales son los <strong>4 cruces</strong> entre estas líneas (las esquinas del cuadro central).</div><div class="tp">Coloca lo importante sobre estas líneas o en los cruces, no en el centro exacto.</div>'},
+    {t:'En retratos',h:'<div class="tp">Los <strong>ojos</strong> van sobre la línea horizontal superior. Esto crea una composición más dinámica que centrar toda la cara.</div><div class="tp">Deja aire arriba de la cabeza. El sujeto no está aplastado arriba; respira.</div>'},
+    {t:'En paisajes',h:'<div class="tp">Ubica el <strong>horizonte</strong> sobre la línea horizontal (superior o inferior), nunca en el medio.</div><div class="tp">Si hay un elemento importante (árbol, persona, montaña), posiciónalo sobre uno de los 4 puntos cruzados.</div><div class="tp"><strong>Resultado:</strong> Paisajes más interesantes sin esfuerzo. Dejan de parecer "postales automáticas".</div>'}
+   ]
+  },
+  {name:'Líneas y Flujo Visual',desc:'Dirige la mirada del espectador',
+   topics:[
+    {t:'Líneas convergentes',h:'<div class="tp">Las líneas que se achican hacia la distancia (vías de tren, carreteras, líneas de un edificio) crean <strong>profundidad</strong> y conducen el ojo automáticamente hacia atrás.</div><div class="tp">El punto donde convergen se llama <strong>"punto de fuga"</strong> y es naturalmente atractivo para el ojo.</div>'},
+    {t:'Tipos de líneas y su efecto',h:'<div class="tp"><strong>Horizontales:</strong> Transmiten calma, estabilidad, descanso (el horizonte, un cuerpo acostado).</div><div class="tp"><strong>Verticales:</strong> Sugieren altura, fuerza, poder (árboles, edificios, personas de pie).</div><div class="tp"><strong>Diagonales:</strong> Las más dinámicas. Crean movimiento y tensión.</div><div class="box"><div class="box-t">Dato de dZoom</div><div class="box-d">"Las líneas diagonales se consideran más dinámicas, mientras que horizontales y verticales más estáticas." Las ascendentes (de abajo-izq a arriba-der) sugieren esfuerzo; las descendentes, velocidad.</div></div><div class="tp"><strong>Curvas (especialmente en S):</strong> Tremendamente atractivas. Serpenteantes, sensualmente guían la mirada.</div>'},
+    {t:'Cómo usarlas en tu fotografía',h:'<div class="tp">Busca líneas naturales en tu entorno: un río, una cerca, baldosas, un cable.</div><div class="tp">Úsalas como <strong>"carreteras visuales"</strong> que lleven al espectador hacia tu sujeto principal.</div><div class="tp">Una línea bien aprovechada hace que la foto tenga profundidad y dramatismo sin necesidad de trucos.</div>'}
+   ]
+  },
+  {name:'Espacio Negativo (El Aire)',desc:'Lo que NO está es tan importante como lo que sí',
+   topics:[
+    {t:'Qué es exactamente',h:'<div class="tp">Es el espacio vacío alrededor de tu sujeto. <strong>No es falta de información.</strong></div><div class="tp">Es un elemento compositivo activo que transmite soledad, libertad, misterio, elegancia.</div><div class="tp">La tradición fotográfica oriental da al espacio negativo la misma importancia que al sujeto mismo.</div>'},
+    {t:'Por qué funciona',h:'<div class="tp">El espacio negativo <strong>"respira".</strong> Hace que el sujeto respire. Un retrato con mucho aire alrededor es más poderoso que uno donde la cara ocupa todo el cuadro.</div><div class="tp">Crea balance visual. Un sujeto pequeño en un espacio grande es emocionalmente potente.</div>'},
+    {t:'Ejemplos prácticos',h:'<div class="tp"><strong>Retrato:</strong> Fotografía a alguien contra un cielo limpio. Deja mucho cielo alrededor. Ese "vacío" transmite libertad.</div><div class="tp"><strong>Soledad:</strong> Una persona en una calle desérta. El espacio negativo la hace verse más sola, vulnerable.</div><div class="tp"><strong>Minimalismo:</strong> Un objeto pequeño en una pared blanca. Lo feo que parezca, el aire lo hace interesante.</div><div class="box"><div class="box-t">Truco fotográfico</div><div class="box-d">Alejate más de lo que crees necesario. Zoom out. Deja aire. Cuando edites, probablemente quites espacio negativo por "aburrimiento". <strong>Resisti la tentación.</strong> Ese aire es tu aliado visual.</div></div>'}
+   ]
+  },
+  {name:'Encuadre Cerrado vs Abierto',desc:'¿Muestro solo el sujeto o lo incluyo en su contexto?',
+   topics:[
+    {t:'Encuadre Cerrado',h:'<div class="tp">El sujeto ocupa casi todo el cuadro. Poco o nulo contexto.</div><div class="tp"><strong>Efecto:</strong> Intimidad, intensidad, enfoque total en lo importante.</div><div class="tp"><strong>Cuándo:</strong> Retratos emocionales, detalles, cuando querés aislar algo del mundo.</div><div class="tp"><strong>Práctica:</strong> Acercate mucho a un rostro. Solo cara y hombros. El contexto desaparece. Lo que queda es crudo, directo, íntimo. Las emociones saltan.</div>'},
+    {t:'Encuadre Abierto',h:'<div class="tp">El sujeto es pequeño dentro de un contexto amplio.</div><div class="tp"><strong>Efecto:</strong> Muestra la relación entre la persona y su lugar. Transmite soledad, aventura, pertenencia.</div><div class="tp"><strong>Cuándo:</strong> Viajes, paisajes con personas, historias sobre el contexto.</div><div class="tp"><strong>Práctica:</strong> Una persona parada en una estación de tren vacía. Alejate. Que se vea pequeña, perdida en ese espacio. La foto cuenta la historia de la espera, del lugar, de la soledad.</div>'},
+    {t:'Elegir uno u otro',h:'<div class="tp">Ambos funcionan. La decisión depende de <strong>qué historia querés contar.</strong></div><div class="tp">Cerrado = "esta emoción, esta cara, este momento."<br/>Abierto = "esta persona en este lugar, esta relación."</div>'}
+   ]
+  },
+  {name:'Pesos Visuales',desc:'No todo pesa igual en una composición',
+   topics:[
+    {t:'Qué son los pesos visuales',h:'<div class="tp">Es "la capacidad que un elemento tiene para atraer la mirada de quien lo observa".</div><div class="tp">No todos los elementos pesan igual. Un punto rojo atrae más que un gris; algo oscuro atrae más que algo claro; un objeto textured atrae más que una superficie lisa.</div><div class="tp"><strong>Entender los pesos es entender el equilibrio visual.</strong></div>'},
+    {t:'7 factores que crean peso visual',h:'<div class="tp"><strong>1. Tamaño:</strong> Elementos grandes pesan más que pequeños.</div><div class="tp"><strong>2. Posición:</strong> Lo de abajo-derecha pesa más que lo de arriba-izquierda.</div><div class="tp"><strong>3. Distribución:</strong> Lo aislado pesa más que lo agrupado.</div><div class="tp"><strong>4. Textura:</strong> Lo texturado atrae más que lo liso.</div><div class="tp"><strong>5. Forma:</strong> Las formas cerradas y reconocibles pesan más.</div><div class="tp"><strong>6. Color:</strong> Colores cálidos y saturados pesan más. Oscuro más que claro.</div><div class="tp"><strong>7. Contraste:</strong> Lo que se destaca del contexto atrae fuertemente.</div>'},
+    {t:'Cómo usarlo',h:'<div class="tp"><strong>Balance:</strong> Imagina tu composición como una balanza. Si todo el peso está a un lado, se ve roto. Distribuye los pesos visuales para equilibrio.</div><div class="tp"><strong>Movimiento:</strong> Posiciona sujetos más abajo-izq para sugerir movimiento venidero; abajo-der para movimiento completado.</div><div class="tp"><strong>Estabilidad:</strong> Elementos bajos y centrados comunican solidez permanencia.</div><div class="tp"><strong>Libertad:</strong> Mucho espacio negativo alrededor de un sujeto = sensación de libertad y ligereza.</div>'}
+   ]
+  },
+  {name:'Elementos Repetidos',desc:'La repetición crea ritmo visual',
+   topics:[
+    {t:'Por qué funciona',h:'<div class="tp">La repetición de objetos crea <strong>"relación visual"</strong> y puede transmitir psicología: unión, compañerismo, orden.</div><div class="tp">Es visualmente adictiva de observar. El ojo sigue el patrón automáticamente.</div>'},
+    {t:'Ejemplos',h:'<div class="tp"><strong>Bandada de pájaros:</strong> Formas similares moviéndose juntas crean un patrón.</div><div class="tp"><strong>Ventanas idénticas:</strong> Las líneas repetidas generan ritmo.</div><div class="tp"><strong>Baldosas de una plaza:</strong> El patrón cuadrado es relajante pero también hipnótico.</div><div class="tp"><strong>Botellas iguales:</strong> Repetidas en un mercado, generan tensión visual deliciosa.</div>'},
+    {t:'El truco: rompe la simetría',h:'<div class="tp">Una simetría perfecta casi siempre es mejor con <strong>una excepción.</strong></div><div class="tp">Una ventana tapiada en un edificio perfecto. Un patrón interrumpido. Esto crea <strong>tensión visual</strong> que es más interesante que la perfección.</div>'}
+   ]
+  },
+  {name:'Profundidad y Capas',desc:'Cómo sugerir 3D en una imagen plana',
+   topics:[
+    {t:'Primer plano, Medio y Fondo',h:'<div class="tp">Una foto interesante tiene al menos <strong>3 capas visuales:</strong></div><div class="tp"><strong>Primer plano:</strong> Algo cercano a la cámara (una rama, flores, una verja).</div><div class="tp"><strong>Medio:</strong> Tu sujeto principal enfocado.</div><div class="tp"><strong>Fondo:</strong> El contexto, generalmente desenfocado.</div><div class="tp"><strong>Magia:</strong> Automáticamente, el espectador entiende la distancia.</div><div class="box"><div class="box-t">Practica en la vida real</div><div class="box-d">Estás en un parque. Antes de fotografiar a alguien, busca algo en primer plano (rama, flores, verja). Colócate de modo que ese elemento quede entre la cámara y la persona. Mágicamente, la profundidad aparece.</div></div>'},
+    {t:'Desenfoque Selectivo (Bokeh)',h:'<div class="tp">El fondo borroso hace que el sujeto salte hacia adelante.</div><div class="tp">En celular: usa <strong>Modo Retrato</strong> (simula profundidad).<br/>En cámara: abre el diafragma.</div>'},
+    {t:'Perspectiva Forzada',h:'<div class="tp">Alguien muy cerca de la cámara parece gigante. Alguien al fondo, minúsculo.</div><div class="tp">Usa esto para crear historias visuales divertidas: sosteniendo edificios, aplaudiendo monumentos.</div>'}
+   ]
+  },
+  {name:'Luz como Composición',desc:'Cómo distribuir luces y sombras',
+   topics:[
+    {t:'Contraste compositivo',h:'<div class="tp">No es solo sobre la calidad de la luz. Es sobre cómo la <strong>luz y la sombra se distribuyen</strong> en el cuadro para guiar la mirada.</div><div class="tp"><strong>Regla simple:</strong> Algo brillante en fondo oscuro = tu ojo va directo allí.</div><div class="tp"><strong>Ejemplo:</strong> Persona parada en una ventana con luz de atrás. El fondo es un cuarto oscuro. La persona, iluminada, es lo único que importa. La sombra y la luz dividen el cuadro tan claramente que no hay confusión.</div>'},
+    {t:'Siluetas',h:'<div class="tp">Fotografiar contra la luz crea siluetas: la persona se vuelve una sombra negra con contorno brillante.</div><div class="tp">Esto es <strong>composición pura,</strong> sin detalles que distraigan. Solo forma.</div>'},
+    {t:'Luz lateral (Rembrandt)',h:'<div class="tp">La luz que viene de un lado crea un rostro medio iluminado, medio en sombra.</div><div class="tp">Esto es drástico y hermoso. Busca esta luz en ventanas durante el atardecer.</div>'}
+   ]
+  },
+  {name:'Movimiento y Acción',desc:'Congela o sugiere el movimiento',
+   topics:[
+    {t:'Espacio de movimiento',h:'<div class="tp">Si alguien corre hacia la derecha, deja más espacio a la derecha de la foto.</div><div class="tp">Si corre hacia la izquierda, lo opuesto.</div><div class="tp">Esto da <strong>"aire de movimiento"</strong> visualmente.</div><div class="tp"><strong>Ejemplo:</strong> Un ciclista aproximándose. No lo centres. Posiciónalo a la izquierda del cuadro, con mucho espacio a la derecha (hacia donde va). La foto parece estar en movimiento.</div>'},
+    {t:'Líneas de movimiento',h:'<div class="tp">Busca líneas diagonales que sugieran movimiento: una persona corriendo, un auto en carretera.</div><div class="tp">Las diagonales son más dinámicas que horizontales o verticales.</div>'},
+    {t:'Momento decisivo',h:'<div class="tp">El <strong>momento exacto</strong> es composición.</div><div class="tp">Fotografiar el instante cuando ocurre algo (una risa, un salto, una mirada) es lo que hace la diferencia entre una foto aburrida y una memorable.</div><div class="box"><div class="box-t">Desarrolla este instinto</div><div class="box-d">Anticipar. No esperes a que pase. Estar listo un momento antes. Eso es técnica, pero también es arte.</div></div>'}
+   ]
+  }
+];
+
+function renderContent(){
+  var modCont=document.getElementById('mod-container');
+  modCont.innerHTML='';
+
+  CLASES_DATA.forEach(function(mod,mi){
+    var modEl=document.createElement('div');
+    modEl.className='mod';
+    var num=String(mi+1).padStart(2,'0');
+    var head=document.createElement('div');
+    head.className='mod-head';
+    head.innerHTML='<div class="mod-num">'+num+'</div><div class="mod-info"><div class="mod-name">'+mod.name+'</div><div class="mod-desc">'+mod.desc+'</div></div><div class="mod-toggle"></div>';
+    head.onclick=function(){modEl.classList.toggle('open');};
+    modEl.appendChild(head);
+
+    var body=document.createElement('div');body.className='mod-body';
+    var inner=document.createElement('div');inner.className='mod-inner';
+
+    (mod.topics||[]).forEach(function(tp){
+      var tpEl=document.createElement('div');tpEl.className='topic';
+      var th=document.createElement('div');th.className='topic-head';
+      th.innerHTML='<div class="topic-dot"></div><div class="topic-title">'+tp.t+'</div><svg class="topic-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>';
+      th.onclick=function(e){e.stopPropagation();tpEl.classList.toggle('open');};
+      tpEl.appendChild(th);
+
+      var tb=document.createElement('div');tb.className='topic-body';
+      tb.innerHTML='<div class="topic-content">'+tp.h+'</div>';
+      tpEl.appendChild(tb);inner.appendChild(tpEl);
+    });
+
+    body.appendChild(inner);modEl.appendChild(body);modCont.appendChild(modEl);
+  });
+}
+
+renderContent();
+</script>
+</body>
+</html>
