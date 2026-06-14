@@ -1,0 +1,188 @@
+{
+  "clase": 2,
+  "titulo": "Composición y Encuadre",
+  "modulos": [
+    {
+      "id": "centro-interes",
+      "nombre": "Centro de Interés",
+      "imagenes": [
+        {
+          "id": "hoja-roja",
+          "titulo": "Hoja roja como centro de interés",
+          "local": "img/clase-2/hoja-roja-baldosa.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "contraste y aislamiento"
+        }
+      ]
+    },
+    {
+      "id": "fill-frame",
+      "nombre": "Rellena el Encuadre",
+      "imagenes": [
+        {
+          "id": "vendedor-milho",
+          "titulo": "Vendedor acercado al encuadre",
+          "local": "img/clase-2/vendedor-milho-encuadre.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "fill the frame"
+        },
+        {
+          "id": "vendedor-frutas",
+          "titulo": "Vendedor llenando el encuadre",
+          "local": "img/clase-2/vendedor-frutas-accion.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "intimidad y acción"
+        }
+      ]
+    },
+    {
+      "id": "tercios",
+      "nombre": "Regla de Tercios",
+      "imagenes": [
+        {
+          "id": "tercios-anotada-1",
+          "titulo": "Ejemplo de regla de tercios con anotaciones",
+          "local": "img/clase-2/regla-tercios-anotada-1.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "composición educativa",
+          "anotaciones": true
+        },
+        {
+          "id": "tercios-anotada-2",
+          "titulo": "Composición con horizonte y líneas guía",
+          "local": "img/clase-2/regla-tercios-anotada-2.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "composición educativa",
+          "anotaciones": true
+        }
+      ]
+    },
+    {
+      "id": "lineas",
+      "nombre": "Líneas y Flujo Visual",
+      "imagenes": [
+        {
+          "id": "pasillo-profundidad",
+          "titulo": "Líneas convergentes en pasillo",
+          "local": "img/clase-2/pasillo-bn-profundidad.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "líneas convergentes, profundidad"
+        },
+        {
+          "id": "barco-pared",
+          "titulo": "Líneas en composición minimalista",
+          "local": "img/clase-2/barco-pared-minimalismo.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "líneas, minimalismo"
+        }
+      ]
+    },
+    {
+      "id": "espacio-negativo",
+      "nombre": "Espacio Negativo",
+      "imagenes": [
+        {
+          "id": "persona-vela",
+          "titulo": "Persona bajo vela con espacio negativo",
+          "local": "img/clase-2/persona-vela-espacio.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "aire, luz, espacio negativo"
+        },
+        {
+          "id": "personas-playa",
+          "titulo": "Personas en playa con palmeras y aire",
+          "local": "img/clase-2/personas-playa-palmeras.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "encuadre abierto, contexto, espacio"
+        }
+      ]
+    },
+    {
+      "id": "repeticion",
+      "nombre": "Elementos Repetidos",
+      "imagenes": [
+        {
+          "id": "barcos",
+          "titulo": "Barcos repetidos en el agua",
+          "local": "img/clase-2/barcos-repeticion.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "repetición, ritmo visual"
+        },
+        {
+          "id": "espirales",
+          "titulo": "Espirales dibujadas en arena",
+          "local": "img/clase-2/espirales-arena-patrones.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "patrones, formas geométricas"
+        }
+      ]
+    },
+    {
+      "id": "luz",
+      "nombre": "Luz como Composición",
+      "imagenes": [
+        {
+          "id": "edificios-bn",
+          "titulo": "Edificios en blanco y negro con luz y sombra",
+          "local": "img/clase-2/edificios-bn-luz.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "contraste, siluetas, luz lateral"
+        }
+      ]
+    },
+    {
+      "id": "movimiento",
+      "nombre": "Movimiento y Acción",
+      "imagenes": [
+        {
+          "id": "buzo",
+          "titulo": "Buzo en acción en la playa",
+          "local": "img/clase-2/buzo-movimiento-accion.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "movimiento, acción, momento decisivo"
+        },
+        {
+          "id": "vendedores",
+          "titulo": "Vendedores en línea con equipos",
+          "local": "img/clase-2/vendedores-equipos-naranjas.jpg",
+          "credito": "Natalia Olivera - Amapola Fotografía",
+          "cc": true,
+          "tema": "líneas de movimiento, composición"
+        }
+      ]
+    }
+  ],
+  "referencias_externas": [
+    {
+      "fuente": "dZoom.org.es",
+      "urls": [
+        "https://www.dzoom.org.es/reglas-de-composicion-fotografica/",
+        "https://www.dzoom.org.es/mejora-tu-composicion-conociendo-los-pesos-visuales-de-tus-imagenes/",
+        "https://www.dzoom.org.es/descubre-el-significado-de-las-lineas-y-mejora-tu-composicion-fotografica/",
+        "https://www.dzoom.org.es/todos-los-secretos-del-centro-de-atencion-de-tus-fotografias/",
+        "https://www.dzoom.org.es/como-sacar-partido-al-elemento-olvidado-de-la-composicion-el-espacio/"
+      ],
+      "licencia": "CC BY-SA"
+    },
+    {
+      "fuente": "Mobile Photo Awards",
+      "url": "https://mobilephotoawards.com/people-winners-14th-annual-mpa/",
+      "descripcion": "Inspiración de fotógrafos ganadores con celular"
+    }
+  ],
+  "actualizacion": "2026-06-14",
+  "version": "1.0"
+}
