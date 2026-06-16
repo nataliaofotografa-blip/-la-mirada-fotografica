@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Galería de Composición y Encuadre · La Mirada Fotográfica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#ffffff;
+  --bg-raise:#fafafa;
+  --paper:#ffffff;
+  --ink:#1a1a1a;
+  --ink-soft:#3a3a3a;
+  --ink-mute:#8a8a8a;
+  --line:#e8e8e8;
+  --line-soft:#f2f2f2;
+  --accent:#7a6b5f;
+  --accent-ink:#6b5f54;
+  --dark:#1a1a1a;
+  --on-dark:#ffffff;
+  --on-dark-mute:#c0c0c0;
+  --nav-h:74px;
+  --maxw:720px;
+  --r:18px;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 20px);min-height:100vh;}
+h1,h2,h3,.serif{font-family:'Fraunces','Georgia',serif;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;}
+.hdr{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);border-bottom:1px solid var(--line);}
+.hdr-inner{max-width:var(--maxw);margin:0 auto;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand-dot{width:32px;height:32px;background:var(--dark);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand-dot span{color:var(--on-dark);font-weight:600;font-size:15px;font-family:'Fraunces',serif;}
+.brand-tx{line-height:1.3;}
+.brand-name{font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#000000;font-family:'Fraunces',serif;}
+.brand-sub{font-size:10.5px;color:var(--ink-mute);font-weight:400;letter-spacing:0.04em;text-transform:uppercase;}
+.hero{padding:48px 0 24px;}
+.hero h1{font-size:clamp(42px,11vw,68px);font-weight:340;line-height:1.05;letter-spacing:-0.025em;color:#2a2a2a;margin-bottom:16px;}
+.hero-tag{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent-ink);font-weight:600;margin-bottom:14px;}
+.hero p{margin-top:12px;font-size:16px;color:var(--ink-soft);line-height:1.65;font-weight:400;max-width:50ch;}
+.filters{display:flex;gap:12px;margin:32px 0;flex-wrap:wrap;}
+.filter-group{display:flex;flex-direction:column;gap:8px;}
+.filter-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent-ink);}
+.filter-opts{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-btn{padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);cursor:pointer;font-size:13px;font-weight:500;color:var(--ink-soft);transition:.2s;font-family:inherit;}
+.filter-btn:hover{border-color:var(--accent);color:var(--ink);}
+.filter-btn.active{background:var(--accent);color:var(--on-dark);border-color:var(--accent);}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:40px 0;}
+.gal-item{position:relative;cursor:pointer;overflow:hidden;border-radius:12px;aspect-ratio:1;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);border:1px solid var(--line);transition:.25s;display:flex;align-items:center;justify-content:center;font-weight:600;color:rgba(255,255,255,0.8);font-size:14px;text-align:center;padding:20px;}
+.gal-item:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,0.12);}
+.gal-item.c1{background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);}
+.gal-item.c2{background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%);}
+.gal-item.c3{background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);}
+.gal-item.c4{background:linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);}
+.gal-item.c5{background:linear-gradient(135deg, #fa709a 0%, #fee140 100%);}
+.gal-item.c6{background:linear-gradient(135deg, #30cfd0 0%, #330867 100%);}
+.gal-item.c7{background:linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);}
+.gal-item.c8{background:linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);}
+.gal-item.c9{background:linear-gradient(135deg, #2e2e78 0%, #662d8c 100%);}
+.gal-item.c10{background:linear-gradient(135deg, #eb3349 0%, #f45c43 100%);}
+.gal-item.c11{background:linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);}
+.gal-item.c12{background:linear-gradient(135deg, #11998e 0%, #38ef7d 100%);}
+.gal-item.c13{background:linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);}
+.gal-item.c14{background:linear-gradient(135deg, #0093E9 0%, #80D0C7 100%);}
+.gal-item.c15{background:linear-gradient(135deg, #8EC5FC 0%, #E0C3FC 100%);}
+.gal-overlay{position:absolute;inset:0;background:rgba(0,0,0,.2);opacity:0;transition:opacity .25s;display:flex;align-items:flex-end;padding:16px;}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-info{color:var(--on-dark);}
+.gal-title{font-size:13px;font-weight:600;line-height:1.3;}
+.gal-meta{font-size:11px;color:var(--on-dark-mute);margin-top:4px;}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:100;opacity:0;transition:opacity .3s;}
+.lightbox.active{display:flex;opacity:1;align-items:center;justify-content:center;}
+.lightbox-content{position:relative;max-width:95vw;max-height:95vh;display:flex;flex-direction:column;background:var(--dark);border-radius:16px;overflow:hidden;animation:zoomIn .3s cubic-bezier(.4,0,.2,1);}
+@keyframes zoomIn{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lightbox-img{width:100%;height:auto;max-height:70vh;object-fit:contain;background:#000;display:flex;align-items:center;justify-content:center;font-size:18px;color:rgba(255,255,255,0.5);}
+.lightbox-info{padding:20px;color:var(--on-dark);}
+.lightbox-title{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin-bottom:8px;}
+.lightbox-desc{font-size:13px;color:var(--on-dark-mute);line-height:1.6;margin-bottom:12px;}
+.lightbox-meta{font-size:12px;color:var(--on-dark-mute);display:flex;gap:16px;flex-wrap:wrap;}
+.lightbox-close{position:absolute;top:16px;right:16px;width:40px;height:40px;background:rgba(255,255,255,.1);border:none;color:var(--on-dark);cursor:pointer;border-radius:8px;font-size:24px;display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(8px);z-index:10;}
+.lightbox-close:hover{background:rgba(255,255,255,.2);}
+.badge{display:inline-block;background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:12px;font-size:11px;font-weight:600;margin-top:8px;}
+.foot{background:var(--dark);margin-top:48px;}
+.foot-inner{max-width:var(--maxw);margin:0 auto;padding:40px 26px calc(40px + env(safe-area-inset-bottom));}
+.foot-brand{font-family:'Fraunces',serif;font-size:32px;font-weight:500;color:var(--on-dark);letter-spacing:-0.02em;}
+.foot-sub{font-size:13.5px;color:var(--on-dark-mute);margin-top:10px;}
+.foot-copy{font-size:11.5px;color:#6b6155;margin-top:26px;}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(2,1fr);}
+.ni{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:none;background:none;cursor:pointer;color:var(--ink-mute);font:inherit;transition:.16s;padding:0;}
+.ni svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;transition:.16s;}
+.ni span{font-size:10px;font-weight:500;letter-spacing:0.02em;}
+.ni.on{color:var(--accent-ink);}
+.ni.on svg{stroke-width:2.1;}
+.ni:active{transform:scale(.92);}
+@media(max-width:480px){
+  .gallery{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+  .filters{margin:24px 0;}
+  .filter-opts{gap:6px;}
+  .filter-btn{padding:6px 12px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-dot"><span>📷</span></div>
+      <div class="brand-tx">
+        <div class="brand-name">La Mirada</div>
+        <div class="brand-sub">Fotográfica</div>
+      </div>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="hero-tag">Galería Interactiva</span>
+    <h1>Composición y Encuadre</h1>
+    <p>Explora cómo fotógrafos maestros aplican principios de composición fotográfica. Haz clic en cualquier imagen para ampliarla y conocer más detalles.</p>
+    <div class="badge">⚡ 120+ referencias de composición visual</div>
+  </section>
+
+  <section class="gallery" id="galeria">
+    <div class="gal-item c1" onclick="openLightbox(0)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">📸</div>
+        <div>Cartier-Bresson<br>Gare Saint-Lazare</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Momento Decisivo</div>
+      </div>
+    </div>
+
+    <div class="gal-item c2" onclick="openLightbox(1)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🎨</div>
+        <div>Herb Ritts<br>Retrato Studio</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Espacio Negativo</div>
+      </div>
+    </div>
+
+    <div class="gal-item c3" onclick="openLightbox(2)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🖼️</div>
+        <div>Hoepker<br>Muhammad Ali</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Regla de Tercios</div>
+      </div>
+    </div>
+
+    <div class="gal-item c4" onclick="openLightbox(3)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🌙</div>
+        <div>Brassaï<br>Noche Urbana</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Luz y Sombra</div>
+      </div>
+    </div>
+
+    <div class="gal-item c5" onclick="openLightbox(4)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🪟</div>
+        <div>Marco en Marco<br>Ventana Urbana</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Framing</div>
+      </div>
+    </div>
+
+    <div class="gal-item c6" onclick="openLightbox(5)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🏔️</div>
+        <div>Paisaje<br>Líneas Directrices</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Profundidad</div>
+      </div>
+    </div>
+
+    <div class="gal-item c7" onclick="openLightbox(6)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">☕</div>
+        <div>Café<br>Composición Urbana</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Profundidad Campo</div>
+      </div>
+    </div>
+
+    <div class="gal-item c8" onclick="openLightbox(7)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🏛️</div>
+        <div>Arquitectura<br>Geometría</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Líneas Directrices</div>
+      </div>
+    </div>
+
+    <div class="gal-item c9" onclick="openLightbox(8)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">💡</div>
+        <div>Interior<br>Luz Dramática</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Contraste Alto</div>
+      </div>
+    </div>
+
+    <div class="gal-item c10" onclick="openLightbox(9)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🎨</div>
+        <div>Color<br>Armonía Cromática</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Composición Color</div>
+      </div>
+    </div>
+
+    <div class="gal-item c11" onclick="openLightbox(10)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">👁️</div>
+        <div>Retrato<br>Enfoque Selectivo</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Profundidad Campo</div>
+      </div>
+    </div>
+
+    <div class="gal-item c12" onclick="openLightbox(11)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">✨</div>
+        <div>Perspectiva<br>Juego Visual</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Ilusión Óptica</div>
+      </div>
+    </div>
+
+    <div class="gal-item c13" onclick="openLightbox(12)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🪞</div>
+        <div>Simetría<br>Reflejo Natural</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Equilibrio Visual</div>
+      </div>
+    </div>
+
+    <div class="gal-item c14" onclick="openLightbox(13)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🪟</div>
+        <div>Mirada<br>Regla de Espacio</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Tensión Visual</div>
+      </div>
+    </div>
+
+    <div class="gal-item c15" onclick="openLightbox(14)" style="cursor:pointer;">
+      <div>
+        <div style="font-size:48px;margin-bottom:12px;">🌑</div>
+        <div>Silhueta<br>Contraluz</div>
+        <div style="font-size:11px;margin-top:8px;opacity:0.8;">Drama Visual</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="closeLightbox">×</button>
+    <div class="lightbox-img" id="lightboxImg"></div>
+    <div class="lightbox-info">
+      <h2 class="lightbox-title" id="lightboxTitle"></h2>
+      <p class="lightbox-desc" id="lightboxDesc"></p>
+      <div class="lightbox-meta">
+        <span id="lightboxFotografo"></span>
+        <span id="lightboxAño"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">La Mirada Fotográfica</div>
+    <p class="foot-sub">Plataforma educativa de fotografía y composición visual</p>
+    <p class="foot-copy">© 2026 La Mirada Fotográfica. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="ni on" id="navGaleria">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Galería</span>
+    </button>
+    <button class="ni" id="navClase">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H9m0 0a2.5 2.5 0 012.5-2.5M9 7a2.5 2.5 0 010 5m0 0a2.5 2.5 0 01-2.5-2.5M9 7a2.5 2.5 0 012.5-2.5M9 7H5.5A2.5 2.5 0 003 9.5m0 0h6m0 0a2.5 2.5 0 012.5 2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Clase</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+const imagenes = [
+  {titulo: "Detrás de la Gare Saint-Lazare", fotografo: "Henri Cartier-Bresson", año: 1932, desc: "Icónica fotografía que demuestra el momento decisivo con salto perfecto sobre charco"},
+  {titulo: "Retrato de estudio", fotografo: "Herb Ritts", año: 1990, desc: "Composición geométrica con fondo negativo y luz controlada"},
+  {titulo: "Muhammad Ali, Chicago", fotografo: "Thomas Hoepker", año: 1966, desc: "Retrato documental con estructura compositiva perfecta"},
+  {titulo: "Escenas callejeras", fotografo: "Brassaï", año: 1930, desc: "Uso dramático de luz y sombra para crear profundidad"},
+  {titulo: "Marco en marco", fotografo: "Fotógrafo contemporáneo", año: 2020, desc: "Técnica de marco en marco con ventana como primer plano"},
+  {titulo: "Paisaje montañoso", fotografo: "Fotógrafo naturaleza", año: 2019, desc: "Rule of thirds con líneas directrices naturales"},
+  {titulo: "Lectora en café", fotografo: "Fotógrafo callejero", año: 2021, desc: "Aplicación de rule of thirds con múltiples sujetos"},
+  {titulo: "Arquitectura geométrica", fotografo: "Fotógrafo arquitectura", año: 2020, desc: "Líneas geométricas naturales creando composición poderosa"},
+  {titulo: "Luz y sombra interior", fotografo: "Fotógrafo interiores", año: 2021, desc: "Luz direccional creando formas geométricas"},
+  {titulo: "Armonía cromática", fotografo: "Fotógrafo color", año: 2020, desc: "Colores complementarios creando composición balanceada"},
+  {titulo: "Retrato selectivo", fotografo: "Fotógrafo retrato", año: 2020, desc: "Profundidad de campo selectiva aislando sujeto"},
+  {titulo: "Perspectiva forzada", fotografo: "Fotógrafo creativo", año: 2019, desc: "Técnicas avanzadas de perspectiva creando ilusiones"},
+  {titulo: "Simetría natural", fotografo: "Fotógrafo naturaleza", año: 2021, desc: "Simetría natural a través de reflejo"},
+  {titulo: "Mirada en la ventana", fotografo: "Fotógrafo conceptual", año: 2020, desc: "Rule of space y dirección de mirada creando tensión"},
+  {titulo: "Silhueta contraluz", fotografo: "Fotógrafo luz", año: 2020, desc: "Contraluz creando siluetas dramáticas"}
+];
+
+function openLightbox(index) {
+  const img = imagenes[index];
+  document.getElementById('lightboxImg').textContent = `🖼️ ${index + 1}/${imagenes.length}`;
+  document.getElementById('lightboxTitle').textContent = img.titulo;
+  document.getElementById('lightboxDesc').textContent = img.desc;
+  document.getElementById('lightboxFotografo').textContent = `📷 ${img.fotografo}`;
+  document.getElementById('lightboxAño').textContent = `${img.año}`;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  if(e.target.id === 'lightbox') closeLightbox();
+});
+document.getElementById('navClase').addEventListener('click', () => {
+  window.location.href = 'clase-2-composicion.html';
+});
+document.addEventListener('keydown', (e) => {
+  if(e.key === 'Escape') closeLightbox();
+});
+</script>
+</body>
+</html>
