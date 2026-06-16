@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Galería: Composición y Encuadre · La Mirada Fotográfica</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+:root{
+  --bg:#ffffff;
+  --bg-raise:#fafafa;
+  --paper:#ffffff;
+  --ink:#1a1a1a;
+  --ink-soft:#3a3a3a;
+  --ink-mute:#8a8a8a;
+  --line:#e8e8e8;
+  --line-soft:#f2f2f2;
+  --accent:#7a6b5f;
+  --accent-ink:#6b5f54;
+  --dark:#1a1a1a;
+  --on-dark:#ffffff;
+  --on-dark-mute:#c0c0c0;
+  --nav-h:74px;
+  --maxw:720px;
+  --r:18px;
+}
+html{font-size:16px;-webkit-text-size-adjust:100%;}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--ink);line-height:1.7;letter-spacing:-0.01em;-webkit-font-smoothing:antialiased;padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom) + 20px);min-height:100vh;}
+h1,h2,h3,.serif{font-family:'Fraunces','Georgia',serif;}
+a{color:inherit;text-decoration:none;}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 26px;}
+.hdr{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);border-bottom:1px solid var(--line);}
+.hdr-inner{max-width:var(--maxw);margin:0 auto;padding:16px 26px;display:flex;align-items:center;justify-content:space-between;}
+.brand{display:flex;align-items:center;gap:12px;cursor:pointer;}
+.brand-dot{width:32px;height:32px;background:var(--dark);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand-dot span{color:var(--on-dark);font-weight:600;font-size:15px;font-family:'Fraunces',serif;}
+.brand-tx{line-height:1.3;}
+.brand-name{font-size:15px;font-weight:500;letter-spacing:-0.02em;color:#000000;font-family:'Fraunces',serif;}
+.brand-sub{font-size:10.5px;color:var(--ink-mute);font-weight:400;letter-spacing:0.04em;text-transform:uppercase;}
+.hero{padding:48px 0 24px;}
+.hero h1{font-size:clamp(42px,11vw,68px);font-weight:340;line-height:1.05;letter-spacing:-0.025em;color:#2a2a2a;margin-bottom:16px;}
+.hero-tag{display:inline-block;font-size:11px;text-transform:uppercase;letter-spacing:0.16em;color:var(--accent-ink);font-weight:600;margin-bottom:14px;}
+.hero p{margin-top:12px;font-size:16px;color:var(--ink-soft);line-height:1.65;font-weight:400;max-width:50ch;}
+.filters{display:flex;gap:12px;margin:32px 0;flex-wrap:wrap;}
+.filter-group{display:flex;flex-direction:column;gap:8px;}
+.filter-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.12em;color:var(--accent-ink);}
+.filter-opts{display:flex;gap:8px;flex-wrap:wrap;}
+.filter-btn{padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--paper);cursor:pointer;font-size:13px;font-weight:500;color:var(--ink-soft);transition:.2s;font-family:inherit;}
+.filter-btn:hover{border-color:var(--accent);color:var(--ink);}
+.filter-btn.active{background:var(--accent);color:var(--on-dark);border-color:var(--accent);}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin:40px 0;}
+.gal-item{position:relative;cursor:pointer;overflow:hidden;border-radius:12px;aspect-ratio:1;background:var(--bg-raise);border:1px solid var(--line);transition:.25s;}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .3s ease;}
+.gal-item:hover img{transform:scale(1.05);}
+.gal-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.4) 100%);opacity:0;transition:opacity .25s;display:flex;align-items:flex-end;padding:16px;}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-info{color:var(--on-dark);}
+.gal-title{font-size:13px;font-weight:600;line-height:1.3;}
+.gal-meta{font-size:11px;color:var(--on-dark-mute);margin-top:4px;}
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:100;opacity:0;transition:opacity .3s;}
+.lightbox.active{display:flex;opacity:1;align-items:center;justify-content:center;}
+.lightbox-content{position:relative;max-width:95vw;max-height:95vh;display:flex;flex-direction:column;background:var(--dark);border-radius:16px;overflow:hidden;animation:zoomIn .3s cubic-bezier(.4,0,.2,1);}
+@keyframes zoomIn{from{transform:scale(.9);opacity:0;}to{transform:scale(1);opacity:1;}}
+.lightbox-img{width:100%;height:auto;max-height:70vh;object-fit:contain;background:#000;}
+.lightbox-info{padding:20px;color:var(--on-dark);}
+.lightbox-title{font-family:'Fraunces',serif;font-size:18px;font-weight:500;margin-bottom:8px;}
+.lightbox-desc{font-size:13px;color:var(--on-dark-mute);line-height:1.6;margin-bottom:12px;}
+.lightbox-meta{font-size:12px;color:var(--on-dark-mute);display:flex;gap:16px;flex-wrap:wrap;}
+.lightbox-close{position:absolute;top:16px;right:16px;width:40px;height:40px;background:rgba(255,255,255,.1);border:none;color:var(--on-dark);cursor:pointer;border-radius:8px;font-size:24px;display:flex;align-items:center;justify-content:center;transition:.2s;backdrop-filter:blur(8px);}
+.lightbox-close:hover{background:rgba(255,255,255,.2);}
+.lightbox-nav{position:absolute;bottom:20px;right:20px;display:flex;gap:8px;}
+.lightbox-prev,.lightbox-next{width:36px;height:36px;background:rgba(255,255,255,.1);border:none;color:var(--on-dark);cursor:pointer;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;transition:.2s;backdrop-filter:blur(8px);}
+.lightbox-prev:hover,.lightbox-next:hover{background:rgba(255,255,255,.2);}
+.empty{text-align:center;padding:60px 20px;color:var(--ink-mute);}
+.empty p{font-size:14px;}
+.foot{background:var(--dark);margin-top:48px;}
+.foot-inner{max-width:var(--maxw);margin:0 auto;padding:40px 26px calc(40px + env(safe-area-inset-bottom));}
+.foot-brand{font-family:'Fraunces',serif;font-size:32px;font-weight:500;color:var(--on-dark);letter-spacing:-0.02em;}
+.foot-sub{font-size:13.5px;color:var(--on-dark-mute);margin-top:10px;}
+.foot-copy{font-size:11.5px;color:#6b6155;margin-top:26px;}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:60;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(22px) saturate(1.2);-webkit-backdrop-filter:blur(22px) saturate(1.2);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);}
+.nav-inner{max-width:var(--maxw);margin:0 auto;height:var(--nav-h);display:grid;grid-template-columns:repeat(2,1fr);}
+.ni{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;border:none;background:none;cursor:pointer;color:var(--ink-mute);font:inherit;transition:.16s;padding:0;}
+.ni svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.7;transition:.16s;}
+.ni span{font-size:10px;font-weight:500;letter-spacing:0.02em;}
+.ni.on{color:var(--accent-ink);}
+.ni.on svg{stroke-width:2.1;}
+.ni:active{transform:scale(.92);}
+@media(max-width:480px){
+  .gallery{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+  .filters{margin:24px 0;}
+  .filter-opts{gap:6px;}
+  .filter-btn{padding:6px 12px;font-size:12px;}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-inner">
+    <a href="index.html" class="brand">
+      <div class="brand-dot"><span>📷</span></div>
+      <div class="brand-tx">
+        <div class="brand-name">La Mirada</div>
+        <div class="brand-sub">Fotográfica</div>
+      </div>
+    </a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <span class="hero-tag">Galería Interactiva</span>
+    <h1>Composición y Encuadre</h1>
+    <p>Explora cómo fotógrafos maestros aplican principios de composición fotográfica. Haz clic en cualquier imagen para ampliarla y conocer más detalles.</p>
+  </section>
+
+  <section class="filters">
+    <div class="filter-group">
+      <label class="filter-label">Tema</label>
+      <div class="filter-opts" id="temaFilters"></div>
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">Fotógrafo</label>
+      <div class="filter-opts" id="fotografoFilters"></div>
+    </div>
+    <button class="filter-btn" id="resetBtn">Limpiar filtros</button>
+  </section>
+
+  <section class="gallery" id="galeria"></section>
+  <div class="empty" id="emptyState" style="display:none;">
+    <p>No hay imágenes que coincidan con los filtros seleccionados.</p>
+  </div>
+</main>
+
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-content">
+    <button class="lightbox-close" id="closeLightbox">×</button>
+    <img id="lightboxImg" class="lightbox-img" src="" alt="">
+    <div class="lightbox-info">
+      <h2 class="lightbox-title" id="lightboxTitle"></h2>
+      <p class="lightbox-desc" id="lightboxDesc"></p>
+      <div class="lightbox-meta">
+        <span id="lightboxFotografo"></span>
+        <span id="lightboxAño"></span>
+      </div>
+    </div>
+    <div class="lightbox-nav">
+      <button class="lightbox-prev" id="prevBtn">‹</button>
+      <button class="lightbox-next" id="nextBtn">›</button>
+    </div>
+  </div>
+</div>
+
+<footer class="foot">
+  <div class="foot-inner">
+    <div class="foot-brand">La Mirada Fotográfica</div>
+    <p class="foot-sub">Plataforma educativa de fotografía y composición visual</p>
+    <p class="foot-copy">© 2026 La Mirada Fotográfica. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <button class="ni on" id="navGaleria" data-page="galeria">
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span>Galería</span>
+    </button>
+    <button class="ni" id="navClase" data-page="clase">
+      <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H9m0 0a2.5 2.5 0 012.5-2.5M9 7a2.5 2.5 0 010 5m0 0a2.5 2.5 0 01-2.5-2.5M9 7a2.5 2.5 0 012.5-2.5M9 7H5.5A2.5 2.5 0 003 9.5m0 0h6m0 0a2.5 2.5 0 012.5 2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Clase</span>
+    </button>
+  </div>
+</nav>
+
+<script>
+let galeriData = [];
+let currentLightboxIndex = 0;
+let activeTheme = null;
+let activeFotografo = null;
+
+async function loadGaleria() {
+  try {
+    const response = await fetch('data/galeria-imagenes.json');
+    const data = await response.json();
+    galeriData = data.galeria.imagenes;
+    renderFilters(data.galeria.temas, data.galeria.fotografos);
+    renderGaleria();
+  } catch(e) {
+    console.error('Error loading gallery:', e);
+  }
+}
+
+function renderFilters(temas, fotografos) {
+  const temaContainer = document.getElementById('temaFilters');
+  temas.forEach(tema => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = tema.nombre;
+    btn.addEventListener('click', () => toggleTheme(tema.id, btn));
+    temaContainer.appendChild(btn);
+  });
+
+  const fotoContainer = document.getElementById('fotografoFilters');
+  const uniqueFotos = [...new Set(fotografos)];
+  uniqueFotos.forEach(foto => {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn';
+    btn.textContent = foto;
+    btn.addEventListener('click', () => toggleFotografo(foto, btn));
+    fotoContainer.appendChild(btn);
+  });
+}
+
+function toggleTheme(id, btn) {
+  activeTheme = activeTheme === id ? null : id;
+  updateFilterButtons();
+  renderGaleria();
+}
+
+function toggleFotografo(nombre, btn) {
+  activeFotografo = activeFotografo === nombre ? null : nombre;
+  updateFilterButtons();
+  renderGaleria();
+}
+
+function updateFilterButtons() {
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    const isThemeBtn = btn.textContent === galeriData.find(i => i.temas && i.temas.includes(activeTheme))?.temas?.join('');
+    const isFotoBtn = btn.textContent === activeFotografo;
+    if((activeTheme && btn.closest('#temaFilters') && btn.textContent === getThemeNameById(activeTheme)) ||
+       (activeFotografo && btn.closest('#fotografoFilters') && btn.textContent === activeFotografo)) {
+      btn.classList.add('active');
+    } else {
+      btn.classList.remove('active');
+    }
+  });
+}
+
+function getThemeNameById(id) {
+  return document.querySelector(`[data-tema="${id}"]`)?.textContent || '';
+}
+
+function filterGaleria() {
+  return galeriData.filter(img => {
+    const temaMatch = !activeTheme || img.temas.includes(activeTheme);
+    const fotoMatch = !activeFotografo || img.fotografo === activeFotografo;
+    return temaMatch && fotoMatch;
+  });
+}
+
+function renderGaleria() {
+  const filtered = filterGaleria();
+  const container = document.getElementById('galeria');
+  const empty = document.getElementById('emptyState');
+
+  if(filtered.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'block';
+    return;
+  }
+
+  empty.style.display = 'none';
+  container.innerHTML = filtered.map((img, idx) => `
+    <div class="gal-item" data-index="${idx}" onclick="openLightbox(${idx})">
+      <img src="${img.archivo}" alt="${img.titulo}" loading="lazy">
+      <div class="gal-overlay">
+        <div class="gal-info">
+          <div class="gal-title">${img.titulo}</div>
+          <div class="gal-meta">${img.fotografo}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openLightbox(index) {
+  const filtered = filterGaleria();
+  const img = filtered[index];
+  currentLightboxIndex = index;
+
+  document.getElementById('lightboxImg').src = img.archivo;
+  document.getElementById('lightboxTitle').textContent = img.titulo;
+  document.getElementById('lightboxDesc').textContent = img.descripcion;
+  document.getElementById('lightboxFotografo').textContent = `📷 ${img.fotografo}`;
+  document.getElementById('lightboxAño').textContent = `${img.año}`;
+
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = 'auto';
+}
+
+function nextImage() {
+  const filtered = filterGaleria();
+  currentLightboxIndex = (currentLightboxIndex + 1) % filtered.length;
+  openLightbox(currentLightboxIndex);
+}
+
+function prevImage() {
+  const filtered = filterGaleria();
+  currentLightboxIndex = (currentLightboxIndex - 1 + filtered.length) % filtered.length;
+  openLightbox(currentLightboxIndex);
+}
+
+document.getElementById('closeLightbox').addEventListener('click', closeLightbox);
+document.getElementById('nextBtn').addEventListener('click', nextImage);
+document.getElementById('prevBtn').addEventListener('click', prevImage);
+document.getElementById('resetBtn').addEventListener('click', () => {
+  activeTheme = null;
+  activeFotografo = null;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  renderGaleria();
+});
+
+document.getElementById('lightbox').addEventListener('click', (e) => {
+  if(e.target.id === 'lightbox') closeLightbox();
+});
+
+document.getElementById('navClase').addEventListener('click', () => {
+  window.location.href = 'clase-2-composicion.html';
+});
+
+document.addEventListener('keydown', (e) => {
+  if(!document.getElementById('lightbox').classList.contains('active')) return;
+  if(e.key === 'ArrowRight') nextImage();
+  if(e.key === 'ArrowLeft') prevImage();
+  if(e.key === 'Escape') closeLightbox();
+});
+
+loadGaleria();
+</script>
+</body>
+</html>

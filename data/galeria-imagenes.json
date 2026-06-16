@@ -1,0 +1,279 @@
+{
+  "galeria": {
+    "titulo": "Galería de Composición y Encuadre",
+    "descripcion": "Colección de fotografías que demuestran principios fundamentales de composición y encuadre fotográfico",
+    "imagenes": [
+      {
+        "id": 1,
+        "titulo": "Detrás de la Gare Saint-Lazare",
+        "fotografo": "Henri Cartier-Bresson",
+        "año": 1932,
+        "archivo": "clase-2/cartier-bresson-gare-saint-lazare.jpg",
+        "temas": ["regla-tercios", "lineas-directrices", "profundidad", "momento-decisivo"],
+        "descripcion": "Icónica fotografía de calle que demuestra el momento decisivo con salto perfecto sobre charco, composición dinámica con líneas compositivas que guían la vista",
+        "modulos": ["lineas-directrices", "profundidad-encuadre", "momento-decisivo"],
+        "credito": "Magnum Photos",
+        "cc": false,
+        "anotaciones": true
+      },
+      {
+        "id": 2,
+        "titulo": "Retrato de estudio - Framing elegante",
+        "fotografo": "Herb Ritts",
+        "año": 1990,
+        "archivo": "clase-2/herb-ritts-portrait.jpg",
+        "temas": ["espacio-negativo", "framing", "luz-sombra", "contraste"],
+        "descripcion": "Retrato en estudio que demuestra composición geométrica con fondo negativo y uso sofisticado de luz controlada",
+        "modulos": ["espacio-negativo", "luz-control"],
+        "credito": "Herb Ritts Foundation",
+        "cc": false,
+        "anotaciones": false
+      },
+      {
+        "id": 3,
+        "titulo": "Muhammad Ali, Chicago",
+        "fotografo": "Thomas Hoepker",
+        "año": 1966,
+        "archivo": "clase-2/hoepker-muhammad-ali.jpg",
+        "temas": ["regla-tercios", "retrato", "momento-decisivo", "composicion-geometrica"],
+        "descripcion": "Retrato documental con anotaciones de composición que muestran cómo se estructuran elementos dentro del encuadre",
+        "modulos": ["regla-tercios", "retrato-composicion"],
+        "credito": "Magnum Photos",
+        "cc": false,
+        "anotaciones": true
+      },
+      {
+        "id": 4,
+        "titulo": "Escenas callejeras - Brassaï",
+        "fotografo": "Brassaï",
+        "año": 1930,
+        "archivo": "clase-2/brassai-street-night.jpg",
+        "temas": ["luz-sombra", "contraste", "atmosfera", "composicion-nocturna"],
+        "descripcion": "Fotografía nocturna que demuestra el uso dramático de luz y sombra para crear profundidad y atmósfera",
+        "modulos": ["luz-sombra", "contraste-tonal"],
+        "credito": "Estate of Brassaï",
+        "cc": false,
+        "anotaciones": false
+      },
+      {
+        "id": 5,
+        "titulo": "Ventana urbana - Marco en marco",
+        "fotografo": "Fotógrafo contemporáneo",
+        "año": 2020,
+        "archivo": "clase-2/frame-in-frame-ventana.jpg",
+        "temas": ["marco-en-marco", "framing", "profundidad", "lineas-directrices", "mirada-dirigida"],
+        "descripcion": "Composición contemporánea que demuestra la técnica de marco en marco con ventana como primer plano, rule of thirds aplicada, y gaze directing al fondo",
+        "modulos": ["marco-en-marco", "profundidad-encuadre", "lineas-directrices"],
+        "credito": "Fotógrafos contemporáneos",
+        "cc": true,
+        "anotaciones": true
+      },
+      {
+        "id": 6,
+        "titulo": "Paisaje montañoso - Composición estratégica",
+        "fotografo": "Fotógrafo de naturaleza",
+        "año": 2019,
+        "archivo": "clase-2/landscape-rule-thirds.jpg",
+        "temas": ["regla-tercios", "lineas-directrices", "profundidad", "perspectiva-diminuyente"],
+        "descripcion": "Fotografía de paisaje que muestra cómo la rule of thirds, las líneas directrices naturales (río), y las capas de profundidad crean una composición fuerte",
+        "modulos": ["regla-tercios", "lineas-directrices", "profundidad-encuadre"],
+        "credito": "Creative Commons",
+        "cc": true,
+        "anotaciones": true
+      },
+      {
+        "id": 7,
+        "titulo": "Lectora en café - Composición urbana",
+        "fotografo": "Fotógrafo callejero",
+        "año": 2021,
+        "archivo": "clase-2/cafe-reader-composition.jpg",
+        "temas": ["regla-tercios", "profundidad-campo", "framing-natural", "contraste"],
+        "descripcion": "Escena cotidiana que demuestra cómo aplicar la rule of thirds con múltiples sujetos, profundidad de campo, y la técnica de framing natural con elemento de ventana",
+        "modulos": ["regla-tercios", "profundidad-encuadre", "framing"],
+        "credito": "Fotógrafos urbanos",
+        "cc": true,
+        "anotaciones": true
+      },
+      {
+        "id": 8,
+        "titulo": "Arquitectura geométrica - Composición minimalista",
+        "fotografo": "Fotógrafo de arquitectura",
+        "año": 2020,
+        "archivo": "clase-2/geometric-architecture.jpg",
+        "temas": ["geometria", "simetria", "lineas-directrices", "perspectiva", "minimalismo"],
+        "descripcion": "Fotografía arquitectónica que demuestra cómo las líneas geométricas naturales crean una composición poderosa con perspectiva y simetría",
+        "modulos": ["lineas-directrices", "simetria", "perspectiva"],
+        "credito": "Fotógrafos de arquitectura",
+        "cc": true,
+        "anotaciones": false
+      },
+      {
+        "id": 9,
+        "titulo": "Estudio de luz y sombra - Interior dramático",
+        "fotografo": "Fotógrafo de interiores",
+        "año": 2021,
+        "archivo": "clase-2/light-shadow-dramatic.jpg",
+        "temas": ["luz-sombra", "contraste-alto", "atmosfera", "composicion-geometrica"],
+        "descripcion": "Escena interior que utiliza luz direccional para crear formas geométricas y profundidad mediante contraste extremo",
+        "modulos": ["luz-sombra", "contraste-tonal"],
+        "credito": "Fotógrafos de interiores",
+        "cc": true,
+        "anotaciones": false
+      },
+      {
+        "id": 10,
+        "titulo": "Composición de colores - Armonía cromática",
+        "fotografo": "Fotógrafo de color",
+        "año": 2020,
+        "archivo": "clase-2/color-harmony-composition.jpg",
+        "temas": ["color-armonia", "contraste-complementario", "composicion-geometrica", "lineas-directrices"],
+        "descripcion": "Fotografía a color que demuestra cómo los colores complementarios y las formas geométricas crean una composición visualmente equilibrada",
+        "modulos": ["color-composicion", "lineas-directrices"],
+        "credito": "Fotógrafos de color",
+        "cc": true,
+        "anotaciones": true
+      },
+      {
+        "id": 11,
+        "titulo": "Retrato con enfoque selectivo",
+        "fotografo": "Fotógrafo de retrato",
+        "año": 2020,
+        "archivo": "clase-2/portrait-selective-focus.jpg",
+        "temas": ["profundidad-campo", "enfoque-selectivo", "retrato", "bokeh-composicion"],
+        "descripcion": "Retrato que utiliza profundidad de campo selectiva para aislar al sujeto del fondo, con composición que sigue rule of thirds",
+        "modulos": ["profundidad-encuadre", "retrato-composicion"],
+        "credito": "Fotógrafos de retrato",
+        "cc": true,
+        "anotaciones": false
+      },
+      {
+        "id": 12,
+        "titulo": "Perspectiva forzada - Juego visual",
+        "fotografo": "Fotógrafo creativo",
+        "año": 2019,
+        "archivo": "clase-2/forced-perspective.jpg",
+        "temas": ["perspectiva-forzada", "juego-visual", "profundidad-ilusion", "lineas-directrices"],
+        "descripcion": "Fotografía que demuestra técnicas avanzadas de perspectiva para crear ilusiones de profundidad y movimiento",
+        "modulos": ["perspectiva", "profundidad-encuadre"],
+        "credito": "Fotógrafos creativos",
+        "cc": true,
+        "anotaciones": false
+      },
+      {
+        "id": 13,
+        "titulo": "Simetría natural",
+        "fotografo": "Fotógrafo de naturaleza",
+        "año": 2021,
+        "archivo": "clase-2/natural-symmetry.jpg",
+        "temas": ["simetria", "reflejo", "composicion-lineal"],
+        "descripcion": "Fotografía que captura simetría natural a través de reflejo, creando una composición equilibrada y armoniosa",
+        "modulos": ["simetria", "profundidad-encuadre"],
+        "credito": "Fotógrafos de naturaleza",
+        "cc": true,
+        "anotaciones": false
+      },
+      {
+        "id": 14,
+        "titulo": "Mirada en la ventana - Regla de espacio",
+        "fotografo": "Fotógrafo conceptual",
+        "año": 2020,
+        "archivo": "clase-2/gaze-rule-window.jpg",
+        "temas": ["regla-mirada", "regla-espacio", "profundidad-campo", "framing"],
+        "descripcion": "Composición que demuestra cómo la dirección de la mirada del sujeto y la rule of space crean tensión y equilibrio visual",
+        "modulos": ["profundidad-encuadre", "framing"],
+        "credito": "Fotógrafos conceptuales",
+        "cc": true,
+        "anotaciones": true
+      },
+      {
+        "id": 15,
+        "titulo": "Silhueta contra luz",
+        "fotografo": "Fotógrafo de luz",
+        "año": 2020,
+        "archivo": "clase-2/silhouette-backlight.jpg",
+        "temas": ["luz-contraluz", "silhueta", "contraste-extremo", "drama-visual"],
+        "descripcion": "Fotografía que utiliza luz de fondo para crear siluetas dramáticas, demostrando el poder compositivo de la contraluz",
+        "modulos": ["luz-sombra", "contraste-tonal"],
+        "credito": "Fotógrafos de luz",
+        "cc": true,
+        "anotaciones": false
+      }
+    ],
+    "temas": [
+      {
+        "id": "regla-tercios",
+        "nombre": "Regla de Tercios",
+        "descripcion": "División de la imagen en 9 secciones iguales para colocar elementos en intersecciones",
+        "modulo": "modulo-1"
+      },
+      {
+        "id": "espacio-negativo",
+        "nombre": "Espacio Negativo",
+        "descripcion": "Uso del espacio vacío alrededor del sujeto principal para crear impacto visual",
+        "modulo": "modulo-2"
+      },
+      {
+        "id": "lineas-directrices",
+        "nombre": "Líneas Directrices",
+        "descripcion": "Líneas que guían la vista del espectador a través de la imagen",
+        "modulo": "modulo-3"
+      },
+      {
+        "id": "profundidad",
+        "nombre": "Profundidad y Encuadre",
+        "descripcion": "Técnicas para crear sensación de profundidad en imágenes planas",
+        "modulo": "modulo-4"
+      },
+      {
+        "id": "luz-sombra",
+        "nombre": "Luz y Sombra",
+        "descripcion": "Control de iluminación para crear atmósfera y dirigir atención",
+        "modulo": "modulo-5"
+      },
+      {
+        "id": "movimiento",
+        "nombre": "Movimiento y Dinamismo",
+        "descripcion": "Técnicas para capturar o sugerir movimiento en fotografía estática",
+        "modulo": "modulo-6"
+      },
+      {
+        "id": "simetria",
+        "nombre": "Simetría y Patrones",
+        "descripcion": "Uso de repetición y simetría para crear composiciones armoniosamente equilibradas",
+        "modulo": "modulo-7"
+      },
+      {
+        "id": "framing",
+        "nombre": "Marco en Marco",
+        "descripcion": "Técnica de usar elementos en primer plano para enmarcar el sujeto principal",
+        "modulo": "modulo-8"
+      },
+      {
+        "id": "momento-decisivo",
+        "nombre": "Momento Decisivo",
+        "descripcion": "Captura del instante exacto donde todos los elementos confluyen perfectamente",
+        "modulo": "modulo-9"
+      },
+      {
+        "id": "color-composicion",
+        "nombre": "Color y Composición",
+        "descripcion": "Uso de armonía y contraste cromático como elemento compositivo",
+        "modulo": "modulo-10"
+      }
+    ],
+    "fotografos": [
+      "Henri Cartier-Bresson",
+      "Herb Ritts",
+      "Thomas Hoepker",
+      "Brassaï",
+      "Elliott Erwitt",
+      "Bruce Gilden",
+      "Diane Arbus",
+      "W. Eugene Smith",
+      "Daido Moriyama",
+      "Ansel Adams",
+      "Annie Leibovitz",
+      "Fotógrafos contemporáneos"
+    ]
+  }
+}
