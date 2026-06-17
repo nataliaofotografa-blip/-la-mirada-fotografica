@@ -135,9 +135,16 @@ a{color:inherit;text-decoration:none;}
     </a>
   </div>
 
-  <div style="padding:32px 0 0;text-align:center;color:var(--ink-mute);font-size:14px;border-top:1px solid var(--line);margin-top:36px;">
+  <div style="padding:32px 0 0;text-align:center;color:var(--ink-mute);font-size:14px;border-top:1px solid var(--line);margin-top:36px;margin-bottom:48px;">
     <p>Fuente: Artículos educativos de dZoom.org.es</p>
   </div>
+
+  <div style="margin-bottom:48px;">
+    <h2 style="font-family:'Fraunces',serif;font-size:32px;font-weight:400;letter-spacing:-0.02em;margin-bottom:12px;color:var(--ink);">Ejercicios Prácticos</h2>
+    <p style="font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:46ch;">Ahora que conoces las herramientas, es hora de practicar. Estos ejercicios están diseñados para desarrollar tu instinto compositivo.</p>
+  </div>
+
+  <div class="mod-list" id="ejercicios-container"></div>
 
 </main>
 
@@ -241,11 +248,93 @@ var CLASES_DATA=[
   }
 ];
 
-function renderContent(){
-  var modCont=document.getElementById('mod-container');
+var EJERCICIOS_DATA=[
+  {name:'Ejercicio Mental',desc:'Antes de fotografiar, pregúntate esto',
+   topics:[
+    {t:'¿QUÉ?',h:'<div class="tp">Define tu centro de interés. ¿De qué trata la foto? ¿Cuál es el protagonista? Sin respuesta clara, no hay composición.</div>'},
+    {t:'¿CÓMO?',h:'<div class="tp">¿Qué técnica compositiva vas a usar? ¿Regla de tercios? ¿Líneas directrices? ¿Espacio negativo? Elige una herramienta consciente.</div>'},
+    {t:'¿PARA QUÉ?',h:'<div class="tp">¿Qué quieres que sienta quien mira tu foto? ¿Calma? ¿Dinamismo? ¿Soledad? La composición debe servir a la emoción que quieres transmitir.</div>'}
+   ]
+  },
+  {name:'Ejercicio 1: Cazadores de Líneas',desc:'15 minutos • Encuentra líneas en tu entorno',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Sal a la calle (o mira por tu ventana) y fotografía:</div><div class="tp"><strong>3 líneas horizontales</strong> (que transmitan calma)</div><div class="tp"><strong>3 líneas verticales</strong> (que transmitan fuerza)</div><div class="tp"><strong>3 líneas diagonales</strong> (que transmitan movimiento)</div><div class="tp">Total: 9 fotos en 15 minutos.</div>'},
+    {t:'Lo importante',h:'<div class="tp">No es tomar la foto "perfecta". Es entrenar tu ojo para VER líneas. Aprenderás que el mundo está lleno de ellas: baldosas, cables, sombras en edificios, escaleras, ventanas.</div><div class="tp"><strong>Bonus:</strong> Mientras buscas, notarás que las líneas aparecen naturalmente cuando las buscas. Tu composición mejora automáticamente.</div>'}
+   ]
+  },
+  {name:'Ejercicio 2: El Punto de Fuga',desc:'20 minutos • Perspectiva y profundidad',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Busca un lugar donde las líneas converjan:</div><div class="tp">Una calle larga, vías de tren, un pasillo, filas de árboles, pasillos en un mercado.</div><div class="tp">Posiciónate de modo que las líneas desaparezcan en el horizonte (punto de fuga).</div><div class="tp">Asegúrate que el punto de fuga esté sobre una línea de tercios (no centrado).</div>'},
+    {t:'Por qué funciona',h:'<div class="tp">El punto de fuga es naturalmente atractivo. El ojo sigue las líneas automáticamente hacia el fondo. Tu foto parece tener profundidad infinita.</div><div class="tp">Esta es una de las técnicas más poderosas en fotografía de composición.</div>'}
+   ]
+  },
+  {name:'Ejercicio 3: Marco Dentro del Marco',desc:'15 minutos • Aislamiento compositivo',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Fotografía a alguien o algo, pero usando elementos del entorno como "marcos" que lo rodean.</div><div class="tp"><strong>Ejemplos:</strong> Una ventana que enmarca a una persona, una puerta que contiene una escena, ramas que rodean un objeto.</div><div class="tp">El "marco" debe estar en primer plano, enfocado o no, pero claramente visible.</div>'},
+    {t:'El efecto',h:'<div class="tp">Creas profundidad automáticamente (3 capas: marco, sujeto, fondo). El sujeto se aísla visualmente. La composición se vuelve sofisticada sin esfuerzo.</div>'}
+   ]
+  },
+  {name:'Ejercicio 4: Espacio Negativo',desc:'20 minutos • Aprende a no llenar todo',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Fotografía un sujeto (persona, objeto, animal) rodeado de mucho espacio vacío.</div><div class="tp">La regla: el sujeto debe ocupar menos del 30% del cuadro. El resto es "aire".</div><div class="tp"><strong>Lugares ideales:</strong> Playa, calle vacía, pared blanca, cielo despejado.</div>'},
+    {t:'Lo difícil (pero importante)',h:'<div class="tp">Tu instinto dirá "acércate más, llena el cuadro". <strong>No lo hagas.</strong> Resisti. Ese aire transmite libertad, soledad, elegancia.</div><div class="tp"><strong>Resultado esperado:</strong> Fotos que se ven "simples" pero emocionalmente potentes.</div>'}
+   ]
+  },
+  {name:'Ejercicio 5: Regla de Tercios',desc:'20 minutos • Distribución equilibrada',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Abre tu cámara (la mayoría tiene opción de "Grid" en settings). Verás 9 cuadrículas.</div><div class="tp">Toma 3 fotos donde coloques lo importante sobre una de las 4 cruces (intersecciones de líneas), nunca en el centro.</div><div class="tp"><strong>En retratos:</strong> Ojos sobre la línea superior.</div><div class="tp"><strong>En paisajes:</strong> Horizonte sobre una línea, objeto importante en una intersección.</div>'},
+    {t:'La magia',h:'<div class="tp">Las fotos automáticamente se ven más interesantes. La regla de tercios es el "atajo de la composición": no es perfección, pero es equilibrio dinámico.</div>'}
+   ]
+  },
+  {name:'Ejercicio 6: Ley de la Mirada',desc:'15 minutos • Dirección y tensión visual',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Fotografía a alguien mirando hacia un lado del cuadro (no a cámara).</div><div class="tp">Deja mucho espacio en la dirección hacia donde mira: es el "espacio de mirada".</div><div class="tp">Si alguien mira derecha, deja más espacio a la derecha. Si mira izquierda, lo opuesto.</div>'},
+    {t:'Por qué',h:'<div class="tp">Esto crea "tensión visual": el espectador sigue la mirada, se pregunta qué está mirando la persona. Nuestra fotografía cuenta una historia incompleta que la mente quiere completar.</div>'}
+   ]
+  },
+  {name:'Ejercicio 7: Curvas y Formas',desc:'20 minutos • Descubre patrones',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Busca formas interesantes en tu entorno:</div><div class="tp"><strong>Curvas (especialmente en S):</strong> Ríos, escaleras, cuerpos, carreteras sinuosas.</div><div class="tp"><strong>Círculos y esferas:</strong> Ruedas, fruits, globos, ventanas redondas.</div><div class="tp"><strong>Triángulos:</strong> Tejados, pilas de objetos, ángulos.</div><div class="tp">Toma 3 fotos que destaquen una forma principal.</div>'},
+    {t:'El aprendizaje',h:'<div class="tp">Entrenarás tu ojo para ver geometría en el caos. Las mejores composiciones suelen tener formas geométricas reconocibles subyacentes.</div>'}
+   ]
+  },
+  {name:'Ejercicio 8: Peso y Contrapeso',desc:'20 minutos • Equilibrio visual',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Compón una imagen donde hay dos elementos que "equilibran" visualmente, aunque no sean idénticos en tamaño.</div><div class="tp"><strong>Ejemplo:</strong> Un árbol grande a un lado, una persona pequeña al otro. Un edificio oscuro (pesa más) equilibrado por espacio negativo brillante.</div><div class="tp">No busques simetría perfecta. Busca balance.</div>'},
+    {t:'Lo difícil',h:'<div class="tp">Requiere que visualices mentalmente cómo los elementos pesan visualmente. No es intuición: es práctica.</div><div class="tp"><strong>Tip:</strong> Toma varias versiones del mismo escenario moviéndote. Observa cuál se siente "equilibrada" y cuál "rota".</div>'}
+   ]
+  },
+  {name:'Ejercicio 9: Congelar Movimiento',desc:'20 minutos • Captura la acción',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Fotografía algo en movimiento en el momento exacto donde es más dinámico:</div><div class="tp">Un salto en el pico más alto. Un auto en curva pronunciada. Un niño riendo. Un animal cazando.</div><div class="tp"><strong>Técnica:</strong> Anticipa. No esperes a que suceda. Presiona el disparador un instante antes de que ocurra.</div>'},
+    {t:'El instinto',h:'<div class="tp">Esto entrena lo que Henri Cartier-Bresson llamaba "el momento decisivo". No es suerte: es anticipación constante.</div>'}
+   ]
+  },
+  {name:'Ejercicio 10: Barrido',desc:'20 minutos • Movimiento + Velocidad',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Fotografía algo en movimiento con movimiento de cámara sincronizado:</div><div class="tp">Un auto pasando: mueve la cámara con él mientras disparas (mantén el auto enfocado).</div><div class="tp">Resultado: el auto está nítido pero el fondo está barrido, dando sensación de velocidad.</div>'},
+    {t:'Técnica',h:'<div class="tp">Requiere práctica. Necesitarás baja velocidad de obturación (si tu celular lo permite en modo manual).</div><div class="tp">Si no tienes control manual: practica de todos modos. El movimiento de cámara sigue siendo válido para sugerir dinámismo.</div>'}
+   ]
+  },
+  {name:'Ejercicio 11: Misma Regla, Dos Sujetos',desc:'30 minutos • Variación: quieto vs movimiento',
+   topics:[
+    {t:'El reto',h:'<div class="tp">Encuentra UNA escena y fotografíala de dos formas:</div><div class="tp"><strong>Versión 1:</strong> Sujeto estático (posado, quieto). Enfoque en geometría, composición estable.</div><div class="tp"><strong>Versión 2:</strong> Mismo sujeto en movimiento. Enfoque en dinamismo, líneas de movimiento, acción.</div><div class="tp">Ejemplo: Una persona. Una foto ella sentada compuesta. Otra ella corriendo/saltando con movimiento.</div>'},
+    {t:'La lección',h:'<div class="tp">Descubrirás cómo el movimiento vs quietud cambia completamente la composición. Aprenderás a elegir intencionalmente si quieres transmitir calma o acción.</div>'}
+   ]
+  },
+  {name:'Desafío Final',desc:'10 minutos • Prueba final creativa',
+   topics:[
+    {t:'El desafío',h:'<div class="tp">Toma UNA sola foto que incorpore AL MENOS 3 de las técnicas que practicaste.</div><div class="tp">Puede combinar:</div><div class="tp">- Regla de tercios + espacio negativo</div><div class="tp">- Líneas directrices + profundidad</div><div class="tp">- Marco en marco + peso visual</div><div class="tp">- Momento decisivo + ley de la mirada</div><div class="tp">O cualquier otra combinación.</div>'},
+    {t:'Reflexión final',h:'<div class="tp">Después, responde estas preguntas por escrito:</div><div class="tp"><strong>1. ¿Cuáles fueron las 3 técnicas que usaste?</strong></div><div class="tp"><strong>2. ¿Por qué elegiste esa combinación?</strong></div><div class="tp"><strong>3. ¿Qué emoción querías transmitir?</strong></div><div class="tp"><strong>4. ¿Lo lograste?</strong></div><div class="tp">Escribir sobre tu proceso te ayuda a desarrollar conciencia compositiva.</div>'}
+   ]
+  }
+];
+
+function renderMods(dataArray,containerId){
+  var modCont=document.getElementById(containerId);
   modCont.innerHTML='';
 
-  CLASES_DATA.forEach(function(mod,mi){
+  dataArray.forEach(function(mod,mi){
     var modEl=document.createElement('div');
     modEl.className='mod';
     var num=String(mi+1).padStart(2,'0');
@@ -274,7 +363,8 @@ function renderContent(){
   });
 }
 
-renderContent();
+renderMods(CLASES_DATA,'mod-container');
+renderMods(EJERCICIOS_DATA,'ejercicios-container');
 </script>
 </body>
 </html>
