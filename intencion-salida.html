@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luz natural · Eje Luz · Taller de Fotografía Móvil</title>
+<title>Una idea, cinco fotos · Eje Intención · Taller de Fotografía Móvil</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -78,6 +78,9 @@
   .chapter-link.disabled{
     opacity:0.5;cursor:not-allowed;
   }
+  .chapter-link.disabled{
+    opacity:0.5;cursor:not-allowed;
+  }
 
   /* ---------- Hero ---------- */
   .hero{padding:40px 0 8px;}
@@ -113,7 +116,7 @@
   p:last-child{margin-bottom:0;}
   .muted{color:var(--ink-soft);}
 
-  /* ---------- Rule card ---------- */
+  /* ---------- Rule card (mostrar no nombrar) ---------- */
   .rule{
     background:var(--card);border:1px solid var(--line);border-radius:22px;
     padding:30px 28px;position:relative;overflow:hidden;
@@ -136,6 +139,23 @@
   .recursos div:first-child{border-top:none;}
   .recursos b{font-family:var(--serif);font-weight:600;font-size:16.5px;color:var(--ink);}
   .recursos span{font-size:14.5px;color:var(--ink-soft);}
+  .story{font-size:16.5px;color:var(--ink-soft);margin:0;line-height:1.55;}
+  .story em{font-style:italic;color:var(--ink);}
+
+  /* ---------- Steps ---------- */
+  .steps{list-style:none;padding:0;margin:6px 0 0;counter-reset:s;}
+  .steps li{
+    position:relative;padding:18px 0 18px 58px;border-top:1px solid var(--line);
+  }
+  .steps li:first-child{border-top:none;}
+  .steps li::before{
+    counter-increment:s;content:counter(s,decimal-leading-zero);
+    position:absolute;left:0;top:16px;
+    font-family:var(--serif);font-size:18px;color:var(--terracota);font-weight:600;
+    width:38px;text-align:left;
+  }
+  .steps strong{font-weight:600;}
+  .steps .sub{display:block;color:var(--ink-soft);font-size:15.5px;margin-top:2px;}
 
   /* ---------- Consignas (accordion) ---------- */
   .consignas{display:flex;flex-direction:column;gap:12px;margin-top:6px;}
@@ -171,26 +191,32 @@
     border:1px solid var(--line);border-radius:999px;padding:6px 13px;
   }
 
-  /* ---------- Tips list ---------- */
-  .tips{list-style:none;padding:0;margin:6px 0 0;counter-reset:t;}
-  .tips li{
-    position:relative;padding:18px 0 18px 58px;border-top:1px solid var(--line);
-  }
-  .tips li:first-child{border-top:none;}
-  .tips li::before{
-    counter-increment:t;content:counter(t,decimal-leading-zero);
-    position:absolute;left:0;top:16px;
-    font-family:var(--serif);font-size:18px;color:var(--terracota);font-weight:600;
-    width:38px;text-align:left;
-  }
-  .tips strong{font-weight:600;}
-  .tips .sub{display:block;color:var(--ink-soft);font-size:15.5px;margin-top:2px;}
-
-  /* ---------- Highlight card ---------- */
+  /* ---------- Highlight (recommendation) ---------- */
   .reco{
     background:var(--card-2);border:1px solid var(--line);border-radius:22px;padding:28px;
   }
   .reco h3{font-size:26px;}
+
+  /* ---------- Titles list ---------- */
+  .titles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .title-chip{
+    font-family:var(--serif);font-size:17px;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;line-height:1.25;
+  }
+  .title-chip em{font-style:italic;color:var(--terracota);}
+
+  /* ---------- Tiempos ---------- */
+  .tiempos{list-style:none;padding:0;margin:6px 0 0;}
+  .tiempos li{
+    display:flex;align-items:baseline;gap:16px;padding:13px 0;border-top:1px solid var(--line);
+  }
+  .tiempos li:first-child{border-top:none;}
+  .tiempos .t{
+    font-family:var(--serif);font-weight:600;color:var(--terracota);
+    font-size:16px;flex:none;width:62px;
+  }
+  .tiempos .d{color:var(--ink);}
 
   /* ---------- Dark closing card ---------- */
   .cierre{
@@ -246,23 +272,25 @@
 
   @media (max-width:480px){
     body{font-size:16px;}
+    .titles{grid-template-columns:1fr;}
     .qs{grid-template-columns:1fr;}
     .acc-body{padding-left:20px;}
   }
 
-  /* ---------- Print ---------- */
+  /* ---------- Print (para imprimir y recortar consignas) ---------- */
   @media print{
     body{background:#fff;padding:0;font-size:12pt;}
     .appbar,.nav,.back,.cierre .rings{display:none!important;}
     .acc[open],.acc{border:1px solid #ccc!important;break-inside:avoid;}
     .acc summary{cursor:default;}
     .acc-body{display:block!important;}
+    details{ }
   }
 </style>
 </head>
 <body>
 
-  <!-- ====== Header ====== -->
+  <!-- ====== Header (igual a la app) ====== -->
   <header class="appbar">
     <div class="appbar-inner">
       <div class="logo">A</div>
@@ -279,157 +307,257 @@
     <section class="chapters-nav">
       <div class="chapters-label">Capítulos del taller</div>
       <div class="chapters-list">
-        <a href="luz.html" class="chapter-link active" aria-current="page">Luz natural</a>
+        <a href="luz.html" class="chapter-link">Luz natural</a>
         <a href="encuadre.html" class="chapter-link">Encuadre</a>
-        <a href="intencion-salida.html" class="chapter-link">Intención</a>
+        <a href="intencion-salida.html" class="chapter-link active" aria-current="page">Intención</a>
         <span class="chapter-link disabled">Edición</span>
       </div>
     </section>
 
-    <!-- ====== Hero ====== -->
+  <!-- ====== Hero ====== -->
     <section class="hero">
-      <div class="eyebrow">Encuentro 01 · Eje Luz</div>
-      <h2>Mirá la <em>luz</em></h2>
-      <p class="lead">La luz es lo más importante en fotografía. No es solo lo que ves: es cómo tu cámara lo ve. Hoy aprendemos a buscarla, a entenderla y a usarla para que tus fotos hablen.</p>
+      <div class="eyebrow">Encuentro 03 · Eje Intención</div>
+      <h2>Contá con <em>intención</em></h2>
+      <p class="lead">Una foto puede ser fuerte, pero una serie puede contar más. Hoy llevamos todo a situaciones reales: personas, momentos cotidianos y una historia narrada en imágenes que se sienten conectadas.</p>
       <div class="tagrow">
         <span class="tag solid">2 h</span>
         <span class="tag">Fotografía aplicada</span>
-        <span class="tag">Lectura de luz</span>
+        <span class="tag">Storytelling</span>
       </div>
     </section>
 
-    <!-- ====== Qué es la luz ====== -->
+    <!-- ====== Repaso antes de salir ====== -->
     <section>
-      <div class="sec-label">Lo primero que debes saber</div>
-      <h3>La luz no es <em>igual</em> en todas partes</h3>
-      <p class="muted" style="margin-bottom:22px;">La luz cambia constantemente. Tu tarea es aprender a verla: dónde viene, cuándo es fuerte, cuándo es suave. Eso es todo.</p>
+      <div class="sec-label">Repaso antes de salir</div>
+      <h3>Ordená tu <em>cabeza</em></h3>
+      <p class="muted" style="margin-bottom:22px;">Antes de salir a la calle, tres recordatorios rápidos de lo que ya vimos juntas.</p>
 
       <div class="repaso">
 
         <div class="block">
-          <div class="block-label">Tres lugares donde buscar luz</div>
+          <div class="block-label">Pensá antes de disparar</div>
           <div class="qs">
             <div class="q">
-              <div class="qword">Directa</div>
-              <p>El sol toca tu sujeto. Sombras marcadas, colores saturados.</p>
+              <div class="qword">¿Qué?</div>
+              <p>Qué estás mostrando. El motivo, el tema, lo que entra al cuadro.</p>
             </div>
             <div class="q">
-              <div class="qword">Rebotada</div>
-              <p>La luz rebota en superficies. Suave, sin sombras duras.</p>
+              <div class="qword">¿Cómo?</div>
+              <p>Cómo lo mostrás. La luz y la composición que ya trabajaste.</p>
             </div>
             <div class="q">
-              <div class="qword">Filtrada</div>
-              <p>Algo se interpone. Sombras sutiles, luz romántica.</p>
+              <div class="qword">¿Para qué?</div>
+              <p>Para qué lo mostrás. Qué querés decir. Acá vive la intención.</p>
             </div>
           </div>
         </div>
 
         <div class="block">
-          <div class="block-label">Las horas más importantes</div>
+          <div class="block-label">Lo que ya sabés mirar · Encuadre</div>
           <div class="recursos">
-            <div><b>Hora dorada</b><span>amanecer y atardecer. Luz cálida y lateral.</span></div>
-            <div><b>Mediodía</b><span>dura, de frente, crea sombras bajo los ojos.</span></div>
-            <div><b>Nublado</b><span>suaviza todo. Ideal para retratos.</span></div>
-            <div><b>Contraluz</b><span>la luz viene de atrás. Crea siluetas y halos.</span></div>
+            <div><b>Regla de tercios</b><span>lo importante, fuera del centro.</span></div>
+            <div><b>Líneas que guían</b><span>que lleven el ojo hasta el motivo.</span></div>
+            <div><b>Fondo limpio</b><span>sacá del cuadro lo que distrae.</span></div>
+            <div><b>Aire para respirar</b><span>dejá espacio alrededor del sujeto.</span></div>
           </div>
+        </div>
+
+        <div class="block">
+          <div class="block-label">De la foto a la serie · Storytelling</div>
+          <p class="story">Una foto sola puede ser fuerte. Pero <em>varias imágenes</em>, juntas y en orden, cuentan algo que una sola no podría. Eso es storytelling: pasás de la foto suelta a la serie que dice.</p>
         </div>
 
       </div>
     </section>
 
-    <!-- ====== Cómo pensar la luz ====== -->
+    <!-- ====== Puente a la salida ====== -->
     <section>
-      <div class="sec-label">El ejercicio de hoy</div>
-      <h3>Encuentra las <em>tres luces</em></h3>
-      <p class="muted">Vas a salir a la calle buscando estos tres tipos de luz. No importa qué fotografiés — importa que reconozcas dónde está la luz, de dónde viene y por qué se ve así.</p>
+      <div class="sec-label">La práctica del día</div>
+      <h3>Una idea, <em>cinco fotos</em></h3>
+      <p class="muted">Ya tenés la cabeza puesta. Ahora salimos a la calle a decir algo. La intención no se ve en el motivo: se ve en la decisión — qué dejás adentro, qué dejás afuera y en qué orden lo contás.</p>
     </section>
 
-    <!-- ====== Regla clave ====== -->
+    <!-- ====== Regla: mostrar no nombrar ====== -->
     <section>
-      <div class="sec-label">La regla más importante</div>
+      <div class="sec-label">La regla que cambia todo</div>
       <div class="rule">
-        <p class="big">La luz define <em>todo</em>.</p>
-        <p class="muted">Lo que ves en la pantalla no es el objeto — es cómo la luz lo toca. Si aprendes a buscar buena luz, las fotos se hacen solas. Si la luz es fea, nada lo arregla después.</p>
+        <p class="big">Mostrá, <em>no nombres.</em></p>
+        <p class="muted">Si te toca <em>la espera</em>, no podés fotografiar la palabra ni un cartel que la diga. Tenés que hacérnosla sentir: una bici apoyada, una parada vacía, alguien que mira a lo lejos. La idea no se nombra — se muestra. Ese salto, de lo literal a lo que se sugiere, es todo el ejercicio.</p>
       </div>
     </section>
 
-    <!-- ====== Tipos de luz detallado ====== -->
+    <!-- ====== Cómo funciona ====== -->
     <section>
-      <div class="sec-label">Tipos de luz para buscar</div>
-      <h3>Cada una tiene su carácter</h3>
+      <div class="sec-label">Cómo funciona la salida</div>
+      <h3>El recorrido, paso a paso</h3>
+      <ol class="steps">
+        <li><strong>Recibís una idea.</strong><span class="sub">Una palabra en una tarjeta. No la elegís vos: te toca.</span></li>
+        <li><strong>25 minutos en la calle.</strong><span class="sub">Sin apuro y sin juntar por juntar. Caminá, mirá, probá.</span></li>
+        <li><strong>Explorá libre.</strong><span class="sub">Sacá todas las fotos que necesites para rodear la idea.</span></li>
+        <li><strong>De vuelta en el aula, elegís 5.</strong><span class="sub">Solo cinco. Acá empieza la parte difícil.</span></li>
+        <li><strong>Ordenalas y poné un título.</strong><span class="sub">El orden cuenta la historia. El título nombra tu intención.</span></li>
+      </ol>
+    </section>
+
+    <!-- ====== Consignas ====== -->
+    <section>
+      <div class="sec-label">Las consignas</div>
+      <h3>Ideas para trabajar</h3>
+      <p class="muted" style="margin-bottom:20px;">Podés recibir cualquiera de estas. Cada una es una palabra que no se puede fotografiar directo. Tocá para ver qué hay que buscar.</p>
 
       <div class="consignas">
 
         <details class="acc">
           <summary>
             <span class="num">01</span>
-            <span class="ttl"><b>Luz lateral</b><span>El sol viene del costado. Crea volumen y textura.</span></span>
+            <span class="ttl"><b>La espera</b><span>El tiempo suspendido, lo que todavía no pasó.</span></span>
             <span class="chev" aria-hidden="true">+</span>
           </summary>
           <div class="acc-body">
-            <p>Es la más linda para retratos y objetos. Define formas sin ser dura.</p>
-            <div class="pistas"><span class="pista">amanecer o atardecer</span><span class="pista">ventana lateral</span><span class="pista">luz de lado en la calle</span></div>
+            <p>Mostrá la pausa antes de que algo ocurra. La tensión de lo que está por venir.</p>
+            <div class="pistas"><span class="pista">una puerta cerrada</span><span class="pista">una bici apoyada</span><span class="pista">una parada vacía</span><span class="pista">alguien mirando a lo lejos</span></div>
           </div>
         </details>
 
         <details class="acc">
           <summary>
             <span class="num">02</span>
-            <span class="ttl"><b>Contraluz</b><span>La luz viene de atrás. Crea halos y siluetas.</span></span>
+            <span class="ttl"><b>El paso del tiempo</b><span>Las marcas que deja lo que ya fue.</span></span>
             <span class="chev" aria-hidden="true">+</span>
           </summary>
           <div class="acc-body">
-            <p>Dramática y difícil de exponer bien. Pero cuando funciona, es increíble.</p>
-            <div class="pistas"><span class="pista">mirada hacia el sol</span><span class="pista">contorno iluminado</span><span class="pista">ventana atrás</span></div>
+            <p>Buscá las huellas del tiempo sobre las cosas y los lugares.</p>
+            <div class="pistas"><span class="pista">paredes gastadas</span><span class="pista">sombras largas</span><span class="pista">hojas secas</span><span class="pista">un objeto viejo en uso</span></div>
           </div>
         </details>
 
         <details class="acc">
           <summary>
             <span class="num">03</span>
-            <span class="ttl"><b>Luz frontal</b><span>La luz viene de frente. Chata pero clara.</span></span>
+            <span class="ttl"><b>La ausencia</b><span>Sugerir que alguien estuvo, sin mostrarlo.</span></span>
             <span class="chev" aria-hidden="true">+</span>
           </summary>
           <div class="acc-body">
-            <p>Fácil de exponer pero menos interesante. Úsala cuando no hay otra.</p>
-            <div class="pistas"><span class="pista">mediodía nublado</span><span class="pista">sombra en el mismo sentido</span><span class="pista">reflector de luz</span></div>
+            <p>Que se sienta una presencia justo en lo que ya no está.</p>
+            <div class="pistas"><span class="pista">una silla vacía</span><span class="pista">una taza a medio terminar</span><span class="pista">una ventana abierta</span><span class="pista">una huella</span></div>
           </div>
         </details>
 
         <details class="acc">
           <summary>
             <span class="num">04</span>
-            <span class="ttl"><b>Luz rebotada</b><span>Suave y sin sombras duras. La más favorecedora.</span></span>
+            <span class="ttl"><b>El encuentro</b><span>Dos elementos que se relacionan en el cuadro.</span></span>
             <span class="chev" aria-hidden="true">+</span>
           </summary>
           <div class="acc-body">
-            <p>Busca paredes blancas, pisos claros, edificios que reflejen luz.</p>
-            <div class="pistas"><span class="pista">entre edificios</span><span class="pista">bajo un árbol</span><span class="pista">día nublado</span><span class="pista">cerca de superficies claras</span></div>
+            <p>La foto pasa por la relación entre dos cosas, no por una sola.</p>
+            <div class="pistas"><span class="pista">dos personas</span><span class="pista">una persona y un animal</span><span class="pista">dos objetos que se buscan</span><span class="pista">miradas que se cruzan</span></div>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>
+            <span class="num">05</span>
+            <span class="ttl"><b>Lo cotidiano</b><span>Encontrar belleza en lo que nadie mira.</span></span>
+            <span class="chev" aria-hidden="true">+</span>
+          </summary>
+          <div class="acc-body">
+            <p>Mirá distinto algo que ves todos los días. La rutina como tema.</p>
+            <div class="pistas"><span class="pista">un gesto mínimo</span><span class="pista">una esquina de siempre</span><span class="pista">una mano trabajando</span><span class="pista">un detalle invisible</span></div>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>
+            <span class="num">06</span>
+            <span class="ttl"><b>La calma</b><span>Buscar escenas donde la imagen respire.</span></span>
+            <span class="chev" aria-hidden="true">+</span>
+          </summary>
+          <div class="acc-body">
+            <p>Buscá espacio, silencio visual, una sola cosa importante en el cuadro.</p>
+            <div class="pistas"><span class="pista">espacio vacío</span><span class="pista">una sola figura</span><span class="pista">líneas simples</span><span class="pista">un cielo limpio</span></div>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>
+            <span class="num">07</span>
+            <span class="ttl"><b>El movimiento</b><span>Sugerir movimiento aunque la foto esté quieta.</span></span>
+            <span class="chev" aria-hidden="true">+</span>
+          </summary>
+          <div class="acc-body">
+            <p>Hacé que se sienta acción dentro de una imagen detenida.</p>
+            <div class="pistas"><span class="pista">una cortina al viento</span><span class="pista">alguien a punto de cruzar</span><span class="pista">una diagonal fuerte</span><span class="pista">un gesto a medias</span></div>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>
+            <span class="num">08</span>
+            <span class="ttl"><b>Algo está cambiando</b><span>Capturar un momento de transición.</span></span>
+            <span class="chev" aria-hidden="true">+</span>
+          </summary>
+          <div class="acc-body">
+            <p>Mostrá lo que está dejando de ser una cosa para volverse otra.</p>
+            <div class="pistas"><span class="pista">una estación que se va</span><span class="pista">una obra a medio hacer</span><span class="pista">la última luz del día</span><span class="pista">algo viejo y algo nuevo juntos</span></div>
           </div>
         </details>
 
       </div>
     </section>
 
-    <!-- ====== Cómo practicar ====== -->
-    <section>
-      <div class="sec-label">El recorrido de hoy</div>
-      <h3>Paso a paso</h3>
-      <ol class="tips">
-        <li><strong>Mirada activa.</strong><span class="sub">No saques fotos todavía. Solo mirá. ¿De dónde viene la luz? ¿Es bonita?</span></li>
-        <li><strong>Busca tres ejemplos.</strong><span class="sub">Uno de luz lateral, uno de contraluz, uno rebotado. Tómate tiempo.</span></li>
-        <li><strong>Estudia la hora.</strong><span class="sub">¿Es hora dorada? ¿Mediodía? ¿Nublado? Cada hora tiene su carácter.</span></li>
-        <li><strong>Ahora sí, dispara.</strong><span class="sub">Una vez que veas la luz linda, toma la foto. La cámara solo confirma lo que ya viste.</span></li>
-      </ol>
-    </section>
-
-    <!-- ====== Recomendación ====== -->
+    <!-- ====== Variante recomendada ====== -->
     <section>
       <div class="reco">
-        <div class="sec-label">Mi recomendación</div>
-        <h3>Practica al mismo <em>lugar</em>, distinta hora</h3>
-        <p class="muted">Elige una esquina, una pared, un árbol. Fotografíalo tres veces: mañana, mediodía y atardecer. Verás cómo cambia todo solo por la luz.</p>
+        <div class="sec-label">Mi recomendación para vos</div>
+        <h3>Que todas trabajemos <em>el mismo tema</em></h3>
+        <p class="muted">Si repartimos consignas distintas está buenísimo. Pero si queremos que se lleve el aprendizaje más fuerte del día, todas trabajamos la misma idea — por ejemplo, <em>"Algo está cambiando"</em>.</p>
+        <p>Cuando todas interpretamos la misma palabra, queda clarísimo que no existe la foto correcta: existen decisiones. Ese es, exactamente, el corazón de la intención.</p>
       </div>
+    </section>
+
+    <!-- ====== Títulos / microhistorias ====== -->
+    <section>
+      <div class="sec-label">Variante storytelling</div>
+      <h3>También funcionan como <em>títulos</em></h3>
+      <p class="muted">Si querés empujar hacia la serie narrada, en vez de un concepto entregá un título de microhistoria. Cada una arma sus 5 fotos como si fueran capítulos.</p>
+      <div class="titles">
+        <div class="title-chip"><em>Antes</em> de que pase algo</div>
+        <div class="title-chip">Lo que <em>quedó</em></div>
+        <div class="title-chip">Una historia <em>sin</em> personas</div>
+        <div class="title-chip"><em>Volver</em> a casa</div>
+        <div class="title-chip">La <em>última</em> luz</div>
+        <div class="title-chip">Un día <em>cualquiera</em></div>
+      </div>
+    </section>
+
+    <!-- ====== Regla de oro ====== -->
+    <section>
+      <div class="sec-label">La regla de oro</div>
+      <h3>Elegí, no <em>acumules</em></h3>
+      <p class="muted">Podés sacar cien fotos. Vas a mostrar cinco. Sacar es explorar; elegir es decidir. Son dos cabezas distintas, y por eso separamos los dos momentos: primero la calle, después el aula.</p>
+      <p>Y todavía hay una decisión más — el <strong>orden</strong>. Las mismas cinco fotos, ordenadas distinto, cuentan otra cosa. Ahí, en la secuencia, aparece la historia.</p>
+    </section>
+
+    <!-- ====== Puesta en común ====== -->
+    <section>
+      <div class="sec-label">La puesta en común</div>
+      <h3>¿Qué quisiste <em>decir</em>?</h3>
+      <p class="muted">Cuando compartimos, no preguntamos cuál foto es la mejor. Preguntamos dos cosas: ¿qué quisiste decir? y ¿llegó?</p>
+      <p>Muchas veces el resto lee algo distinto de lo que buscabas. Eso no es un error: es información valiosa sobre cómo hablan las imágenes. Comparamos decisiones y detectamos qué recurso hizo que cada serie funcione.</p>
+    </section>
+
+    <!-- ====== Tiempos sugeridos ====== -->
+    <section>
+      <div class="sec-label">Tiempos sugeridos · 2 h</div>
+      <h3>Cómo se reparte el encuentro</h3>
+      <ul class="tiempos">
+        <li><span class="t">20 min</span><span class="d">Repaso activo y entrega de la consigna</span></li>
+        <li><span class="t">25 min</span><span class="d">Salida a la calle</span></li>
+        <li><span class="t">20 min</span><span class="d">Edición: elegir 5 y ordenarlas</span></li>
+        <li><span class="t">45 min</span><span class="d">Puesta en común y lectura de las series</span></li>
+        <li><span class="t">10 min</span><span class="d">Cierre</span></li>
+      </ul>
     </section>
 
     <!-- ====== Cierre ====== -->
@@ -437,26 +565,28 @@
       <div class="cierre">
         <div class="rings"></div>
         <div class="eyebrow">El cierre del encuentro</div>
-        <p class="quote">La luz lo es todo. Buscala, reconócela, sírvete de ella.</p>
-        <p>Si entendés luz, entiendés fotografía. El resto son detalles. De ahora en adelante, antes de disparar, preguntate: <em>¿es bonita esta luz?</em> Si no, espera. Si sí, toma la foto.</p>
+        <p class="quote">No se trata de acumular fotos, sino de elegir mejor.</p>
+        <p>Si te llevás una sola cosa de hoy, que sea esta: la cámara no decide por vos. <em>Vos</em> elegís qué mirar, qué dejar afuera y en qué orden contarlo. Eso es fotografiar con intención.</p>
       </div>
 
-      <a class="back" href="https://clases-bice.vercel.app/#luz">
+      <!-- Vuelve a la app de Encuentros. Ajusta el ancla si tu app usa otro id. -->
+      <a class="back" href="https://clases-bice.vercel.app/#intencion">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-        Volver a Luz
+        Volver a Intención
       </a>
     </section>
 
   </main>
 
-  <!-- ====== Bottom nav ====== -->
+  <!-- ====== Bottom nav (igual a la app de Encuentros) ======
+       Apunta a clases-bice.vercel.app. Ajusta las anclas si tu app usa otros id. -->
   <nav class="nav">
     <div class="nav-inner">
       <a href="https://clases-bice.vercel.app/#inicio">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
         Inicio
       </a>
-      <a href="https://clases-bice.vercel.app/#luz" class="active" aria-current="page">
+      <a href="https://clases-bice.vercel.app/#luz">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"></path></svg>
         Luz
       </a>
@@ -464,7 +594,7 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path></svg>
         Encuadre
       </a>
-      <a href="https://clases-bice.vercel.app/#intencion">
+      <a href="https://clases-bice.vercel.app/#intencion" class="active" aria-current="page">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"></circle></svg>
         Intención
       </a>

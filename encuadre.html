@@ -75,6 +75,9 @@
   .chapter-link.active{
     background:var(--terracota);color:var(--card);border-color:var(--terracota);font-weight:600;
   }
+  .chapter-link.disabled{
+    opacity:0.5;cursor:not-allowed;
+  }
 
   /* ---------- Hero ---------- */
   .hero{padding:40px 0 8px;}
@@ -279,6 +282,7 @@
         <a href="luz.html" class="chapter-link">Luz natural</a>
         <a href="encuadre.html" class="chapter-link active" aria-current="page">Encuadre</a>
         <a href="intencion-salida.html" class="chapter-link">Intención</a>
+        <span class="chapter-link disabled">Edición</span>
       </div>
     </section>
 

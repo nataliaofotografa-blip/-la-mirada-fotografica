@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es-AR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<title>Edición · Taller de Fotografía Móvil · Encuentros — Amapola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f1e7d9;
+    --card:#faf4ea;
+    --card-2:#f6eee1;
+    --terracota:#c8462a;
+    --terracota-soft:#e9c9bd;
+    --ink:#2b211b;
+    --ink-soft:#6f6256;
+    --ink-faint:#8a7d70;
+    --dark:#271f1a;
+    --dark-soft:#9b8d7f;
+    --line:rgba(43,33,27,.10);
+    --line-strong:rgba(43,33,27,.16);
+    --serif:'Spectral',Georgia,serif;
+    --sans:'Archivo',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:96px;
+  }
+  .wrap{max-width:680px;margin:0 auto;padding:0 22px;}
+
+  /* ---------- Header ---------- */
+  .appbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(241,231,217,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .appbar-inner{
+    max-width:680px;margin:0 auto;padding:16px 22px;
+    display:flex;align-items:center;gap:14px;
+  }
+  .logo{
+    width:54px;height:54px;flex:none;border-radius:14px;
+    background:var(--terracota);color:var(--card);
+    font-family:var(--serif);font-size:30px;font-weight:500;
+    display:grid;place-items:center;
+    box-shadow:0 6px 16px rgba(200,70,42,.22);
+  }
+  .appbar h1{font-family:var(--serif);font-weight:500;font-size:22px;line-height:1.1;margin:0;}
+  .appbar .kicker{
+    font-family:var(--sans);font-weight:600;font-size:12px;letter-spacing:.16em;
+    color:var(--terracota);text-transform:uppercase;margin-top:3px;
+  }
+
+  /* ---------- Chapters nav ---------- */
+  .chapters-nav{padding:18px 0 0;margin-bottom:8px;border-bottom:1px solid var(--line);}
+  .chapters-label{font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;}
+  .chapters-list{display:flex;gap:8px;flex-wrap:wrap;}
+  .chapter-link{
+    font-family:var(--sans);font-weight:500;font-size:14px;
+    padding:8px 16px;border-radius:999px;border:1px solid var(--line);
+    color:var(--ink-soft);text-decoration:none;transition:all .2s ease;
+  }
+  .chapter-link:hover{border-color:var(--terracota-soft);color:var(--terracota);}
+  .chapter-link.active{
+    background:var(--terracota);color:var(--card);border-color:var(--terracota);font-weight:600;
+  }
+  .chapter-link.disabled{
+    opacity:0.5;cursor:not-allowed;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{padding:40px 0 8px;}
+  .eyebrow{
+    font-family:var(--sans);font-weight:600;font-size:13px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--terracota);margin-bottom:18px;
+  }
+  .hero h2{
+    font-family:var(--serif);font-weight:500;font-size:clamp(40px,11vw,58px);
+    line-height:1.02;margin:0 0 22px;letter-spacing:-.01em;
+  }
+  .hero h2 em{font-style:italic;color:var(--terracota);}
+
+  /* ---------- Placeholder ---------- */
+  .placeholder{
+    background:var(--card);border:2px dashed var(--line-strong);border-radius:22px;
+    padding:60px 30px;text-align:center;margin:40px 0;
+  }
+  .placeholder h3{
+    font-family:var(--serif);font-weight:500;font-size:24px;color:var(--ink);margin-bottom:16px;
+  }
+  .placeholder p{
+    font-size:16px;color:var(--ink-soft);line-height:1.6;margin:0;
+  }
+
+  /* ---------- Bottom nav ---------- */
+  .nav{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(241,231,217,.94);backdrop-filter:blur(12px);
+    border-top:1px solid var(--line);
+  }
+  .nav-inner{max-width:680px;margin:0 auto;display:flex;padding:8px 6px;flex-wrap:wrap;}
+  .nav a, .nav button{
+    flex:1;min-width:60px;text-decoration:none;color:var(--ink-faint);
+    display:flex;flex-direction:column;align-items:center;gap:5px;
+    font-family:var(--sans);font-size:12px;font-weight:500;padding:6px 0;
+    border:none;background:none;cursor:pointer;transition:color .2s ease;
+  }
+  .nav a.active, .nav button.active{color:var(--terracota);font-weight:600;}
+  .nav button:disabled{opacity:0.4;cursor:not-allowed;}
+  .nav svg{width:24px;height:24px;}
+
+  /* ---------- Motion / a11y ---------- */
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none!important;scroll-behavior:auto!important;}
+  }
+  a:focus-visible, summary:focus-visible{outline:2px solid var(--terracota);outline-offset:3px;border-radius:6px;}
+
+  @media (max-width:480px){
+    body{font-size:16px;}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ====== Header ====== -->
+  <header class="appbar">
+    <div class="appbar-inner">
+      <div class="logo">A</div>
+      <div>
+        <h1>Taller de Fotografía Móvil</h1>
+        <div class="kicker">Amapola · Encuentros</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ====== Navegación entre capítulos ====== -->
+    <section class="chapters-nav">
+      <div class="chapters-label">Capítulos del taller</div>
+      <div class="chapters-list">
+        <a href="luz.html" class="chapter-link">Luz natural</a>
+        <a href="encuadre.html" class="chapter-link">Encuadre</a>
+        <a href="intencion-salida.html" class="chapter-link">Intención</a>
+        <span class="chapter-link disabled">Edición</span>
+      </div>
+    </section>
+
+    <!-- ====== Hero ====== -->
+    <section class="hero">
+      <div class="eyebrow">Edición · Lightroom + Snapseed</div>
+      <h2>Edición <em>consciente</em></h2>
+    </section>
+
+    <!-- ====== Placeholder ====== -->
+    <section class="placeholder">
+      <h3>En construcción</h3>
+      <p>Este contenido está siendo preparado. Vuelve pronto para aprender los fundamentos de edición con Lightroom y Snapseed.</p>
+    </section>
+
+  </main>
+
+  <!-- ====== Bottom nav ====== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="https://clases-bice.vercel.app/#inicio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
+        Inicio
+      </a>
+      <a href="https://clases-bice.vercel.app/#luz">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"></path></svg>
+        Luz
+      </a>
+      <a href="https://clases-bice.vercel.app/#encuadre">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path></svg>
+        Encuadre
+      </a>
+      <a href="https://clases-bice.vercel.app/#intencion">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3.2" fill="currentColor" stroke="none"></circle></svg>
+        Intención
+      </a>
+      <a href="https://clases-bice.vercel.app/#contacto">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"></path></svg>
+        Contacto
+      </a>
+    </div>
+  </nav>
+
+</body>
+</html>
